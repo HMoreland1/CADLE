@@ -1,7 +1,5 @@
-Great, thank you for providing the details. With that information in mind, here's a suggested structure for your readme.txt file:
 
 ---
-
 # CADLE - The Cyber Awareness Digital Learning Environment
 
 CADLE is a web application designed to educate individuals, particularly Royal Navy personnel, on cybersecurity awareness. It provides an engaging and interactive learning experience through learning modules, quizzes, and future game-based activities. Employers can utilize CADLE to assign specific tasks and workloads to employees based on their roles.

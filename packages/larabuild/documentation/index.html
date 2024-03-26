@@ -1,0 +1,1104 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1.0, shrink-to-fit=no">
+  <link href="assets/images/favicon.png" rel="icon" />
+  <title>LaraBuild - A settings builder and page builder package for laravel</title>
+  <meta name="description" content="LaraBuild - A settings builder package for laravel">
+  <meta name="author" content="amentotech.com">
+
+  <!-- Stylesheet
+  ============================== -->
+  <!-- Bootstrap -->
+  <link rel="stylesheet" type="text/css" href="assets/vendor/bootstrap/css/bootstrap.min.css" />
+  <!-- Font Awesome Icon -->
+  <link rel="stylesheet" type="text/css" href="assets/vendor/font-awesome/css/all.min.css" />
+  <!-- Magnific Popup -->
+  <link rel="stylesheet" type="text/css" href="assets/vendor/magnific-popup/magnific-popup.min.css" />
+  <!-- Highlight Syntax -->
+  <link rel="stylesheet" type="text/css" href="assets/vendor/highlight.js/styles/github.css" />
+  <!-- Custom Stylesheet -->
+  <link rel="stylesheet" type="text/css" href="assets/css/stylesheet.css" />
+</head>
+
+<body data-spy="scroll" data-target=".idocs-navigation" data-offset="125">
+
+  <!-- Document Wrapper   
+=============================== -->
+  <div id="main-wrapper">
+
+    <!-- Header
+  ============================ -->
+    <header id="header" class="sticky-top">
+      <!-- Navbar -->
+      <nav class="primary-menu navbar navbar-expand-lg navbar-dropdown-dark">
+        <div class="container-fluid">
+          <!-- Sidebar Toggler -->
+          <button id="sidebarCollapse" class="navbar-toggler d-block d-md-none" type="button"><span></span><span
+              class="w-75"></span><span class="w-50"></span></button>
+
+          <!-- Logo -->
+          <a class="logo ml-md-3" href="index.html" title="LaraBuild"> <img src="assets/images/logo.png"
+              alt="LaraBuild" /> </a>
+          <span class="text-2 ml-2">v1.3</span>
+          <!-- Logo End -->
+          <!-- Navbar Toggler -->
+          <button class="navbar-toggler ml-auto" type="button" data-toggle="collapse"
+            data-target="#header-nav"><span></span><span></span><span></span></button>
+
+          <div id="header-nav" class="collapse navbar-collapse justify-content-end">
+            <ul class="navbar-nav">
+              <li><a target="_blank" href="https://codecanyon.net/user/amentotech/portfolio">Our portfolio</a></li>
+              <li><a target="_blank" href="https://amentotech.ticksy.com">Get support</a></li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+    </header>
+    <div id="content" role="main">
+      <div class="idocs-navigation bg-light">
+        <ul class="nav flex-column ">
+          <li class="nav-item"><a class="nav-link active" href="#ob_start">Getting Started</a>
+            <ul class="nav flex-column">
+              <li class="nav-item"><a class="nav-link" href="#ob_prerequisites">Things You Must Have</a></li>
+              <li class="nav-item"><a class="nav-link" href="#ob_installation">Installation</a></li>
+              <li class="nav-item"><a class="nav-link" href="#ob_demo_structure">LaraBuild Optionbuilder Setup</a></li>
+              <li class="nav-item"><a class="nav-link" href="#pb_demo_structure">LaraBuild Pagebuilder Setup</a></li>
+            </ul>
+          </li>
+          <li class="nav-item"><a class="nav-link" href="#_block_settings">Block Settings</a>
+            <ul class="nav flex-column">
+              <li class="nav-item"><a class="nav-link" href="#_add_edit_block">Add/Edit block</a></li>
+              <li class="nav-item"><a class="nav-link" href="#_dynamic_content">Add dynamic content to block</a></li>
+              <li class="nav-item"><a class="nav-link" href="#_block_styles">Add Styles to block</a></li>
+              <li class="nav-item"><a class="nav-link" href="#_block_js">Add Javascript to block</a></li>
+
+            </ul>
+          </li>
+          <li class="nav-item"><a class="nav-link" href="#field_types">Fields</a>
+            <ul class="nav flex-column">
+              <li class="nav-item"><a class="nav-link" href="#_text">Textbox</a></li>
+              <li class="nav-item"><a class="nav-link" href="#_number">Number</a></li>
+              <li class="nav-item"><a class="nav-link" href="#_password">Password</a></li>
+              <li class="nav-item"><a class="nav-link" href="#_textarea">Textarea</a></li>
+              <li class="nav-item"><a class="nav-link" href="#_texteditor">Texteditor</a></li>
+              <li class="nav-item"><a class="nav-link" href="#_radio">Radio</a></li>
+              <li class="nav-item"><a class="nav-link" href="#_switch">Switch</a></li>
+              <li class="nav-item"><a class="nav-link" href="#_checkbox">Checkbox</a></li>
+              <li class="nav-item"><a class="nav-link" href="#_select">Select</a></li>
+              <li class="nav-item"><a class="nav-link" href="#_file">File</a></li>
+              <li class="nav-item"><a class="nav-link" href="#_colorpicker">Colorpicker</a></li>
+              <li class="nav-item"><a class="nav-link" href="#_daterange">Daterange</a></li>
+              <li class="nav-item"><a class="nav-link" href="#_repeator">Repeator</a></li>
+              <li class="nav-item"><a class="nav-link" href="#_range_selector">Range selector</a></li>
+              <li class="nav-item"><a class="nav-link" href="#_info">Info</a></li>
+              <li class="nav-item"><a class="nav-link" href="#_tabs">Tabs</a></li>
+
+            </ul>
+          </li>
+          <li class="nav-item"><a class="nav-link" href="#ob_changelog">Changelog</a>
+            <ul class="nav flex-column">
+              <li class="nav-item"><a class="nav-link" href="#v1-0">v1.0</a></li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+      <div class="idocs-content">
+        <div class="container">
+          <section id="ob_start">
+            <h1 style="text-align: center;">Documentation</h1>
+            <hr>
+            <h2>LaraBuild - An option builder / page builder package for laravel</h2>
+            <p class="lead">Thank you so much for purchasing our item from codecanyon.</p>
+            <hr>
+            <div class="row">
+              <div class="col-sm-6 col-lg-4">
+                <ul class="list-unstyled">
+                  <li><strong>Version:</strong> 1.3</li>
+                  <li><strong>Author:</strong> <a href="https://themeforest.net/user/amentotech" target="_blank">Amento
+                      Tech</a></li>
+                </ul>
+              </div>
+              <div class="col-sm-6 col-lg-4">
+                <ul class="list-unstyled">
+                  <li><strong class="font-weight-700">Created:</strong> 16 Dec, 2022</li>
+                  <li><strong>Update:</strong> 17 Apr, 2023</li>
+                </ul>
+              </div>
+            </div>
+            <p class="alert alert-info">If you have any questions that are beyond the scope of this help file, Please
+              feel free to email via <a target="_blank" href="https://amentotech.ticksy.com">Item Support Page</a>.</p>
+          </section>
+          <hr>
+          <section id="ob_prerequisites">
+            <h2>Things You Must Have:</h2>
+            <hr>
+            <p class="lead">These are prerequisites for Larabuild.</p>
+            <div class="row">
+              <div class="col-sm-6 col-lg-4">
+                <ul class="list-unstyled">
+                  <li><strong>PHP:</strong> 8.x</li>
+                  <li><strong>MySQL:</strong> 8.x</li>
+                 
+                </ul>
+              </div>
+              <div class="col-sm-6 col-lg-4">
+                <ul class="list-unstyled">
+                  <li><strong class="font-weight-700">Laravel:</strong> 8.x, 9.x, 10.x</li>
+
+                </ul>
+              </div>
+            </div>
+
+          <hr class="divider">
+          <section id="ob_installation">
+            <h2>Installation</h2>
+            <h5>Follow the steps below to setup your LaraBuild Optionbuilder package:</h5>
+            <ol>
+              <li>Unzip the downloaded package and copy the <strong>larabuild</strong> directory to
+                <strong>packages</strong> directory at the root of
+                your website using FTP or localhost in order to use it on your website.
+              </li>
+              <ul>
+                <li>After uploading you need to execute the following commands in the website root directory through
+                  <strong>CLI</strong>
+                  <ul>
+                    <li>Execute this –
+                      <code> composer config repositories.optionbuilder '{"type": "path", "url": "packages/larabuild/optionbuilder", "options":{"symlink": false}}' --file composer.json</code>
+                    </li>
+                    <li>Execute this – <code> composer require larabuild/optionbuilder</code></li>
+                    <li>Execute this –
+                      <code> php artisan vendor:publish --provider="Larabuild\Optionbuilder\ServiceProvider" --tag=config</code>
+                    </li>
+                    <li>Execute this –
+                      <code> php artisan vendor:publish --provider="Larabuild\Optionbuilder\ServiceProvider" --tag=routes</code>
+                    </li>
+                    <li>Execute this –
+                      <code> php artisan vendor:publish --provider="Larabuild\Optionbuilder\ServiceProvider" --tag=assets --force</code>
+                    </li>
+                    <li>Execute this –
+                      <code> php artisan vendor:publish --provider="Larabuild\Optionbuilder\ServiceProvider" --tag=demosettings</code>
+                    </li>
+                  </ul>
+                </li>
+              </ul>
+              <li>You need to set the optionbuilder configurations in config/optinubilder.php file <strong>(e-g; default
+                  layout, database prefix, url prefix etc).</strong></li>
+              <ul>
+                <li>
+                  After configurations, you need to execute this command in <strong>CLI</strong>
+                  <ul>
+                    <li>Execute this – <code> php artisan migrate</code></li>
+                  </ul>
+                </li>
+              </ul>
+              <li>After that you need to add optionbuilder routes in your main route file.</li>
+              <ul>
+                <li>
+                  Add this line to your route file <code>require __DIR__.'/optionbuilder.php';</code></li>
+                </li>
+              </ul>
+              <li>After that, you can add optionbuilder route <code>route('optionbuilder')</code> to your menu also. or
+                you can access Optionbuilder by hitting the URL <code>your-domain.com/option-builder</code></code></li>
+            </ol>
+
+
+            <hr />
+
+            <h5>Follow the steps below to setup your LaraBuild Pagebuilder package:</h5>
+            <ol>
+
+              <ul>
+                <li>Execute the following commands in the website root directory through <strong>CLI</strong>
+                  <ul>
+                    <li>Execute this –
+                      <code> composer config repositories.pageubilder '{"type": "path", "url": "packages/larabuild/pagebuilder", "options":{"symlink": false}}' --file composer.json</code>
+                    </li>
+                    <li>Execute this – <code> composer require larabuild/pagebuilder</code></li>
+                    <li>Execute this –
+                      <code> php artisan vendor:publish --provider="Larabuild\Pagebuilder\ServiceProvider" --tag=config</code>
+                    </li>
+                    <li>Execute this –
+                      <code> php artisan vendor:publish --provider="Larabuild\Pagebuilder\ServiceProvider" --tag=routes</code>
+                    </li>
+                    <li>Execute this –
+                      <code> php artisan vendor:publish --provider="Larabuild\Pagebuilder\ServiceProvider" --tag=assets --force</code>
+                    </li>
+                    <li>Execute this –
+                      <code> php artisan vendor:publish --provider="Larabuild\Pagebuilder\ServiceProvider" --tag=demos</code>
+                    </li>
+                  </ul>
+                </li>
+              </ul>
+              <li>You need to set the pagebuilder configurations in config/pagebuilder.php file <strong>(e-g; default
+                  layout, database prefix, url prefix etc).</strong></li>
+              <ul>
+                <li>
+                  After configurations you need to execute the command in <strong>CLI</strong>
+                  <ul>
+                    <li>Execute this – <code> php artisan migrate</code></li>
+                  </ul>
+                </li>
+              </ul>
+              <li>After that you need to add optionbuilder routes in your main route file.</li>
+              <ul>
+                <li>
+                  Add this line in your route file <code>require __DIR__.'/pagebuilder.php';</code></li>
+                </li>
+              </ul>
+              <li>After that, you can add optionbuilder route <code>route('pagebuilder')</code> to your menu also. or
+                you can access Pagebuilder by hitting the URL <code>your-domain.com/pages</code></code></li>
+            </ol>
+            <p><b>Note: </b>If you're only upgrading the Larbuild package, you need to add <code>--force</code> at the end of all publish commands to replace old configurations.</p>
+          </section>
+
+          <hr class="divider">
+          <section id="ob_demo_structure">
+            <h2>LaraBuild Optionbuilder setup</h2>
+            <p>
+              After the installation you can use LaraBuild Optionbuilder, you have demo files in the directory
+              <strong>app/Optionbuilder</strong>.
+              <br>
+              If you want to create new option settings then you need to create a new php file in the
+              <strong>app/Optionbuilder</strong> directory and add the configuration of fields as mentioned in the demo
+              files.
+            </p>
+          </section>
+
+          <hr class="divider">
+          <section id="pb_demo_structure">
+            <h2>LaraBuild Pagebuilder setup</h2>
+            <p>
+              After the installation you can use LaraBuild Pagebuilder, you have demo blocks in
+              <strong>resources/views/pagebuilder</strong> directory.
+
+            </p>
+          </section>
+
+          <section id="_block_settings">
+            <h2>Block Settings</h2>
+            <p>
+              You can add new blocks, edit existing blocks, add dynamic content, and add CSS and javascript to the
+              blocks.
+            </p>
+          </section>
+          <section id="_add_edit_block">
+            <h5>Add/Edit block</h5>
+            <p>If you want to create a new block, you need to create a new directory inside
+              <strong>resources/views/pagebuilder</strong> directory. Create two files, settings.php and
+              view.blade.php to this newly created directory. Add the configurations to settings.php file as mentioned
+              in the demo blocks.
+            </p>
+            <ul>
+              <li>settings.php file contains the field types that will be used in view.blade.php</li>
+              <li>view.blade.php file contains the blade template of the block. Each field created in settings.php can
+                be fetched using <code>pagesetting('field_id');</code> function inside view.blade.php <file class="">
+                </file>
+              </li>
+            </ul>
+            <h5>settings.php file example</h5>
+            <pre>
+            <code>
+              return [
+                  &#39;id&#39; =&gt; &#39;faqs&#39;,
+                  &#39;name&#39; =&gt; __(&#39;FAQs&#39;),
+                  &#39;icon&#39; =&gt; &#39;&lt;i class=&quot;icon-book&quot;&gt;&lt;/i&gt;&#39;,
+                  &#39;tab&#39; =&gt; &quot;Faqs&quot;,
+                  &#39;fields&#39; =&gt; [
+                      [
+                          &#39;id&#39;            =&gt; &#39;heading&#39;,
+                          &#39;type&#39;          =&gt; &#39;text&#39;,
+                          &#39;value&#39;         =&gt; &#39;Frequently Asked Questions&#39;,
+                          &#39;class&#39;         =&gt; &#39;&#39;,
+                          &#39;label_title&#39;   =&gt; __(&#39;Heading&#39;),
+                          &#39;placeholder&#39;   =&gt; __(&#39;Heading&#39;),
+                      ],
+
+                      [
+                          &#39;id&#39;                =&gt; &#39;faq_data&#39;,
+                          &#39;type&#39;              =&gt; &#39;repeater&#39;,
+                          &#39;label_title&#39;       =&gt; __(&#39;FAQs&#39;),
+                          &#39;repeater_title&#39;    =&gt; __(&#39;FAQ&#39;),
+                          &#39;multi&#39;       =&gt; true,
+                          &#39;fields&#39;       =&gt;
+                          [
+                              [
+                                  &#39;id&#39;            =&gt; &#39;question&#39;,
+                                  &#39;type&#39;          =&gt; &#39;text&#39;,
+                                  &#39;value&#39;         =&gt; &#39;How can I test new items I add to the design system before making them?&#39;,
+                                  &#39;class&#39;         =&gt; &#39;&#39;,
+                                  &#39;label_title&#39;   =&gt; __(&#39;Question&#39;),
+                                  &#39;placeholder&#39;   =&gt; __(&#39;Question&#39;),
+                              ],
+                              [
+                                  &#39;id&#39;            =&gt; &#39;answer&#39;,
+                                  &#39;type&#39;          =&gt; &#39;editor&#39;,
+                                  &#39;class&#39;         =&gt; &#39;&#39;,
+                                  &#39;value&#39;         =&gt; &#39;Lorem Ipsum is simply dummy text of the printing and typesetting industry.&#39;,
+                                  &#39;label_title&#39;   =&gt; __(&#39;Answer&#39;),
+                              ],
+                          ],
+                      ]
+
+                  ]
+              ];
+            </code>
+          </pre>
+
+            <h5>view.blade.php file example</h5>
+            <pre>
+            <code>
+              ...
+              &lt;div class=&quot;tmp-faq&quot;&gt;
+              &lt;h2&gt;{{ pagesetting(&#39;heading&#39;) }}&lt;/h2&gt;
+              &lt;div class=&quot;tmp-faqsection&quot;&gt;
+                @if (!empty(pagesetting(&#39;faq_data&#39;)))
+                @foreach (pagesetting(&#39;faq_data&#39;) as $faq)
+                &lt;div class=&quot;tmp-faqwrap&quot;&gt;
+                  &lt;div class=&quot;tmp-faqtitlle&quot;&gt;
+                    &lt;h6&gt;{{ $faq[&#39;question&#39;] }}&lt;/h6&gt;
+                    &lt;img src=&quot;{{ asset(&#39;demo/images/chevron-right.svg&#39;) }}&quot; alt=&quot;&quot;&gt;
+                  &lt;/div&gt;
+                  &lt;div class=&quot;tmp-faqcontent&quot;&gt;
+                    &lt;p&gt;{!! $faq[&#39;answer&#39;] !!}&lt;/p&gt;
+                  &lt;/div&gt;
+                &lt;/div&gt;
+                @endforeach
+                @endif
+              &lt;/div&gt;
+            &lt;/div&gt;
+
+            @pushonce(config(&#39;pagebuilder.site_script_var&#39;))
+                &lt;script&gt;
+                  const accordion = document.querySelectorAll(&quot;.tmp-faqwrap&quot;);
+                  for(let i=0;i&lt;accordion.length;i++){
+                    accordion[i].addEventListener(&#39;click&#39;,function(){
+                      let isActive = this.classList.contains(&#39;active&#39;);
+                      for(let j=0;j&lt;accordion.length;j++){
+                        accordion[j].classList.remove(&#39;active&#39;);
+                      }
+                      if(isActive){
+                        this.classList.remove(&#39;active&#39;);
+                      } else{
+                        this.classList.add(&#39;active&#39;);
+                      }
+                    })
+                  };
+                &lt;/script&gt;
+              @endpushonce
+              ...
+            </code>
+          </pre>
+          <section>
+            <p><b>Note: </b>If you are using Laravel8, you will need to use two directives, @once and @push, instead of @pushonce directive.</p>
+          </section>
+            <section id="_dynamic_content">
+              <h5>Add dynamic content to blocks</h5>
+              <p>Sometimes you might need to add some dynamic content fetched from the database, e-g; a users list or
+                countries list or a search component with a search feature. For such dynamic content, you can crate a <a
+                  target="_blank" href="https://laravel.com/docs/blade#components">Laravel Component</a>, and then add
+                that component to view.blade.php file like <code>&lt;x-users /&gt;</code></p>
+
+              <p>Note: For this feature to use, your Laravel version should support components. Laravel supports
+                components from Laravel 7.</p>
+
+              <h5>Dynamic content example</h5>
+              <pre>
+            <code>
+              ...
+              &lt;div class=&quot;col-xl-7&quot;&gt;
+                &lt;div class=&quot;tu-banner_title&quot;&gt;
+                    {!! pagesetting(&#39;h1&#39;) !!}
+                    &lt;p&gt;{{ pagesetting(&#39;content&#39;) }}&lt;/p&gt;
+
+                    &lt;x-users /&gt;
+
+                &lt;/div&gt;
+            &lt;/div&gt;
+            ...
+            </code>
+          </pre>
+            </section>
+
+            <section id="_block_styles">
+              <h5>Add styles to blocks</h5>
+              <p>You can push styles to blocks like this</p>
+              <pre>
+              <code>
+                @pushonce(config(&#39;pagebuilder.site_style_var&#39;))
+                &lt;style&gt;
+                //your css classes here
+                &lt;/style&gt;
+                &lt;link rel=&quot;stylesheet&quot; href=&quot;&quot;&gt;
+                @endpushonce
+              </code>
+            </pre>
+            </section>
+
+            <section id="_block_js">
+              <h5>Add Javascript to blocks</h5>
+              <p>You can push javascript to blocks like this</p>
+              <pre>
+            <code>
+              @pushonce(config(&#39;pagebuilder.site_script_var&#39;))
+              &lt;script src=&quot;&quot;&gt;&lt;/script&gt;
+              &lt;script&gt;
+              //your javascript code here
+              &lt;/script&gt;
+              @endpushonce
+            </code>
+          </pre>
+
+            </section>
+
+
+          </section>
+          <section id="field_types">
+            <h2>Field types used in both Optionbuiler and Pagebuilder</h2>
+            <p>
+              We have a bunch of field types and you can define the arrays for each file type.
+            </p>
+            <h5 id="_text">Text field</h5>
+            <pre>
+            <code>
+return [
+  'section' => [
+    'id'     => 'ob_textbox', 
+    'label'  => __('Textbox'), 
+    'icon'   => '', 
+  ],
+  'fields' => [
+      [
+          'id'            => 'textbox',
+          'type'          => 'text',
+          'value'         => '',
+          'class'         => '',
+          'label_title'   => __('Textbox field'),
+          'label_desc'    => __('This is the label description you can use here'),
+          'field_desc'    => __('This is the field description you can use here'),
+          'placeholder'   => __('Textbox placeholder'),
+          'hint'     => [
+              'content' => __('Hint content about this field!'),
+          ],
+      ]
+  ]
+];
+            </code>
+          </pre>
+
+            <h5 id="_number">Number field</h5>
+            <pre>
+            <code>
+return [
+  'section' => [
+      'id'     => 'ob_number', 
+      'label'  => __('number'), 
+      'icon'   => '', 
+  ],
+  'fields' => [
+      [
+          'id'            => 'number',
+          'type'          => 'number',
+          'value'         => '',
+          'class'         => '',
+          'label_title'   => __('Number field'),
+          'label_desc'    => __('This is the label description you can use here'),
+          'field_desc'    => __('This is the field description you can use here'),
+          'placeholder'   => __('Default number placeholder'),
+      ],
+  ]
+];
+            </code>
+          </pre>
+
+            <h5 id="_password">Password field</h5>
+            <pre>
+            <code>
+return [
+    'section' => [
+       'id'     => 'ob_password', 
+       'label'  => __('textbox'), 
+       'icon'   => '', 
+    ],
+    'fields' => [
+        [
+            'id'            => 'password',
+            'type'          => 'password',
+            'value'         => '',
+            'class'         => '',
+            'label_title'   => __('Password'),
+            'label_desc'    => __('This is the label desc you can use here'),
+            'placeholder'   => __('*****'),
+        ],
+    ]
+];
+            </code>
+          </pre>
+
+            <h5 id="_textarea">Textarea field</h5>
+            <pre>
+            <code>
+return [
+  'section' => [
+      'id'     => 'ob_textarea', 
+      'label'  => __('textarea'), 
+      'icon'   => '', 
+  ],
+  'fields' => [
+      [
+          'id'            => 'textarea',
+          'type'          => 'textarea',
+          'class'         => '',
+          'value'         => '',
+          'label_title'   => __('Textarea field'),
+          'label_desc'    => __('This is the label description you can use here'),
+          'field_desc'    => __('This is the field description you can use here'),
+      ]
+  ]
+];
+            </code>
+          </pre>
+
+            <h5 id="_texteditor">Texteditor field</h5>
+            <pre>
+            <code>
+return [
+  'section' => [
+      'id'     => 'tab_editor', 
+      'label'  => __('text editor'), 
+      'icon'   => '', 
+  ],
+  'fields' => [
+      [
+          'id'            => 'texteditor',
+          'type'          => 'editor',
+          'class'         => '',
+          'label_title'   => __('Text editor'),
+          'label_desc'    => __('This is the label description you can use here'),
+          'field_desc'    => __('This is the editor description text you can use here'),
+      ],
+  ]
+];
+            </code>
+          </pre>
+
+            <h5 id="_radio">Radio field</h5>
+            <pre>
+            <code>
+return [
+  'section' => [
+      'id'     => 'ob_radio', 
+      'label'  => __('radio'), 
+      'icon'   => '', 
+  ],
+  'fields' => [
+      [
+          'id'            => 'gender',
+          'type'          => 'radio',
+          'class'         => '',
+          'label_title'   => __('Radio button field'),
+          'label_desc'    => __('This is the label description you can use here'),
+          'field_desc'    => __('This is the field description you can use here'),
+          'options'       => [
+              'male'  => __('Male'),
+              'femle' => __('Female'),
+          ],
+          'default'       => 'male',  
+      ],
+  ]
+];
+            </code>
+          </pre>
+
+            <h5 id="_switch">Switch field</h5>
+            <pre>
+            <code>
+return [
+  'section' => [
+      'id'     => 'ob_switch', 
+      'label'  => __('switch'), 
+      'icon'   => '', 
+  ],
+  'fields' => [
+      [
+          'id'            => 'switch',
+          'type'          => 'switch',
+          'class'         => '',
+          'label_title'   => __('Single switch field'),
+          'label_desc'    => __('This is the label description you can use here'),
+          'field_title'   => __('Single switch title'), 
+          'field_desc'    => __('This is the field description you can use here'), 
+          'value'       => '1',  
+      ],
+      [                                   // multiple switch fields
+          'id'            => 'multiswitch',
+          'type'          => 'switch',
+          'class'         => '',
+          'label_title'   => __('Multiple switch field'),
+          'label_desc'    => __('This is the label description you can use here'),
+          'field_desc'    => __('This is the field description you can use here'), 
+          'options'       => [
+              '1' => __('Switch opt 1'),
+              '2' => __('Switch opt 2'),
+              '3' => __('Switch opt 3'),
+              '4' => __('Switch opt 4'),
+              '5' => __('Switch opt 5'),
+              '6' => __('Switch opt 6'),
+          ],
+          'default'       => [2,6,4],  
+      ],
+  ]
+];
+            </code>
+          </pre>
+
+            <h5 id="_checkbox">Checkbox field</h5>
+            <pre>
+            <code>
+return [
+  'section' => [
+      'id'     => 'ob_checkbox', 
+      'label'  => __('checkbox'), 
+      'icon'   => '', 
+  ],
+  'fields' => [
+      [
+          'id'                    => 'checkbox',
+          'type'                  => 'checkbox',
+          'class'                 => '',
+          'label_title'           => __('Single checkbox field'),
+          'label_desc'            => __('This is the label description you can use here'),
+          'field_desc'            => __('This is the field description you can use here'),
+          'field_title'           => __('Checkbox single'), 
+          'value'                 => '1', 
+      ],
+      [                                             // multiple checkbox fields
+          'id'            => 'multicheckbox_id',
+          'type'          => 'checkbox',
+          'class'         => '',
+          'label_title'   => __('Multiple checkbox field'),
+          'label_desc'    => __('This is the label description you can use here'),
+          'options'       => [
+              '1' => __('Option 1'),
+              '2' => __('Option 2'),
+              '3' => __('Option 3'),
+              '4' => __('Option 4'),
+              '5' => __('Option 5'),
+              '6' => __('Option 6'),
+          ],
+          'default'       => [1,6],  
+      ]
+  ]
+];
+            </code>
+          </pre>
+
+            <h5 id="_select">Select field</h5>
+            <pre>
+            <code>
+return [
+  'section' => [
+      'id'     => 'ob_select', 
+      'label'  => __('select'), 
+      'icon'   => '', 
+  ],
+  'fields' => [
+      [
+          'id'            => 'select',
+          'type'          => 'select',
+          'class'         => '',
+          'label_title'   => __('Single select field'),
+          'label_desc'    => __('This is the label description you can use here'),
+          'field_desc'    => __('This is the field description you can use here'),
+          'options'       => [
+              'alabama'   => 'Alabama',
+              'wyoming'   => 'Wyoming',
+              'choice'    => 'Choice',
+              'usa'       => 'USA',
+              'france'    => 'France',
+              'japan'     => 'Japan',
+              'itly'      => 'Itly',
+              'uae'       => 'UAE',
+              'uk'        => 'United kindom',
+              'germany'   => 'Germany',
+          ],
+          'default'       => 'uk',  
+          'placeholder'   => __('Select from the list'),  
+      ],
+      [                                       // multiple select
+          'id'            => 'multiselect',
+          'type'          => 'select',
+          'class'         => '',
+          'multi'         => true,
+          'label_title'   => __('Multi Select field'),
+          'label_desc'    => __('This is the label description you can use here'),
+          'field_desc'    => __('This is the field description you can use here'),
+          'options'       => [
+              'usa'       => 'USA',
+              'france'    => 'France',
+              'japan'     => 'Japan',
+              'itly'      => 'Itly',
+              'uae'       => 'UAE',
+              'alabama'   => 'Alabama',
+              'wyoming'   => 'Wyoming',
+              'choice'    => 'Choice',
+              'uk'        => 'United kindom',
+              'germany'   => 'Germany',
+          ],
+          'default'       => ['uk'],  
+          'placeholder'   => __('Select from the list'),   
+      ]
+  ]
+];
+            </code>
+          </pre>
+
+            <h5 id="_file">File uploader</h5>
+            <pre>
+            <code>
+return [
+  'section' => [
+      'id'     => 'ob_file', 
+      'label'  => __('file uploader'), 
+      'icon'   => '', 
+  ],
+  'fields' => [
+      [
+          'id'            => 'file_uploader',
+          'type'          => 'file',
+          'class'         => '',
+          'label_title'   => __('Single file uploader field'),
+          'label_desc'    => __('This is the file description you can use here'),
+          'field_desc'    => __('This is the file uploader description text you can use here'),
+          'max_size'   => 4,                  // size in MB
+          'ext'    =>[
+              'jpg',
+              'png',
+              'pdf',
+              'doc',
+              'xlsx',
+              'ppt',
+          ], 
+      ],
+      [                                               //multi file uploader
+          'id'            => 'multifile_uploader',
+          'type'          => 'file',
+          'class'         => '',
+          'label_title'   => __('Multi file uploader field'),
+          'label_desc'    => __('This is the file description you can use here'),
+          'field_desc'    => __('This is the file uploader description text you can use here'),
+          'multi'       => true,
+          'max_size'   => 4,                  // size in MB
+          'ext'    =>[
+              'jpg',
+              'png',
+              'pdf',
+              'doc',
+              'xlsx',
+              'ppt',
+          ], 
+      ],
+  ]
+];
+            </code>
+          </pre>
+
+            <h5 id="_colorpicker">Colorpicker field</h5>
+            <pre>
+            <code>
+return [
+  'section' => [
+      'id'     => 'ob_colorpicker', 
+      'label'  => __('color picker'), 
+      'icon'   => '', 
+  ],
+  'fields' => [
+      [
+          'id'            => 'colorpicker',
+          'type'          => 'colorpicker',
+          'value'         => '',
+          'class'         => '',
+          'label_title'   => __('Color picker field'),
+          'label_desc'    => __('This is the label description you can use here'),
+          'field_desc'    => __('This is the field description text you can use here'),
+          'placeholder'   => __('Add color code or select'),
+      ],
+  ]
+];
+            </code>
+          </pre>
+
+            <h5 id="_daterange">Date& Daterange picker field</h5>
+            <pre>
+            <code>
+return [
+  'section' => [
+      'id'     => 'ob_datepicker', 
+      'label'  => __('date picker'), 
+      'icon'   => '', 
+  ],
+  'fields' => [
+      [
+        'id'            => 'datepicker',
+        'type'          => 'datepicker',
+        'value'         => '',
+        'class'         => '',
+        'label_title'   => __('Date picker field'),
+        'label_desc'    => __('This is the label description you can use here'),
+        'field_desc'    => __('This is the field description you can use here'),
+        'placeholder'   => __('Select date'),
+        'format'        => 'Y-m-d',
+      ],
+      [                                         //date with time picker
+          'id'            => 'datepicker_time',
+          'type'          => 'datepicker',
+          'value'         => '',
+          'class'         => '',
+          'label_title'   => __('Date time field'),
+          'label_desc'    => __('This is the label description you can use here'),
+          'field_desc'    => __('This is the field description you can use here'),
+          'placeholder'   => __('Select date time'),
+          'format'        => 'Y-m-d H:i:s',
+          'time'    =>[
+            'enable'    => true,
+            'time_24hr' => true,
+          ]  
+      ],
+      [                                         //daterange picker 
+          'id'            => 'date_range',
+          'type'          => 'datepicker',
+          'value'         => '',
+          'class'         => '',
+          'label_title'   => __('Date range picker field'),
+          'label_desc'    => __('This is the label description you can use here'),
+          'field_desc'    => __('This is the field description you can use here'),
+          'placeholder'   => __('Select date range'),
+          'format'        => 'Y-m-d',
+          'mode'          => 'range',
+            
+      ],
+      [                                         //specific dates picker 
+          'id'            => 'date_specific',
+          'type'          => 'datepicker',
+          'value'         => '',
+          'class'         => '',
+          'label_title'   => __('Specific date picker field'),
+          'label_desc'    => __('This is the label description you can use here'),
+          'field_desc'    => __('This is the field description you can use here'),
+          'placeholder'   => __('Select specific dates'),
+          'format'        => 'Y-m-d',
+          'mode'          => 'multiple',
+            
+      ],
+      [                                       //time picker
+        'id'            => 'time',
+        'type'          => 'timepicker',
+        'value'         => '',
+        'class'         => '',
+        'label_title'   => __('Time picker field'),
+        'label_desc'    => __('This is the label description you can use here'),
+        'field_desc'    => __('This is the field description you can use here'),
+        'placeholder'   => __('Select time'),
+        'time_24hr'     => false,
+      ]
+  ]
+];
+            </code>
+          </pre>
+
+            <h5 id="_repeator">Repeator field</h5>
+            <pre>
+            <code>
+return [
+  'section' => [
+      'id'     => 'ob_repeator', 
+      'label'  => __('repeator'), 
+      'icon'   => '', 
+  ],
+  'fields' => [
+      [                                                       // repeator with single field
+          'id'                => 'single_repeator',
+          'type'              => 'repeater',
+          'label_title'       => __('Single field repeator'),
+          'label_desc'        => __('This is the repeator description you can use here'),
+          'field'             => [
+              'id'            => 'textbox_id',
+              'type'          => 'text',
+              'value'         => '',
+              'class'         => '',
+              'label_title'   => __('Textbox repeator'),
+              'label_desc'    => __('This is the label description you can use here'),
+              'field_desc'    => __('This is the field description you can use here'),
+              'placeholder'   => __('Textbox placeholder'),
+          ]
+      ],
+      [                                                           // repeator with multiple fields
+          'id'                => 'multi_repeator',
+          'type'              => 'repeater',
+          'label_title'       => __('Multiple fields repeator'),
+          'label_desc'        => __('This is the label description you can use here'),
+          'repeater_title'    => __('Repeater title'),
+          'multi'       => true,
+          'fields'       =>[
+              [
+                  'id'            => 'repeator_textbox_id',
+                  'type'          => 'text',
+                  'value'         => '',
+                  'class'         => '',
+                  'label_title'   => __('Textbox in repeator'),
+                  'label_desc'    => __('This is the label description you can use here'),
+                  'field_desc'    => __('This is the field description you can use here'),
+                  'placeholder'   => __('Textbox placeholder'),
+              ],
+              [
+                  'id'            => 'repeator_textarea_id',
+                  'type'          => 'textarea',
+                  'class'         => '',
+                  'value'         => '',
+                  'label_title'   => __('Textarea'),
+                  'label_desc'    => __('This is the label description you can use here'),
+                  'field_desc'    => __('This is the field description you can use here'),
+              ],
+              [
+                  'id'            => 'repeator_file_uploader',
+                  'type'          => 'file',
+                  'class'         => '',
+                  'label_title'   => __('File uploader'),
+                  'label_desc'    => __('This is the file description you can use here'),
+                  'field_desc'    => __('This is the file uploader description text you can use here'),
+                  'multi'       => true,
+                  'max_size'   => 4,                  // size in MB
+                  'ext'    =>[
+                      'jpg',
+                      'png',
+                      'pdf',
+                      'doc',
+                      'xlsx',
+                      'ppt',
+                  ], 
+              ]
+          ],
+      ],
+  ]
+];
+            </code>
+          </pre>
+
+            <h5 id="_range_selector">Range selector</h5>
+            <pre>
+            <code>
+return [
+  'section' => [
+      'id'     => 'range_selector', 
+      'label'  => __('range selector'), 
+      'icon'   => '', 
+  ],
+  'fields' => [
+      [
+          'id'            => 'ranger_selector_id',
+          'type'          => 'range',
+          'label_title'   => __('range selector field'),
+          'options'       =>[
+            'min'     => 1
+            'max'     => 500
+            'format'  => 'number'           // by default it shows decimal
+          ]
+      ],
+  ]
+];
+            </code>
+          </pre>
+
+            <h5 id="_info">Info seprator</h5>
+            <pre>
+            <code>
+return [
+  'section' => [
+      'id'     => 'info_seprator_section', 
+      'label'  => __('info seprator'), 
+      'icon'   => '', 
+  ],
+  'fields' => [
+      [
+          'id'            => 'info_seprator_id',
+          'type'          => 'info',
+          'label_title'   => __('Section separator style'),
+          'label_desc'    => __('This is the info seprator description'), 
+      ],
+  ]
+];
+            </code>
+          </pre>
+
+          <h5 id="_tabs">Tabs inside Signle Setting Tab of Optionbuilder</h5>
+          <pre>
+            <code>
+  return [
+    'section' => [
+    'id'     => 'ob_tabs',
+    'label'  => __('Tabs Separator'),
+    'tabs'    => true, //set this option to enable tabs
+    'icon'   => '',
+  ],
+  'fields' => [
+    [
+        'tab_id'        => 'tab_id', //tab id in which you want to place this field
+        'tab_title'     => __('Tab Title'), //tab display text
+        'id'            => 'textarea',
+        'type'          => 'textarea',
+        'class'         => '',
+        'value'         => '',
+        'label_title'   => __('Textarea field'),
+        'label_desc'    => __('This is the label description you can use here'),
+        'field_desc'    => __('This is the field description you can use here'),
+    ],
+];
+            </code>
+          </pre>
+          </section>
+          <hr class="divider">
+          <section id="ob_changelog">
+            <h2>Changelog</h2>
+            <p class="text-4">See what's new added, changed, fixed, improved or updated in the latest versions. </p>
+
+            <h3 id="v1-0">Version 1.2 <small class="text-muted">(17 Apr, 2023)</small></h3>
+            <p>- Added 'Tabs' to Larabuild Optionbuilder</p>
+            <p>- Moved Larabuild Pagebuilder sections content inside the iframe to fix any possible CSS conflicts between user components and the Pagebuilder</p>
+            <p>- Added compatibility of Larabuild Pagebuilder for Laravel8</p>
+            
+          </section>
+
+        </div>
+      </div>
+
+    </div>
+    <footer id="footer" class="section bg-dark footer-text-light">
+      <div class="container">
+        <p class="text-center">Copyright &copy; 2023 <a
+            href="https://codecanyon.net/user/amentotech/portfolio">LaraBuild - Laravel Drag and Drop Page builder and Settings Builder Package</a>. All
+          Rights Reserved.</p>
+        <p class="text-2 text-center mb-0">Design &amp; Develop by <a class="btn-link" target="_blank"
+            href="https://codecanyon.net/user/amentotech/portfolio">Amentotech</a>.</p>
+      </div>
+    </footer>
+    <!-- Footer end -->
+
+  </div>
+  <a id="back-to-top" data-toggle="tooltip" title="Back to Top" href="javascript:void(0)"><i
+      class="fa fa-chevron-up"></i></a>
+  <script src="assets/vendor/jquery/jquery.min.js"></script>
+  <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <!-- Highlight JS -->
+  <script src="assets/vendor/highlight.js/highlight.min.js"></script>
+  <!-- Easing -->
+  <script src="assets/vendor/jquery.easing/jquery.easing.min.js"></script>
+  <!-- Magnific Popup -->
+  <script src="assets/vendor/magnific-popup/jquery.magnific-popup.min.js"></script>
+  <!-- Custom Script -->
+  <script src="assets/js/theme.js"></script>
+</body>
+
+</html>

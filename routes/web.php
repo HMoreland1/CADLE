@@ -15,6 +15,12 @@ use Inertia\Inertia;
 | contains the "web" middleware group. Now create something great!
 |
 */
+require __DIR__.'/optionbuilder.php';
+
+
+Route::get('/popup', function () {
+    return inertia('PopupComponent');
+});
 
 Route::get('/', function () {
     return Inertia::render('Welcome', [
@@ -35,4 +41,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
+
 require __DIR__.'/auth.php';
+require __DIR__.'/pagebuilder.php';
+

@@ -23,7 +23,7 @@ return [
     //End site layout settings
 
     'db_prefix'                             => 'pagebuilder__',                 // prefix for database tables
-    'url_prefix'                            => '/admin',                              // like /admin if you are using it in admin panel
+    'url_prefix'                            => 'admin',                              // like /admin if you are using it in admin panel
     'route_middleware'                      => [],                              // route middlewares like auth, role etc
 
     // assets publishing

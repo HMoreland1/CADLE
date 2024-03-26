@@ -296,7 +296,7 @@
             $.ajax({
                 type:'POST',
                 url:ajaxUrl,
-                data:{'_token': '{{ csrf_token() }}', 'page_id': pageId, 'settings': mainArray,'current_section_data':currentSectionData, 'current_advanced_settings': currentSectionStyles,'directory':directory},
+                data:{'page_id': pageId, 'settings': mainArray,'current_section_data':currentSectionData, 'current_advanced_settings': currentSectionStyles,'directory':directory},
                 dataType:'json',
                 success:function(data){
                     $('.savePageData').removeClass('pb-btn-actionload');

@@ -77,15 +77,16 @@ class PlatformProvider extends OrchidServiceProvider
                 ->route('platform.systems.roles')
                 ->permission('platform.systems.roles'),
 
-            Menu::make(__('Learning Content'))
+           /* Menu::make(__('Learning Content'))
                 ->icon('bs.book')
                 ->route('platform.systems.learning-content')
                 ->permission('platform.systems.learningcontent')
-                ->divider(),
-            Menu::make(__('Options'))
+                ->divider(),*/
+            Menu::make(__('Learning Content - This will open in a new tab'))
                 ->icon('bs.book')
-                ->route('optionbuilder')
+                ->route('pagebuilder')
                 ->permission('platform.systems.learningcontent')
+                ->target('_blank')
                 ->divider(),
 
             Menu::make('Documentation')

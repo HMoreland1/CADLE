@@ -12,7 +12,7 @@ return [
     'style_var'                             => 'styles',                        // push style variable for style css
     'script_var'                            => 'scripts',                       // push scripts variable for custom js and scripts files
     'db_prefix'                             => 'optionbuilder__',
-    'url_prefix'                            => '/admin',                              // like admin if you are using it in admin panel
+    'url_prefix'                            => 'admin',                              // like admin if you are using it in admin panel
     'route_middleware'                      => [],                              // route middlewares like auth, role etc
     'developer_mode'                        =>  'yes',                          // yes/no to enable developer mode
 

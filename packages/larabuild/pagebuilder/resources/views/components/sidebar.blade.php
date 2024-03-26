@@ -2,8 +2,6 @@
 <aside class="pb-aside larabuild-pbsettings">
     <div class="pb-aside_title">
         <img src="{{asset('vendor/pagebuilder/images/page-builder-logo.png')}}" alt="logo">
-        <h6>{{ __('pagebuilder::pagebuilder.product_name')
-            }}<em>{{__('pagebuilder::pagebuilder.the_page_builder')}}</em></h6>
     </div>
 
     <div class="pb-tabs-wrapper">

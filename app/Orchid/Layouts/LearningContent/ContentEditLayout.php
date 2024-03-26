@@ -11,9 +11,7 @@ use Orchid\Screen\Layouts\Rows;
 use Inertia\Inertia;
 use Orchid\Screen\Layouts\View;
 use Orchid\Support\Facades\Layout;
-use PHPageBuilder\PHPageBuilder;
-use App\Orchid\Fields\pagebuilder;
-
+use App\Orchid\Fields\PagesLayout;
 class ContentEditLayout extends Rows
 {
     /**
@@ -29,7 +27,6 @@ class ContentEditLayout extends Rows
     public function fields(): array
     {
         return [
-
             Input::make('learning_content.title')
                 ->type('text')
                 ->max(255)

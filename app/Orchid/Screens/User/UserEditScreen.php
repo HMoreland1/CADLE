@@ -157,7 +157,7 @@ class UserEditScreen extends Screen
                 Rule::unique(User::class, 'email')->ignore($user),
             ],
         ]);
-
+        $user["name"] = $user["forename"] . " " . $user["surname"];
         $permissions = collect($request->get('permissions'))
             ->map(fn ($value, $key) => [base64_decode($key) => $value])
             ->collapse()

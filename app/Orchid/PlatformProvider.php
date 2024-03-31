@@ -34,6 +34,7 @@ class PlatformProvider extends OrchidServiceProvider
     public function menu(): array
     {
         return [
+            /*
             Menu::make('Get Started')
                 ->icon('bs.book')
                 ->title('Navigation')
@@ -47,7 +48,7 @@ class PlatformProvider extends OrchidServiceProvider
             Menu::make('Form Elements')
                 ->icon('bs.card-list')
                 ->route('platform.example.fields')
-                ->active('*/examples/form/*'),
+                ->active('examples/form'),
 
             Menu::make('Overview Layouts')
                 ->icon('bs.window-sidebar')
@@ -65,7 +66,7 @@ class PlatformProvider extends OrchidServiceProvider
                 ->icon('bs.card-text')
                 ->route('platform.example.cards')
                 ->divider(),
-
+            */
             Menu::make(__('Users'))
                 ->icon('bs.people')
                 ->route('platform.systems.users')
@@ -77,11 +78,12 @@ class PlatformProvider extends OrchidServiceProvider
                 ->route('platform.systems.roles')
                 ->permission('platform.systems.roles'),
 
-           /* Menu::make(__('Learning Content'))
-                ->icon('bs.book')
-                ->route('platform.systems.learning-content')
-                ->permission('platform.systems.learningcontent')
-                ->divider(),*/
+
+            Menu::make(__('Quizzes'))
+                ->icon('bs.shield')
+                ->route('platform.systems.quizzes')
+                ->permission('platform.systems.roles'),
+
             Menu::make(__('Learning Content - This will open in a new tab'))
                 ->icon('bs.book')
                 ->route('pagebuilder')
@@ -111,10 +113,10 @@ class PlatformProvider extends OrchidServiceProvider
     public function permissions(): array
     {
         return [
-            ItemPermission::group(__('System'))
+            ItemPermission::group(__('Management'))
                 ->addPermission('platform.systems.roles', __('Roles'))
                 ->addPermission('platform.systems.users', __('Users'))
-                ->addPermission('platform.systems.learningcontent', __('Learning Content')),
+                ->addPermission('platform.systems.learningcontent', __('Learning Content Management')),
         ];
     }
 }

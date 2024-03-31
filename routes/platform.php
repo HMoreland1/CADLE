@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use App\Http\Controllers\QuestionController;
 use App\Orchid\Screens\Examples\ExampleActionsScreen;
 use App\Orchid\Screens\Examples\ExampleCardsScreen;
 use App\Orchid\Screens\Examples\ExampleChartsScreen;
@@ -13,6 +14,9 @@ use App\Orchid\Screens\Examples\ExampleScreen;
 use App\Orchid\Screens\Examples\ExampleTextEditorsScreen;
 use App\Orchid\Screens\LearningContent\ContentListScreen;
 use App\Orchid\Screens\PlatformScreen;
+use App\Orchid\Screens\Quiz\QuestionListScreen;
+use App\Orchid\Screens\Quiz\QuizEditScreen;
+use App\Orchid\Screens\Quiz\QuizListScreen;
 use App\Orchid\Screens\Role\RoleEditScreen;
 use App\Orchid\Screens\Role\RoleListScreen;
 use App\Orchid\Screens\User\UserEditScreen;
@@ -33,31 +37,54 @@ use App\Orchid\Screens\LearningContent\ContentEditScreen;
 | contains the need "dashboard" middleware group. Now create something great!
 |
 */
-
-Route::screen('task', TaskScreen::class)->name('platform.task');
-
-Route::screen('learning-content/create', ContentEditScreen::class)
-    ->name('platform.systems.learning-content.create')
-    ->breadcrumbs(fn (Trail $trail) => $trail
-        ->parent('platform.systems.learning-content')
-        ->push(__('Create'), route('platform.systems.learning-content.create')));
-
-Route::screen('learning-content', ContentListScreen::class)
-    ->name('platform.systems.learning-content')
-    ->breadcrumbs(fn (Trail $trail) => $trail
-        ->parent('platform.index')
-        ->push(__('Profile'), route('platform.systems.learning-content')));
-
-Route::screen('learning-content/{content}/edit', ContentEditScreen::class)
-    ->name('platform.systems.learning-content.edit')
-    ->breadcrumbs(fn (Trail $trail, $content) => $trail
-        ->parent('platform.systems.learning-content')
-        ->push(route('platform.systems.learning-content.edit', $content)));
-
 // Main
 Route::screen('/main', PlatformScreen::class)
     ->name('platform.main');
+/*
+|--------------------------------------------------------------------------
+| Quiz Routes
+|--------------------------------------------------------------------------
+*/
 
+Route::screen('quizzes', QuizListScreen::class)
+    ->name('platform.systems.quizzes')
+    ->breadcrumbs(fn (Trail $trail) => $trail
+        ->parent('platform.index')
+        ->push(__('Quizzes'), route('platform.systems.quizzes')));
+
+Route::screen('quizzes/create', QuizEditScreen::class)
+    ->name('platform.systems.quizzes.create')
+    ->breadcrumbs(fn (Trail $trail) => $trail
+        ->parent('platform.systems.quizzes')
+        ->push(__('Create'), route('platform.systems.quizzes.create')));
+
+Route::screen('quizzes/{quiz}/edit', QuizEditScreen::class)
+    ->name('platform.systems.quizzes.edit')
+    ->breadcrumbs(fn (Trail $trail, $quiz) => $trail
+        ->parent('platform.systems.quizzes')
+        ->push(__('Edit'), route('platform.systems.quizzes.edit', $quiz)));
+
+Route::screen('quizzes/{quiz}/edit/questions', QuestionListScreen::class)
+    ->name('platform.systems.quizzes.edit.questions')
+    ->breadcrumbs(fn (Trail $trail, $quiz) => $trail
+        ->parent('platform.systems.quizzes.edit', $quiz)
+        ->push(__('Questions'), route('platform.systems.quizzes.edit.questions', $quiz)));
+
+Route::screen('quizzes/{question}/edit', QuestionListScreen::class)
+    ->name('platform.systems.questions.edit')
+    ->breadcrumbs(fn (Trail $trail, $question) => $trail
+        ->parent('platform.systems.quizzes.edit', $question)
+        ->push(__('Questions'), route('platform.systems.questions.edit', $question)));
+
+
+Route::screen('task', TaskScreen::class)->name('platform.task');
+Route::post('/save-question-assignments', [QuestionController::class, 'save']);
+
+/*
+|--------------------------------------------------------------------------
+| User Routes
+|--------------------------------------------------------------------------
+*/
 // Platform > Profile
 Route::screen('profile', UserProfileScreen::class)
     ->name('platform.profile')
@@ -86,6 +113,11 @@ Route::screen('users', UserListScreen::class)
         ->parent('platform.index')
         ->push(__('Users'), route('platform.systems.users')));
 
+/*
+|--------------------------------------------------------------------------
+| Role Routes
+|--------------------------------------------------------------------------
+*/
 // Platform > System > Roles > Role
 Route::screen('roles/{role}/edit', RoleEditScreen::class)
     ->name('platform.systems.roles.edit')

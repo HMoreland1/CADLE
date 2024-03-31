@@ -20,7 +20,9 @@ class RoleListScreen extends Screen
     public function query(): iterable
     {
         return [
-            'roles' => Role::filters()->defaultSort('id', 'desc')->paginate(),
+            'roles' => Role::filters()
+                ->defaultSort('id', 'desc')
+                ->paginate(),
         ];
     }
 

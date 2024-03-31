@@ -10,41 +10,37 @@ use Orchid\Filters\Filterable;
 use Orchid\Screen\AsSource;
 use Orchid\Filters\Types\Like;
 use Orchid\Filters\Types\Where;
-class Quiz extends Model
+class Question extends Model
 {
     use SoftDeletes, HasFactory, Filterable, HasFactory, Notifiable, UserAccess, AsSource;
 
 
-    protected $table = 'quizzes';
+    protected $table = 'questions';
 
     protected $fillable = [
         'name',
-        'slug',
-        'description',
-        'total_marks',
-        'pass_marks',
-        'max_attempts',
-        'is_published',
+        'question_type_id',
         'media_url',
         'media_type',
-        'duration',
-        'valid_from',
-        'valid_upto',
-        'time_between_attempts',
+        'is_active',
     ];
 
     protected $allowedFilters = [
-        'name'          => Like::class,
-        'description'        => Like::class,
+        'name'                   => Like::class,
+        'question_type_id'       => Like::class,
     ];
 
     protected $allowedSorts = [
         'id',
         'name',
-        'description',
+        'question_type_id',
         'updated_at',
         'created_at',
     ];
 
-    protected $dates = ['valid_from', 'valid_upto'];
+    protected $dates = [
+        'valid_from',
+        'valid_upto',
+        'updated_at',
+        'created_at',];
 }

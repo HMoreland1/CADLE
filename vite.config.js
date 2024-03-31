@@ -10,6 +10,8 @@ export default defineConfig({
         laravel({
             input: [
                 'resources/js/app.jsx',
+                'resources/js/Scripts/QuestionsCheckbox.jsx',
+
                 ],
             ssr: 'resources/js/ssr.jsx',
             refresh: true,

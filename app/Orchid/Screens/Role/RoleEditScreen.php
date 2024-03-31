@@ -139,4 +139,5 @@ class RoleEditScreen extends Screen
 
         return redirect()->route('platform.systems.roles');
     }
+
 }

@@ -129,6 +129,7 @@ return [
         'stylesheets' => [],
         'scripts'     => [
             "https://cdn.jsdelivr.net/npm/vvvebjs@0.0.1/js/popper.min.js",
+
         ],
     ],
 
@@ -144,7 +145,10 @@ return [
      |
      */
 
-    'vite' => [],
+    'vite' => [
+
+        'resources/js/Scripts/QuestionsCheckbox.jsx', // Add the path to QuestionsCheckbox.js here
+    ],
 
     /*
      |--------------------------------------------------------------------------

@@ -44,6 +44,7 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::post('/save-question-assignments', [QuestionController::class, 'save']);
+Route::delete('/systems/question_options/remove/{id}', 'QuestionController@removeOption')->name('platform.systems.question_options.remove');
 
 
 require __DIR__.'/auth.php';

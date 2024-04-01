@@ -1,8 +1,8 @@
-export default function ApplicationLogo(props) {
+export default function ApplicationLogo({height}) {
     return (
         <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink"
              x="0px" y="0px"
-             width="40vw" viewBox="0 0 599 180" enableBackground="new 0 0 599 180" xmlSpace="preserve">
+             height={height} viewBox="0 0 599 180" xmlSpace="preserve">
 
             <path fill="#CAE0F7" opacity="1.000000" stroke="none"
                   d="

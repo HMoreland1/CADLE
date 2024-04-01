@@ -33,6 +33,13 @@ class RoleEditLayout extends Rows
                 ->title(__('Slug'))
                 ->placeholder(__('Slug'))
                 ->help(__('Actual name in the system')),
+
+            Input::make('role.authority')
+                ->type('number')
+                ->required()
+                ->title(__('Authority'))
+                ->placeholder(__('Authority'))
+                ->help(__('Authority level number for the rank. The lower the number the less the authority.')),
         ];
     }
 }

@@ -47,7 +47,12 @@ class QuestionEditScreen extends Screen
         ];
 
     }
-
+    public function permission(): ?iterable
+    {
+        return [
+            'platform.systems.quizzes',
+        ];
+    }
     /**
      * The name of the screen displayed in the header.
      */
@@ -98,6 +103,7 @@ class QuestionEditScreen extends Screen
     public function layout(): array
     {
         return [
+
             QuestionEditLayout::class,
             QuestionOptionsListLayout::class,
             QuestionOptionsEditLayout::class,

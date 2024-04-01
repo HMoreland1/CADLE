@@ -4,12 +4,14 @@ declare(strict_types=1);
 
 namespace App\Orchid\Screens\User;
 
+use App\Models\Role;
 use App\Orchid\Layouts\Role\RolePermissionLayout;
 use App\Orchid\Layouts\User\UserEditLayout;
 use App\Orchid\Layouts\User\UserPasswordLayout;
 use App\Orchid\Layouts\User\UserRoleLayout;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rule;
 use Orchid\Access\Impersonation;
@@ -20,7 +22,7 @@ use Orchid\Screen\Screen;
 use Orchid\Support\Color;
 use Orchid\Support\Facades\Layout;
 use Orchid\Support\Facades\Toast;
-
+use Orchid\Support\Facades\Dashboard;
 class UserEditScreen extends Screen
 {
     /**
@@ -151,34 +153,115 @@ class UserEditScreen extends Screen
      */
     public function save(User $user, Request $request)
     {
+        $authUser = Auth::user();
+        // Check if the user is authorized to edit users
+       if (!Auth::user()->hasAccess('platform.systems.users')) {
+            Toast::error(__('You are not authorized to perform this action.'));
+            return redirect()->back();
+        }
+
+        // Check if the user is trying to edit their own profile
+        if ($user->id === Auth::id()) {
+            // Prevent editing permissions or roles for own profile
+            Toast::error(__('You are not allowed to change your own permissions or roles.'));
+            return redirect()->back();
+        }
+
+        // Check if the authenticated user has the permission to grant the specified permissions
+        $allowedPermissions = Auth::user()->permissions ?? [];
+
+
+        $permissions = $request->get('permissions', []);
+        $requestedPermission = [];
+
+        $decodedPermissions = collect($permissions)->map(function ($value, $key) {
+            // Decode the key (permission) if it's not empty
+            $decodedKey = $key ? base64_decode($key) : $key;
+
+            // Check if the permission was selected or not
+
+            return [$decodedKey => $value];
+        });
+
+        $extractedPermissions = [];
+
+        foreach ($decodedPermissions as $permissions) {
+            foreach ($permissions as $key => $value) {
+                $extractedPermissions[$key] = $value;
+            }
+        }
+        $invalidPermissions = [];
+       //d($extractedPermissions) ;
+        foreach ($extractedPermissions as $key => $value) {
+            // Check if the value is "1" in extractedPermissions and "0" in allowedPermissions
+            if ($value === "1" && ($allowedPermissions[$key] ?? null) === "0") {
+                $invalidPermissions[$key] = $value;
+            }
+        }
+        //dd($extractedPermissions, $allowedPermissions, $invalidPermissions);
+        $invalidPermissions = collect($invalidPermissions);
+        if ($invalidPermissions->isNotEmpty()) {
+            // Prevent the user from granting permissions that they do not have
+            Toast::error(__('You are not allowed to grant permissions that you do not have.'));
+            return redirect()->back();
+        }
+
+        if ($authUser->roles()->exists()) {
+            // Retrieve the highest authority role of the authenticated user
+            $highestAuthorityRole = $authUser->roles()->orderByDesc('authority')->first();
+            foreach ($request->input('user.roles', []) as $roleId) {
+                $role = Role::findOrFail($roleId);
+
+                if ($role->authority >= $highestAuthorityRole->authority) {
+                    Toast::error(__('You are not allowed to assign or remove roles of equal or higher authority than your own.'));
+                    return redirect()->back();
+                }
+            }
+        } else {
+            // If the authenticated user has no roles, prevent them from assigning any roles
+            Toast::error(__('You do not have any roles assigned and cannot assign roles to other users.'));
+            return redirect()->back();
+        }
+
+            // Validate the request data
         $request->validate([
             'user.email' => [
                 'required',
                 Rule::unique(User::class, 'email')->ignore($user),
             ],
+            'user.forename' => 'required', // Add validation for forename
+            'user.surname' => 'required',
         ]);
-        $user["name"] = $user["forename"] . " " . $user["surname"];
+
+        // Update the user's name based on forename and surname
+        $user->surname = $request->input('user.surname');
+        $user->forename = $request->input('user.forename');
+        $user->name = $request->input('user.forename') . ' ' . $request->input('user.surname');
+        $user->email = $request->input('user.email');
+        // Update the password if provided
+        if ($request->filled('user.password')) {
+            $user->password = Hash::make($request->input('user.password'));
+        }
+        //dd($user);
+        // Save the user details
+        $user->save();
+
+        // Update user permissions
         $permissions = collect($request->get('permissions'))
             ->map(fn ($value, $key) => [base64_decode($key) => $value])
             ->collapse()
             ->toArray();
 
-        $user->when($request->filled('user.password'), function (Builder $builder) use ($request) {
-            $builder->getModel()->password = Hash::make($request->input('user.password'));
-        });
+        $user->forceFill(['permissions' => $permissions])->save();
 
-        $user
-            ->fill($request->collect('user')->except(['password', 'permissions', 'roles'])->toArray())
-            ->forceFill(['permissions' => $permissions])
-            ->save();
-
+        // Update user roles
         $user->replaceRoles($request->input('user.roles'));
 
-        Toast::info(__('User was saved.'));
+        // Show success message
+        Toast::info(__('User details have been saved.'));
 
         return redirect()->route('platform.systems.users');
     }
-
     /**
      * @throws \Exception
      *
@@ -198,10 +281,17 @@ class UserEditScreen extends Screen
      */
     public function loginAs(User $user)
     {
-        Impersonation::loginAs($user);
+        $authUser = Auth::user();
 
-        Toast::info(__('You are now impersonating this user'));
+        if ($authUser->canImpersonate()) {
+            Impersonation::loginAs($user);
 
-        return redirect()->route(config('platform.index'));
+            Toast::info(__('You are now impersonating this user'));
+
+            return redirect()->route(config('platform.index'));
+        } else {
+            // Redirect the user or show an error message indicating they don't have permission
+            return redirect()->back()->with('error', __('You do not have permission to impersonate users'));
+        }
     }
 }

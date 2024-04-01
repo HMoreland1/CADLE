@@ -67,7 +67,7 @@ class QuestionListScreen extends Screen
     public function permission(): ?iterable
     {
         return [
-            'platform.systems.users',
+            'platform.systems.quizzes',
         ];
     }
 

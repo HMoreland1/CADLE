@@ -1,3 +1,16 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+.bg-gold {
+    background-color: #F9D960;
+}
+.bg-navy-blue {
+    background-color: #000080;
+}
+.logo-svg-40 {
+    width: 40vw; /* Set the desired width */
+}
+
+.logo-svg-25 {
+    width: 25vw; /* Set the desired width */
+}

@@ -54,7 +54,7 @@ Route::screen('quizzes/questions/{question}/edit', QuestionEditScreen::class)
 Route::screen('quizzes/questions/create', QuestionEditScreen::class)
     ->name('platform.systems.questions.create')
     ->breadcrumbs(fn (Trail $trail) => $trail
-        ->parent('platform.systems.questions.create')
+        ->parent('platform.index')
         ->push(__('Questions'), route('platform.systems.questions.create')));
 
 Route::delete('/systems/question_options/remove/{id}', 'QuestionController@removeOption')->name('platform.systems.question_options.remove');
@@ -91,7 +91,11 @@ Route::screen('quizzes/{quiz}/edit/questions', QuestionListScreen::class)
         ->parent('platform.systems.quizzes.edit', $quiz)
         ->push(__('Questions'), route('platform.systems.quizzes.edit.questions', $quiz)));
 
-
+Route::screen('quizzes/{quiz}/edit/questions', QuestionListScreen::class)
+    ->name('platform.systems.quizzes.edit.questions')
+    ->breadcrumbs(fn (Trail $trail, $quiz) => $trail
+        ->parent('platform.systems.quizzes.edit', $quiz)
+        ->push(__('Questions'), route('platform.systems.quizzes.edit.questions', $quiz)));
 
 
 Route::screen('task', TaskScreen::class)->name('platform.task');
@@ -174,3 +178,4 @@ Route::screen('/examples/charts', ExampleChartsScreen::class)->name('platform.ex
 Route::screen('/examples/cards', ExampleCardsScreen::class)->name('platform.example.cards');
 
 //Route::screen('idea', Idea::class, 'platform.screens.idea');
+

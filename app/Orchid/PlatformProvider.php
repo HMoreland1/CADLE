@@ -71,7 +71,7 @@ class PlatformProvider extends OrchidServiceProvider
                 ->icon('bs.people')
                 ->route('platform.systems.users')
                 ->permission('platform.systems.users')
-                ->title(__('Database Management')),
+                ->title(__('Administration')),
 
             Menu::make(__('Roles'))
                 ->icon('bs.shield')
@@ -80,7 +80,7 @@ class PlatformProvider extends OrchidServiceProvider
 
 
             Menu::make(__('Quizzes'))
-                ->icon('bs.shield')
+                ->icon('bs.question-circle')
                 ->route('platform.systems.quizzes')
                 ->permission('platform.systems.roles'),
 
@@ -113,10 +113,14 @@ class PlatformProvider extends OrchidServiceProvider
     public function permissions(): array
     {
         return [
-            ItemPermission::group(__('Management'))
+            ItemPermission::group(__('User Management'))
                 ->addPermission('platform.systems.roles', __('Roles'))
                 ->addPermission('platform.systems.users', __('Users'))
-                ->addPermission('platform.systems.learningcontent', __('Learning Content Management')),
+                ->addPermission('platform.systems.impersonate', __('Impersonate User')),
+            ItemPermission::group(__('Content Management'))
+                ->addPermission('platform.systems.learningcontent', __('Learning Content Management'))
+                ->addPermission('platform.systems.quizzes', __('Quiz Management')),
         ];
+
     }
 }

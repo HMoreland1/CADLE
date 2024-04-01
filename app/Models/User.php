@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Orchid\Access\UserAccess;
 use Orchid\Filters\Types\Like;
 use Orchid\Filters\Types\Where;
 use Orchid\Filters\Types\WhereDateStartEnd;
@@ -9,6 +10,7 @@ use Orchid\Platform\Models\User as Authenticatable;
 
 class User extends Authenticatable
 {
+    use UserAccess;
     /**
      * The attributes that are mass assignable.
      *
@@ -73,5 +75,12 @@ class User extends Authenticatable
         'created_at',
     ];
 
+    public function canImpersonate()
+    {
+        // Get the current user's permissions
+        $permissions = $this->permissions ?? [];
 
+        // Check if the impersonate permission is present in the user's permissions
+        return in_array('platform.system.impersonate', $permissions);
+    }
 }

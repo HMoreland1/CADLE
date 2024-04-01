@@ -67,11 +67,7 @@ class QuizEditScreen extends Screen
         return 'Create or edit a quiz';
     }
 
-    /**
-     * The screen's action buttons.
-     *
-     * @return Action[]
-     */
+
     public function commandBar(): iterable
     {
 
@@ -108,7 +104,7 @@ class QuizEditScreen extends Screen
     public function permission(): ?iterable
     {
         return [
-            'platform.systems.users',
+            'platform.systems.quizzes',
         ];
     }
     /**

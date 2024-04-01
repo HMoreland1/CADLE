@@ -4,6 +4,7 @@ namespace App\Providers;
 
 // use Illuminate\Support\Facades\Gate;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
+use Illuminate\Support\Facades\Gate;
 
 class AuthServiceProvider extends ServiceProvider
 {
@@ -13,14 +14,19 @@ class AuthServiceProvider extends ServiceProvider
      * @var array<class-string, class-string>
      */
     protected $policies = [
+
         //
     ];
+
 
     /**
      * Register any authentication / authorization services.
      */
     public function boot(): void
     {
-        //
+        Gate::define('grant-permission', function ($user, $permission) {
+            // Define your authorization logic here
+            return $user->hasPermission($permission);
+        });
     }
 }

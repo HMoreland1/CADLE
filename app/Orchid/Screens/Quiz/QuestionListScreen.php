@@ -30,6 +30,7 @@ class QuestionListScreen extends Screen
         $questions = Question::filters()
             ->defaultSort('id', 'desc')
             ->paginate(5);
+        echo $questions . " ";
 
         if ($quiz !== null) {
             $assignedQuestions = QuizQuestion::where('quiz_id', $quiz->id)->pluck('question_id')->toArray();
@@ -39,7 +40,6 @@ class QuestionListScreen extends Screen
                 'assignedQuestions' => $assignedQuestions
             ];
         }
-
         return [
             'quiz' => new Quiz(), // Empty quiz object
             'assignedQuestions' => [],
@@ -86,7 +86,7 @@ class QuestionListScreen extends Screen
 
             Link::make(__('Add'))
                 ->icon('bs.plus-circle')
-                ->route('platform.systems.quizzes.create'),
+                ->route('platform.systems.questions.create'),
         ];
     }
 
@@ -97,6 +97,7 @@ class QuestionListScreen extends Screen
      */
     public function layout(): iterable
     {
+
         return [
 
             QuestionListLayout::class,

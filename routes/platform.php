@@ -12,8 +12,8 @@ use App\Orchid\Screens\Examples\ExampleGridScreen;
 use App\Orchid\Screens\Examples\ExampleLayoutsScreen;
 use App\Orchid\Screens\Examples\ExampleScreen;
 use App\Orchid\Screens\Examples\ExampleTextEditorsScreen;
-use App\Orchid\Screens\LearningContent\ContentListScreen;
 use App\Orchid\Screens\PlatformScreen;
+use App\Orchid\Screens\Quiz\QuestionEditScreen;
 use App\Orchid\Screens\Quiz\QuestionListScreen;
 use App\Orchid\Screens\Quiz\QuizEditScreen;
 use App\Orchid\Screens\Quiz\QuizListScreen;
@@ -26,7 +26,6 @@ use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use Tabuna\Breadcrumbs\Trail;
 use App\Orchid\Screens\TaskScreen;
-use App\Orchid\Screens\LearningContent\ContentEditScreen;
 /*
 |--------------------------------------------------------------------------
 | Dashboard Routes
@@ -40,6 +39,28 @@ use App\Orchid\Screens\LearningContent\ContentEditScreen;
 // Main
 Route::screen('/main', PlatformScreen::class)
     ->name('platform.main');
+
+/*
+|--------------------------------------------------------------------------
+| Question Routes
+|--------------------------------------------------------------------------
+*/
+Route::screen('quizzes/questions/{question}/edit', QuestionEditScreen::class)
+    ->name('platform.systems.questions.edit')
+    ->breadcrumbs(fn (Trail $trail, $question) => $trail
+        ->parent('platform.systems.quizzes.edit', $question)
+        ->push(__('Questions'), route('platform.systems.questions.edit', $question)));
+
+Route::screen('quizzes/questions/create', QuestionEditScreen::class)
+    ->name('platform.systems.questions.create')
+    ->breadcrumbs(fn (Trail $trail) => $trail
+        ->parent('platform.systems.questions.create')
+        ->push(__('Questions'), route('platform.systems.questions.create')));
+
+Route::delete('/systems/question_options/remove/{id}', 'QuestionController@removeOption')->name('platform.systems.question_options.remove');
+
+
+
 /*
 |--------------------------------------------------------------------------
 | Quiz Routes
@@ -70,11 +91,7 @@ Route::screen('quizzes/{quiz}/edit/questions', QuestionListScreen::class)
         ->parent('platform.systems.quizzes.edit', $quiz)
         ->push(__('Questions'), route('platform.systems.quizzes.edit.questions', $quiz)));
 
-Route::screen('quizzes/{question}/edit', QuestionListScreen::class)
-    ->name('platform.systems.questions.edit')
-    ->breadcrumbs(fn (Trail $trail, $question) => $trail
-        ->parent('platform.systems.quizzes.edit', $question)
-        ->push(__('Questions'), route('platform.systems.questions.edit', $question)));
+
 
 
 Route::screen('task', TaskScreen::class)->name('platform.task');

@@ -18,16 +18,19 @@ class QuestionListLayout extends Table
      */
     public $target = 'questions';
 
+
     /**
      * @return TD[]
      */
     public function columns(): array
     {
+
         return [
             // Checkbox column for selecting questions
             TD::make('selected', 'Add to Quiz')
                 ->align(TD::ALIGN_CENTER)
                 ->width('50px')
+                ->cantHide()
                 ->render(function (Question $question) {
                     $assignedQuestions = $this->query->get('assignedQuestions', []);
                     $isChecked = in_array($question->id, $assignedQuestions);

@@ -1,9 +1,12 @@
 <?php
 namespace App\Http\Controllers;
 
+use App\Models\QuestionOption;
 use Illuminate\Http\Request;
 use App\Models\QuizQuestion;
 use App\Models\Quiz;
+use Orchid\Screen\Actions\ModalToggle;
+use Orchid\Support\Facades\Layout;
 use Orchid\Support\Facades\Toast;
 
 class QuestionController extends Controller
@@ -50,6 +53,17 @@ class QuestionController extends Controller
 
         // Return a success response
         return response()->json(['message' => 'Question assignments saved successfully.']);
+    }
+    public function removeOption($id)
+    {
+        // Fetch the question option
+        $option = QuestionOption::findOrFail($id);
+
+        // Delete the option
+        $option->delete();
+
+        // Redirect back or to any other appropriate page
+        return redirect()->back()->with('success', 'Option deleted successfully');
     }
 }
 

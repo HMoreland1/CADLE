@@ -37,3 +37,35 @@ If you encounter any issues or have suggestions for improvements, please contact
 - User guides and tutorials will be made available on the CADLE website.
 
 ---
+
+## Dependencies
+
+CADLE is built on top of the Laravel framework and utilizes various packages and libraries to enhance its functionality. Below is a list of dependencies used in the project:
+
+- **[guzzlehttp/guzzle](https://packagist.org/packages/guzzlehttp/guzzle)**: A PHP HTTP client library used for making HTTP requests.
+- **[harishdurga/laravel-quiz](https://packagist.org/packages/harishdurga/laravel-quiz)**: A Laravel package for creating quizzes.
+- **[inertiajs/inertia-laravel](https://packagist.org/packages/inertiajs/inertia-laravel)**: The Inertia.js adapter for Laravel.
+- **[larabuild/optionbuilder](https://packagist.org/packages/larabuild/optionbuilder)**: A package for building options dynamically.
+- **[larabuild/pagebuilder](https://packagist.org/packages/larabuild/pagebuilder)**: A package for building pages dynamically.
+- **[laravel/breeze](https://packagist.org/packages/laravel/breeze)**: A simple and minimalistic starter kit for Laravel.
+- **[laravel/framework](https://packagist.org/packages/laravel/framework)**: The Laravel framework itself.
+- **[laravel/sanctum](https://packagist.org/packages/laravel/sanctum)**: Laravel Sanctum provides a lightweight authentication system for SPAs and simple APIs.
+- **[laravel/tinker](https://packagist.org/packages/laravel/tinker)**: Laravel Tinker is a powerful REPL for testing with Laravel applications.
+- **[orchid/platform](https://packagist.org/packages/orchid/platform)**: A platform for back-office applications, admin panels, and dashboards.
+- **[tightenco/ziggy](https://packagist.org/packages/tightenco/ziggy)**: A package for automatically generating JavaScript routes for Laravel.
+
+
+### Development Dependencies
+
+In addition to the above dependencies, the project also relies on several development dependencies for testing, debugging, and development purposes:
+
+- **[fakerphp/faker](https://packagist.org/packages/fakerphp/faker)**: A PHP library for generating fake data.
+- **[laravel/pint](https://packagist.org/packages/laravel/pint)**: Laravel Package Installer.
+- **[laravel/sail](https://packagist.org/packages/laravel/sail)**: Laravel Sail provides a Docker-powered local development experience for Laravel projects.
+- **[mockery/mockery](https://packagist.org/packages/mockery/mockery)**: A simple yet flexible PHP mock object framework for use in unit testing.
+- **[nunomaduro/collision](https://packagist.org/packages/nunomaduro/collision)**: Error handler, CLI tool, and REPL for PHP.
+- **[pestphp/pest](https://packagist.org/packages/pestphp/pest)**: An elegant PHP testing framework with a focus on simplicity.
+- **[pestphp/pest-plugin-laravel](https://packagist.org/packages/pestphp/pest-plugin-laravel)**: Laravel Plugin for the Pest Testing Framework.
+- **[spatie/laravel-ignition](https://packagist.org/packages/spatie/laravel-ignition)**: A beautiful error page for Laravel applications.
+
+These dependencies are managed using Composer, the PHP dependency manager.

@@ -5,7 +5,7 @@ import ResponsiveNavLink from '@/Components/ResponsiveNavLink';
 import { Link } from '@inertiajs/react';
 import '@inertiajs/react';
 import ApplicationLogo from "@/Components/ApplicationLogo.jsx";
-export default function Authenticated({ user, header, children }) {
+export default function Authenticated({ user, header, page_description, children }) {
     const [showingNavigationDropdown, setShowingNavigationDropdown] = useState(false);
 
     return (
@@ -16,7 +16,7 @@ export default function Authenticated({ user, header, children }) {
                     <div className="flex h-16 items-center">
                         <div className="sm:flex flex-grow items-center justify-start ">
                             <Link href={route('platform.index')}>
-                                <ApplicationLogo height={"7vh"}/>
+                                <ApplicationLogo height={"6vh"}/>
                             </Link>
                         </div>
 
@@ -163,10 +163,16 @@ export default function Authenticated({ user, header, children }) {
             </div>
 
             {header && (
-                <header className="bg-gold shadow flex justify-center">
-                    <div className="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">{header}</div>
-                </header>
-            )}
+                <div className="py-5 bg-gold">
+                    <header className="bg-gold flex justify-center">
+                        <div>{header}</div>
+                    </header>
+                    <header className="bg-gold flex justify-center">
+                        <div>{page_description}</div>
+                    </header>
+                </div>
+
+                )}
 
             <main>{children}</main>
         </div>

@@ -1,17 +1,21 @@
 import React, { useState, useEffect, useLayoutEffect } from 'react';
 import LearningContentService from '@/Services/LearningContentService.jsx';
-import '/resources/css/LearningContentRepeater.css'; // Import CSS file for styling
-import defaultImage from '/resources/imgs/LearningContentThumbnails/default.jpg'; // Import default image
+import '/resources/css/LearningContentRepeater.css';
+import defaultImage from '/resources/imgs/LearningContentThumbnails/default.jpg';
 
 const LearningContentRepeater = ({ userId, showFilterByDefault, fillWindow }) => {
+    // State variables initialization
     const [learningContent, setLearningContent] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState(null);
     const [currentPage, setCurrentPage] = useState(1);
-    const [itemsPerPage, setItemsPerPage] = useState(1); // Initial value, will be updated later
-    const [showFilter, setShowFilter] = useState(showFilterByDefault); // State for filter visibility
-    const [selectedCategory, setSelectedCategory] = useState(null); // State for selected category
+    const [itemsPerRow, setItemsPerRow] = useState(1);
+    const [rowsPerPage, setRowsPerPage] = useState(1);
+    const [showFilter, setShowFilter] = useState(showFilterByDefault);
+    const [selectedCategory, setSelectedCategory] = useState(null);
+    const [searchQuery, setSearchQuery] = useState('');
 
+    // Fetch learning content and set states when component mounts or userId changes
     useEffect(() => {
         const fetchLearningContent = async () => {
             try {
@@ -22,7 +26,7 @@ const LearningContentRepeater = ({ userId, showFilterByDefault, fillWindow }) =>
                         setError("Your training is currently up to date.");
                     }
                 } else {
-                    content = await LearningContentService.getAssignedContent(); // Fetch all content if userId is not provided
+                    content = await LearningContentService.getAssignedContent();
                 }
                 setLearningContent(content);
             } catch (error) {
@@ -35,133 +39,146 @@ const LearningContentRepeater = ({ userId, showFilterByDefault, fillWindow }) =>
         fetchLearningContent();
     }, [userId]);
 
-    // Update the number of items per page when the screen size changes or after initial render
+    // Calculate layout based on window size
     useLayoutEffect(() => {
-        function calculateItemsPerPage() {
-            if (fillWindow) {
-                const windowHeight = window.innerHeight;
-                const windowWidth = window.innerWidth;
-                const cardHeight = 200; // Adjust this value to match your card height
-                const cardWidth = 150; // Adjust this value to match your card width
-                const itemsPerRow = Math.floor(windowWidth * 0.8 / cardWidth);
-                const rows = Math.floor(windowHeight * 0.5 / cardHeight);
-                const itemsPerPage = itemsPerRow * rows;
-                console.log("Items per page:", itemsPerPage); // Log the value of itemsPerPage
-                return itemsPerPage; // Calculate items per page based on window height and card height
-            } else {
-                const windowWidth = window.innerWidth;
-                const cardWidth = 150; // Adjust this value to match your card width
-                return Math.max(1, Math.floor(windowWidth / cardWidth)); // Fill horizontally regardless of fillWindow setting
-            }
+        function calculateLayout() {
+            const windowWidth = window.innerWidth;
+            const windowHeight = window.innerHeight;
+            const cardWidth = 250;
+            const cardHeight = 300;
+
+            const itemsPerRow = Math.floor(0.8 * windowWidth / cardWidth);
+            const rowsPerPage = Math.floor(0.9 * windowHeight / cardHeight);
+
+            setItemsPerRow(itemsPerRow);
+            setRowsPerPage(fillWindow ? rowsPerPage : 1);
         }
 
-        // Calculate items per page after initial render
-        setItemsPerPage(calculateItemsPerPage());
+        calculateLayout();
 
         function handleResize() {
-            setItemsPerPage(calculateItemsPerPage());
+            calculateLayout();
         }
 
         window.addEventListener('resize', handleResize);
         return () => window.removeEventListener('resize', handleResize);
     }, [fillWindow]);
 
-    // Filter content by category
+    // Filter learning content based on selected category
     const filteredContent = selectedCategory
         ? learningContent.filter(content => content.content_category === selectedCategory)
         : learningContent;
 
-    // Pagination logic
-    const totalPages = Math.ceil(filteredContent.length / itemsPerPage);
+    // Filter learning content based on search query
+    const searchedContent = searchQuery.length === 0
+        ? filteredContent
+        : filteredContent.filter(content => content.title.toLowerCase().includes(searchQuery.toLowerCase()));
 
+    // Calculate total pages for pagination
+    const totalPages = Math.ceil(searchedContent.length / (itemsPerRow * rowsPerPage));
 
+    // Function to navigate to previous page
     const prevPage = () => {
-        setCurrentPage((prevPage) => (prevPage === 1 ? totalPages : prevPage - 1));
+        setCurrentPage(prevPage => (prevPage === 1 ? totalPages : prevPage - 1));
     };
 
+    // Function to navigate to next page
     const nextPage = () => {
-        setCurrentPage((prevPage) => (prevPage === totalPages ? 1 : prevPage + 1));
+        setCurrentPage(prevPage => (prevPage === totalPages ? 1 : prevPage + 1));
     };
 
+    // Render loading indicator while fetching data
     if (isLoading) {
         return <div>Loading...</div>;
     }
 
+    // Render error message if fetching data fails
     if (error) {
         return <div>{error}</div>;
     }
 
-    // Check if learningContent is an array before rendering
-    if (!Array.isArray(filteredContent)) {
+    // Render error message if learning content is not available
+    if (!Array.isArray(searchedContent)) {
         return <div>Error: Learning content is not available</div>;
     }
 
+    // Calculate indices for current page
+    const startIndex = (currentPage - 1) * itemsPerRow * rowsPerPage;
+    const endIndex = Math.min(startIndex + (itemsPerRow * rowsPerPage), searchedContent.length);
+    const currentItems = searchedContent.slice(startIndex, endIndex);
 
-    const indexOfLastItem = currentPage * itemsPerPage;
-    const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-    const currentItems = filteredContent.slice(indexOfFirstItem, indexOfLastItem);
-
+    // Render the component
     return (
         <div>
-            <div style={{marginBottom: '20px', display: 'flex', justifyContent: 'flex-start'}}>
-                {showFilterByDefault && (
-                    <>
-                        {showFilter && (
+            {/* Render filter dropdown and search bar if showFilterByDefault is true */}
+            {showFilterByDefault && (
+                <div style={{ marginBottom: '20px', display: 'flex', justifyContent: 'flex-start' }}>
+                    {showFilter && (
+                        <>
+                            {/* Filter dropdown */}
                             <select
                                 value={selectedCategory || ''}
                                 onChange={(e) => setSelectedCategory(e.target.value || null)}
-                                style={{marginLeft: '10px' , borderRadius: '5px'}}
+                                style={{ marginLeft: '10px', borderRadius: '5px' }}
                             >
                                 <option value="">All</option>
                                 <option value="category1">Category 1</option>
                                 <option value="category2">Category 2</option>
-                                {/* Add more options as needed */}
                             </select>
-                        )}
-                    </>
-                )}
-            </div>
+                        </>
+                    )}
+                    {/* Search bar */}
+                    <input
+                        type="text"
+                        placeholder="Search..."
+                        value={searchQuery}
+                        onChange={(e) => setSearchQuery(e.target.value)}
+                        style={{ marginLeft: '10px', borderRadius: '5px', padding: '5px' }}
+                    />
+                </div>
+            )}
 
-            <div className="learning-content-container items-center flex">
-                {currentItems.map((content) => (
-                    <a key={content.id} href="#" className="tile-link">
-                        <div className="learning-content-tile bg-primary-subtle1">
-                            <div className="image-container">
-                                <img src={content.image_filename || defaultImage} alt={content.title}/>
+            {/* Render learning content grid */}
+            <div className="container" style={{ display: 'flex', justifyContent: 'center' }}>
+                <div className="p-3 learning-content-container items-center flex" style={{ display: 'grid', gridTemplateColumns: `repeat(${itemsPerRow}, 1fr)` }}>
+                    {/* Iterate over current items and render content tiles */}
+                    {currentItems.map((content) => (
+                        <a key={content.id} href="#" className="tile-link">
+                            <div className="learning-content-tile bg-primary-subtle1">
+                                <div className="image-container">
+                                    <img src={content.image_filename || defaultImage} alt={content.title} />
+                                </div>
+                                <div className="banner p-3">
+                                    <p>test{content.content_type}</p>
+                                </div>
+                                <div className=" p-3 title-container">
+                                    <h3 style={{ fontWeight: 'bold', marginTop: '10px', marginBottom: '10px' }}>
+                                        {content.title}
+                                    </h3>
+                                </div>
+                                <div className="tooltip">{content.description}</div>
                             </div>
-                            <div className="banner p-3">
-                                <p>test{content.content_type}</p>
-                            </div>
-                            <div className=" p-3 title-container">
-                                <h3 style={{fontWeight: 'bold', marginTop: '10px', marginBottom: '10px'}}>
-                                    {content.title}
-                                </h3>
-                            </div>
-                            {/* Tooltip */}
-                            <div className="tooltip">{content.description}</div>
-                        </div>
-                    </a>
-                ))}
-                {/* Show message if no matching results */}
-                {filteredContent.length === 0 && (
-                    <div>No learning content matches the selected filters.</div>
-                )}
-                {/* Pagination */}
-                {(learningContent.length > 0) && (
-                    <>
-                        <button className="pagination-btn prev" onClick={prevPage}>
-                            {'<'}
-                        </button>
-                        <button className="pagination-btn next" onClick={nextPage}>
-                            {'>'}
-                        </button>
-                    </>
-                )}
+                        </a>
+                    ))}
+                    {/* Render message if no matching results */}
+                    {searchedContent.length === 0 && (
+                        <div>No learning content matches the selected filters.</div>
+                    )}
+                    {/* Render pagination buttons */}
+                    {(learningContent.length > 0) && (
+                        <>
+                            <button className="pagination-btn prev" onClick={prevPage}>
+                                {'<'}
+                            </button>
+                            <button className="pagination-btn next" onClick={nextPage}>
+                                {'>'}
+                            </button>
+                        </>
+                    )}
+                </div>
             </div>
-
         </div>
     );
-
 };
 
 export default LearningContentRepeater;

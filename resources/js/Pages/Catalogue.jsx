@@ -12,7 +12,7 @@ export default function Catalogue({ auth }) {
             <Head title="Catalogue" />
 
             <div className="py-6">
-                <div className="max-w-7xl  mx-auto sm:px-6 lg:px-8">
+                <div className="mx-auto sm:px-6 lg:px-8" style={{width: '70%'}}>
                     <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                         <div className="flex items-center">
 

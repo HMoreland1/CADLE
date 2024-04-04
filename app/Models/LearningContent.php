@@ -4,18 +4,15 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Orchid\Filters\Filterable;
-use Orchid\Metrics\Chartable;
-use Orchid\Screen\AsSource;
 
 class LearningContent extends Model
 {
-    use AsSource, HasFactory, Filterable, Chartable;
+    use HasFactory;
 
     protected $table = 'learning_contents';
     protected $primaryKey = 'content_id';
     protected $fillable = [
-        'content',
+        'page_id',
         'description',
         'title',
         'image_filename', // Add new field for image path
@@ -26,5 +23,3 @@ class LearningContent extends Model
         return $this->hasMany(UserLearningAssignment::class);
     }
 }
-
-

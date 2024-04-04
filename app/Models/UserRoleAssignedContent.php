@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class UserRoleAssignedContent extends Model
 {
     use HasFactory;
+    protected $table = 'user_role_assigned_content';
 
     protected $fillable = [
         'user_id',

@@ -23,6 +23,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 // Route to fetch learning content assigned directly to a user
 Route::get('/learning-content/user/{userId}', [UserLearningController::class, 'getAssignedContentForUser']);
+Route::get('/learning-content/user/{userId}/status', [UserLearningController::class, 'getAssignedContentCompletionStatus']);
 Route::get('learning-content/all', [LearningContentController::class, 'getAllContent']);
 // Route to fetch learning content assigned to a user through their roles
 Route::get('/learning-content/role/{userId}', [UserLearningController::class, 'getAssignedContentForUserRole']);

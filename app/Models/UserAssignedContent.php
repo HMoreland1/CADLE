@@ -13,7 +13,8 @@ class UserAssignedContent extends Model
 
     protected $fillable = [
         'user_id',
-        'learning_content_id',
+        'content_id', // Updated field name
+        'importance', // New field
         'completed',
     ];
 
@@ -25,6 +26,6 @@ class UserAssignedContent extends Model
 
     public function learningContent()
     {
-        return $this->belongsTo(LearningContent::class);
+        return $this->belongsTo(LearningContent::class, 'content_id'); // Updated foreign key
     }
 }

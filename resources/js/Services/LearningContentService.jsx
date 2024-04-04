@@ -18,7 +18,9 @@ const LearningContentService = {
             console.log("Content Type: ", contentType);
             if (contentType && contentType.includes('application/json')) {
                 // If content type is JSON, parse response as JSON
-                return await response.json();
+                const responseData = await response.json();
+                console.log("Response Data: ", responseData); // Log response data to console
+                return responseData;
             } else {
                 // If content type is not JSON (e.g., HTML), handle HTML response
                 console.error('Received non-JSON response from server');
@@ -29,6 +31,15 @@ const LearningContentService = {
             console.error(`Failed to fetch learning content: ${error.message}`);
             throw new Error('Failed to fetch learning content');
         }
+    },
+
+
+    getAssignedContentCompletionStatus: async (userId) => {
+        let endpoint = `api/learning-content/user/${userId}/status`;
+
+       return await fetch(endpoint);
+
+
     }
 };
 

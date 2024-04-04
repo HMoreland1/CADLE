@@ -11,6 +11,7 @@ class CreateUserAssignedContentTable extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->foreignId('content_id')->constrained('learning_contents', 'content_id')->onDelete('cascade'); // Specify the column name
+            $table->enum('importance', ['Essential', 'Compliance'])->default('Essential');
             $table->boolean('completed')->default(false);
             $table->timestamps();
         });

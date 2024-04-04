@@ -10,10 +10,10 @@ class CreateLearningContentsTable extends Migration
     {
         Schema::create('learning_contents', function (Blueprint $table) {
             $table->id('content_id');
-            $table->longText('content');
+            $table->foreignId('page_id')->constrained('pagebuilder__pages');
             $table->longText('description');
             $table->string('title', 100);
-            $table->string('image_filename')->nullable(); // Add a new column for storing image filename
+            $table->string('image_filename')->nullable();
             $table->timestamps();
         });
     }

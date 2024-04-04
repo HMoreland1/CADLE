@@ -1,4 +1,4 @@
-![CADLE Logo](resources/imgs/Logo.png)
+![CADLE Logo](resources/imgs/LogoText.png)
 ---
 # CADLE - The Cyber Awareness Digital Learning Environment
 

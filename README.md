@@ -37,5 +37,3 @@ If you encounter any issues or have suggestions for improvements, please contact
 - User guides and tutorials will be made available on the CADLE website.
 
 ---
-
-Feel free to adjust the content as needed, and let me know if there's anything else you'd like to include or modify!

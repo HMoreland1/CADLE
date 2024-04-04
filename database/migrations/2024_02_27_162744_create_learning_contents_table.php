@@ -1,7 +1,5 @@
 <?php
 
-// Adjust the timestamps, columns, and constraints as needed
-
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -15,6 +13,7 @@ class CreateLearningContentsTable extends Migration
             $table->longText('content');
             $table->longText('description');
             $table->string('title', 100);
+            $table->string('image_filename')->nullable(); // Add a new column for storing image filename
             $table->timestamps();
         });
     }
@@ -24,4 +23,3 @@ class CreateLearningContentsTable extends Migration
         Schema::dropIfExists('learning_contents');
     }
 }
-

@@ -5,7 +5,10 @@
     background-color: #F9D960;
 }
 .bg-navy-blue {
-    background-color: #000080;
+    background-color: #001f3f;
+}
+.bg-navy-light-blue {
+    background-color: #1671CF;
 }
 .logo-svg-40 {
     width: 40vw; /* Set the desired width */

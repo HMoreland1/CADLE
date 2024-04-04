@@ -79,8 +79,8 @@ export default function Authenticated({ user, header, children }) {
                                          active={route().current('dashboard')}>
                                     Pathways
                                 </NavLink>
-                                <NavLink className="bg-white rounded-md py-2 px-4" href={route('dashboard')}
-                                         active={route().current('dashboard')}>
+                                <NavLink className="bg-white rounded-md py-2 px-4" href={route('catalogue')}
+                                         active={route().current('catalogue')}>
                                     Catalogue
                                 </NavLink>
                                 <NavLink className="bg-white rounded-md py-2 px-4" href={route('dashboard')}
@@ -132,7 +132,7 @@ export default function Authenticated({ user, header, children }) {
                         <ResponsiveNavLink href={route('dashboard')} active={route().current('dashboard')}>
                             Pathways
                         </ResponsiveNavLink>
-                        <ResponsiveNavLink href={route('dashboard')} active={route().current('dashboard')}>
+                        <ResponsiveNavLink href={route('catalogue')} active={route().current('catalogue')}>
                             Catalogue
                         </ResponsiveNavLink>
                         <ResponsiveNavLink href={route('dashboard')} active={route().current('dashboard')}>
@@ -163,7 +163,7 @@ export default function Authenticated({ user, header, children }) {
             </div>
 
             {header && (
-                <header className="bg-gold shadow">
+                <header className="bg-gold shadow flex justify-center">
                     <div className="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">{header}</div>
                 </header>
             )}

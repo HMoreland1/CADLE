@@ -12,17 +12,19 @@ class LearningContent extends Model
 {
     use AsSource, HasFactory, Filterable, Chartable;
 
+    protected $table = 'learning_contents';
     protected $primaryKey = 'content_id';
     protected $fillable = [
         'content',
         'description',
         'title',
+        'image_filename', // Add new field for image path
     ];
-
 
     public function userAssignments()
     {
         return $this->hasMany(UserLearningAssignment::class);
     }
-
 }
+
+

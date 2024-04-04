@@ -24,7 +24,7 @@ return [
 
     'db_prefix'                             => 'pagebuilder__',                 // prefix for database tables
     'url_prefix'                            => 'admin',                              // like /admin if you are using it in admin panel
-    'route_middleware'                      => [],                              // route middlewares like auth, role etc
+    'route_middleware'                      => ['auth'],                              // route middlewares like auth, role etc
 
     // assets publishing
     'add_bootstrap'                         => 'yes',                            // yes/no to add/remove bootstrap assets from the package

@@ -1,0 +1,131 @@
+.learning-content-container {
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 30px;
+}
+
+.learning-content-tile {
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    height: 200px; /* Keep the height of each card */
+    width: 150px; /* Keep the width of each card */
+    text-align: center; /* Center content horizontally within each card */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    position: relative; /* Position relative for absolute positioning */
+}
+.title-container {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    text-align: left; /* Align the title text to the left */
+}
+
+.tile-content {
+    display: block;
+    text-decoration: none; /* Remove default link underline */
+    border: 1px solid black;
+    padding: 10px; /* Adjust padding to match the button appearance */
+    border-radius: 5px; /* Add rounded corners to mimic button */
+    transition: background-color 0.3s ease; /* Add transition effect for hover */
+}
+
+.tooltip {
+    visibility: hidden; /* Initially hidden */
+    width: 200px;
+    background-color: #001f3f;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px;
+    position: fixed; /* Position fixed to stay at the top of the screen */
+    top: 0; /* Align with the top of the screen */
+    left: 50%;
+    transform: translateX(-50%);
+    opacity: 0;
+    transition: opacity 0.3s, top 0.5s; /* Add transition for opacity and top */
+}
+
+.image-container {
+    flex: 1; /* Fill remaining vertical space */
+    overflow: hidden; /* Ensure the image doesn't overflow */
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    height: calc(70%); /* Calculate the height to leave space for the banner */
+}
+
+.image-container img {
+    width: 100%; /* Ensure the image fills its container */
+    height: 100%; /* Ensure the image fills its container */
+    object-fit: cover; /* Maintain aspect ratio and cover container */
+    transition: transform 0.3s ease; /* Add transition for smooth zoom effect */
+}
+
+.image-container:hover img {
+    transform: scale(1.1); /* Zoom in by 10% when hovering */
+}
+
+.learning-content-tile:hover .tooltip {
+    visibility: visible; /* Show tooltip on hover */
+    opacity: 1;
+}
+
+.tile-content:hover {
+    background-color: #eaeaea; /* Change background color on hover */
+}
+
+.banner {
+    background-color: #001f3f; /* Dark blue background color */
+    color: #fff; /* White text color */
+    position: absolute; /* Position absolute to overlay on the card */
+    bottom: 30%; /* Align with the bottom of the card */
+    left: 0; /* Align with the left edge of the card */
+    height: 15%;
+    width: 100%; /* Full width */
+    text-align: left; /* Align the text to the left */
+    display: flex; /* Use flexbox for centering */
+    justify-content: flex-start; /* Align text to the left */
+    align-items: center; /* Center vertically */
+    line-height: 1; /* Ensure proper alignment */
+}
+
+.pagination {
+    position: absolute;
+    bottom: -40px; /* Position the pagination buttons below the cards */
+    left: 50%; /* Position in the center */
+    transform: translateX(-50%); /* Center horizontally */
+    display: flex;
+    justify-content: center;
+    list-style: none;
+    padding: 0;
+}
+
+.pagination-btn {
+    width: 40px;
+    height: 40px;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 50%;
+    font-size: 16px;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 5px;
+}
+
+.pagination-btn.prev {
+    position: absolute;
+    left: 0;
+    top: 50%; /* Align with the middle of the cards */
+    transform: translateY(-50%);
+}
+
+.pagination-btn.next {
+    position: absolute;
+    right: 0;
+    top: 50%; /* Align with the middle of the cards */
+    transform: translateY(-50%);
+}

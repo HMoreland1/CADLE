@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-use App\Http\Controllers\QuestionController;
+//use App\Http\Controllers\QuestionController;
 use App\Orchid\Screens\Examples\ExampleActionsScreen;
 use App\Orchid\Screens\Examples\ExampleCardsScreen;
 use App\Orchid\Screens\Examples\ExampleChartsScreen;
@@ -57,7 +57,8 @@ Route::screen('quizzes/questions/create', QuestionEditScreen::class)
         ->parent('platform.index')
         ->push(__('Questions'), route('platform.systems.questions.create')));
 
-Route::delete('/systems/question_options/remove/{id}', 'QuestionController@removeOption')->name('platform.systems.question_options.remove');
+
+//Route::post('/save-question-assignments', [QuestionController::class, 'save']);
 
 
 
@@ -91,15 +92,9 @@ Route::screen('quizzes/{quiz}/edit/questions', QuestionListScreen::class)
         ->parent('platform.systems.quizzes.edit', $quiz)
         ->push(__('Questions'), route('platform.systems.quizzes.edit.questions', $quiz)));
 
-Route::screen('quizzes/{quiz}/edit/questions', QuestionListScreen::class)
-    ->name('platform.systems.quizzes.edit.questions')
-    ->breadcrumbs(fn (Trail $trail, $quiz) => $trail
-        ->parent('platform.systems.quizzes.edit', $quiz)
-        ->push(__('Questions'), route('platform.systems.quizzes.edit.questions', $quiz)));
 
 
 Route::screen('task', TaskScreen::class)->name('platform.task');
-Route::post('/save-question-assignments', [QuestionController::class, 'save']);
 
 /*
 |--------------------------------------------------------------------------

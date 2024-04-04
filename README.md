@@ -1,6 +1,6 @@
-<div style="text-align:center">
+
     ![CADLE Logo](resources/imgs/Logo.png)
-</div>
+
 ---
 # CADLE - The Cyber Awareness Digital Learning Environment
 

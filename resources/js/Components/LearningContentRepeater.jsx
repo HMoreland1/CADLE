@@ -6,7 +6,7 @@ import defaultImage from '/resources/imgs/LearningContentThumbnails/default.jpg'
 const LearningContentRepeater = ({ userId, showFilterByDefault, fillWindow }) => {
     // State variables initialization
     const [learningContent, setLearningContent] = useState([]);
-    const [isLoading, setIsLoading] = useState(true);
+    const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState(null);
     const [currentPage, setCurrentPage] = useState(1);
     const [itemsPerRow, setItemsPerRow] = useState(1);
@@ -14,6 +14,7 @@ const LearningContentRepeater = ({ userId, showFilterByDefault, fillWindow }) =>
     const [showFilter, setShowFilter] = useState(showFilterByDefault);
     const [selectedCategory, setSelectedCategory] = useState(null);
     const [searchQuery, setSearchQuery] = useState('');
+    
 
     // Fetch learning content and set states when component mounts or userId changes
     useEffect(() => {
@@ -32,12 +33,37 @@ const LearningContentRepeater = ({ userId, showFilterByDefault, fillWindow }) =>
             } catch (error) {
                 setError(error.message || 'Error fetching learning content');
             } finally {
-                setIsLoading(false);
-            }
-        };
 
-        fetchLearningContent();
+                setIsLoading(true);
+                // Adjust itemsPerRow if there are fewer items than itemsPerRow suggests
+            }
+
+        }
+
+        fetchLearningContent()
     }, [userId]);
+
+    useEffect(() => {
+        // This function will be executed whenever isLoading changes
+        const handleStateChange = async () => {
+            // Do something when isLoading changes
+            console.log("isLoading changed:", isLoading);
+            // Call any other functions or logic you want to execute
+            if (isLoading) {
+                console.log("Learning Content Length: ", learningContent.length);
+                setItemsPerRow(Math.min(itemsPerRow, learningContent.length));
+                console.log("Row: ",itemsPerRow);
+            }
+        }
+
+        // Call the function when the component mounts, to handle initial state
+        handleStateChange();
+
+        // Set up the effect to run the function whenever isLoading changes
+        return () => {
+            // Clean up any resources or subscriptions if necessary
+        };
+    }, [isLoading]);
 
     // Calculate layout based on window size
     useLayoutEffect(() => {
@@ -50,14 +76,25 @@ const LearningContentRepeater = ({ userId, showFilterByDefault, fillWindow }) =>
             const itemsPerRow = Math.floor(0.8 * windowWidth / cardWidth);
             const rowsPerPage = Math.floor(0.9 * windowHeight / cardHeight);
 
-            setItemsPerRow(itemsPerRow);
+            console.log("isLoading Calc:", isLoading);
+            if(isLoading){
+                setItemsPerRow(Math.min(itemsPerRow, learningContent.length));
+            }
+            else{
+                setItemsPerRow(itemsPerRow);
+            }
+
+
             setRowsPerPage(fillWindow ? rowsPerPage : 1);
+
+
         }
 
         calculateLayout();
 
         function handleResize() {
             calculateLayout();
+
         }
 
         window.addEventListener('resize', handleResize);
@@ -88,7 +125,7 @@ const LearningContentRepeater = ({ userId, showFilterByDefault, fillWindow }) =>
     };
 
     // Render loading indicator while fetching data
-    if (isLoading) {
+    if (!isLoading) {
         return <div>Loading...</div>;
     }
 
@@ -112,14 +149,14 @@ const LearningContentRepeater = ({ userId, showFilterByDefault, fillWindow }) =>
         <div>
             {/* Render filter dropdown and search bar if showFilterByDefault is true */}
             {showFilterByDefault && (
-                <div style={{ marginBottom: '20px', display: 'flex', justifyContent: 'flex-start' }}>
+                <div style={{marginBottom: '20px', display: 'flex', justifyContent: 'flex-start'}}>
                     {showFilter && (
                         <>
                             {/* Filter dropdown */}
                             <select
                                 value={selectedCategory || ''}
                                 onChange={(e) => setSelectedCategory(e.target.value || null)}
-                                style={{ marginLeft: '10px', borderRadius: '5px' }}
+                                style={{marginLeft: '10px', borderRadius: '5px'}}
                             >
                                 <option value="">All</option>
                                 <option value="category1">Category 1</option>
@@ -133,26 +170,37 @@ const LearningContentRepeater = ({ userId, showFilterByDefault, fillWindow }) =>
                         placeholder="Search..."
                         value={searchQuery}
                         onChange={(e) => setSearchQuery(e.target.value)}
-                        style={{ marginLeft: '10px', borderRadius: '5px', padding: '5px' }}
+                        style={{marginLeft: '10px', borderRadius: '5px', padding: '5px'}}
                     />
                 </div>
             )}
 
             {/* Render learning content grid */}
-            <div className="container" style={{ display: 'flex', justifyContent: 'center' }}>
-                <div className="p-3 learning-content-container items-center flex" style={{ display: 'grid', gridTemplateColumns: `repeat(${itemsPerRow}, 1fr)` }}>
+            <div className="container" style={{
+                display: 'flex',
+                justifyContent: 'center',
+                minWidth: '300px',
+                maxWidth: '100%',
+                overflowX: 'auto'
+            }}>
+                <div className="p-3 learning-content-container items-center flex" style={{
+                    display: 'grid',
+                    gridTemplateColumns: `repeat(${itemsPerRow}, 1fr)`,
+                    justifyContent: 'center',
+                    gap: '10px'
+                }}>
                     {/* Iterate over current items and render content tiles */}
-                    {currentItems.map((content) => (
-                        <a key={content.id} href="#" className="tile-link">
+                    {currentItems.map((content, index) => (
+                        <a key={index} href="#" className="tile-link">
                             <div className="learning-content-tile bg-primary-subtle1">
                                 <div className="image-container">
-                                    <img src={content.image_filename || defaultImage} alt={content.title} />
+                                    <img src={content.image_filename || defaultImage} alt={content.title}/>
                                 </div>
                                 <div className="banner p-3">
                                     <p>test{content.content_type}</p>
                                 </div>
                                 <div className=" p-3 title-container">
-                                    <h3 style={{ fontWeight: 'bold', marginTop: '10px', marginBottom: '10px' }}>
+                                    <h3 style={{fontWeight: 'bold', marginTop: '10px', marginBottom: '10px'}}>
                                         {content.title}
                                     </h3>
                                 </div>
@@ -165,7 +213,7 @@ const LearningContentRepeater = ({ userId, showFilterByDefault, fillWindow }) =>
                         <div>No learning content matches the selected filters.</div>
                     )}
                     {/* Render pagination buttons */}
-                    {(learningContent.length > 0) && (
+                    {currentItems.length > 0 && (
                         <>
                             <button className="pagination-btn prev" onClick={prevPage}>
                                 {'<'}
@@ -177,7 +225,9 @@ const LearningContentRepeater = ({ userId, showFilterByDefault, fillWindow }) =>
                     )}
                 </div>
             </div>
+
         </div>
+
     );
 };
 

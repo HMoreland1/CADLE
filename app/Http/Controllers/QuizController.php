@@ -11,7 +11,7 @@ class QuizController extends Controller
      * Display the specified resource.
      *
      * @param  \App\Models\Quiz  $quiz
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Foundation\Application
      */
     public function show(Quiz $quiz)
     {
@@ -22,7 +22,7 @@ class QuizController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param  \App\Models\Quiz  $quiz
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Foundation\Application
      */
     public function edit(Quiz $quiz)
     {

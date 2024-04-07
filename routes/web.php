@@ -4,6 +4,7 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
+use App\Http\Controllers\SCORMCreatorController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -47,6 +48,10 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
+
+Route::get('/scorm/creator', function () {
+    return Inertia::render('SCORM/SCORMCreator');
+})->middleware(['auth', 'verified'])->name('scorm.creator');
 
 
 require __DIR__.'/auth.php';

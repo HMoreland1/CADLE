@@ -13,6 +13,7 @@ export default defineConfig({
             input: [
                 'resources/js/app.jsx',
                 'resources/js/Scripts/QuestionsCheckbox.jsx',
+                'resources/js/Pages/SCORM/SCORMCreator.jsx',
 
                 ],
             ssr: 'resources/js/ssr.jsx',

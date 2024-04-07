@@ -15,8 +15,8 @@ CADLE is a web application designed to educate individuals, particularly Royal N
 To access CADLE, follow these steps:
 
 1. Visit the CADLE website.
-2. If you're a Royal Navy personnel, use your provided credentials to log in. Otherwise, contact your system administrator for access.
-3. Explore the available learning modules and quizzes to enhance your cybersecurity awareness.
+2. Use your provided credentials to log in. Otherwise, contact your system administrator for access.
+3. Explore the available learning modules and quizzes to enhance your cyber-security awareness.
 4. Employers can set tasks and assignments for employees through the administrative interface.
 
 ## Security Considerations:

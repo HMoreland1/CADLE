@@ -53,7 +53,9 @@ class PlatformScreen extends Screen
     public function layout(): iterable
     {
         return [
+
             Layout::view('AdminPanel.adminpanel')
+
         ];
     }
 }

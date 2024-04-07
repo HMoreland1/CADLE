@@ -11,12 +11,12 @@ export default function Authenticated({ user, header, page_description, children
     return (
         <div className="min-h-screen bg-gray-100">
 
-            <nav className="border-b border-gray-100">
-                <div className="max-w-7xl mx-auto lg:px-8 ">
+            <nav className="border-b border-gray-100" >
+                <div className="mx-auto lg:px-8 " style={{ width: '70%'}}>
                     <div className="flex h-16 items-center">
-                        <div className="sm:flex flex-grow items-center justify-start ">
+                        <div className="sm:flex flex-grow items-center">
                             <Link href={route('platform.index')}>
-                                <ApplicationLogo height={"6vh"}/>
+                                <ApplicationLogo height={"6vh"} style={{ height: '70%'}}/>
                             </Link>
                         </div>
 
@@ -125,25 +125,27 @@ export default function Authenticated({ user, header, page_description, children
                 </nav>
 
                 <div className={(showingNavigationDropdown ? 'block' : 'hidden') + ' sm:hidden'}>
-                    <div className="pt-2 pb-3 space-y-1 ">
-                        <ResponsiveNavLink href={route('dashboard')} active={route().current('dashboard')}>
-                            Dashboard
-                        </ResponsiveNavLink>
-                        <ResponsiveNavLink href={route('dashboard')} active={route().current('dashboard')}>
-                            Pathways
-                        </ResponsiveNavLink>
-                        <ResponsiveNavLink href={route('catalogue')} active={route().current('catalogue')}>
-                            Catalogue
-                        </ResponsiveNavLink>
-                        <ResponsiveNavLink href={route('dashboard')} active={route().current('dashboard')}>
-                            Challenges
-                        </ResponsiveNavLink>
-                        <ResponsiveNavLink href={route('dashboard')} active={route().current('dashboard')}>
-                            My Activity
-                        </ResponsiveNavLink>
-                        <ResponsiveNavLink href={route('dashboard')} active={route().current('dashboard')}>
-                            Help
-                        </ResponsiveNavLink>
+                    <div className={(showingNavigationDropdown ? 'block slide-in' : 'hidden sm:hidden')}>
+                        <div className="pt-2 pb-3 space-y-1">
+                            <ResponsiveNavLink href={route('dashboard')} active={route().current('dashboard')}>
+                                Dashboard
+                            </ResponsiveNavLink>
+                            <ResponsiveNavLink href={route('dashboard')} active={route().current('dashboard')}>
+                                Pathways
+                            </ResponsiveNavLink>
+                            <ResponsiveNavLink href={route('catalogue')} active={route().current('catalogue')}>
+                                Catalogue
+                            </ResponsiveNavLink>
+                            <ResponsiveNavLink href={route('dashboard')} active={route().current('dashboard')}>
+                                Challenges
+                            </ResponsiveNavLink>
+                            <ResponsiveNavLink href={route('dashboard')} active={route().current('dashboard')}>
+                                My Activity
+                            </ResponsiveNavLink>
+                            <ResponsiveNavLink href={route('dashboard')} active={route().current('dashboard')}>
+                                Help
+                            </ResponsiveNavLink>
+                        </div>
                     </div>
 
                     <div className="pt-4 pb-1 border-t border-gray-200">

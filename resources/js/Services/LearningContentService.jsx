@@ -40,7 +40,18 @@ const LearningContentService = {
        return await fetch(endpoint);
 
 
+    },
+
+    getPathwayContent: async (pathway) => {
+        try {
+            const response = await axios.get(`/api/learning-content/pathway/${pathway.id}`);
+            return response.data;
+        } catch (error) {
+            console.error('Error fetching pathway content:', error);
+            throw error;
+        }
     }
+
 };
 
 export default LearningContentService;

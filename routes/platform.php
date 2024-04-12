@@ -12,6 +12,8 @@ use App\Orchid\Screens\Examples\ExampleGridScreen;
 use App\Orchid\Screens\Examples\ExampleLayoutsScreen;
 use App\Orchid\Screens\Examples\ExampleScreen;
 use App\Orchid\Screens\Examples\ExampleTextEditorsScreen;
+use App\Orchid\Screens\Pathways\PathwayEditScreen;
+use App\Orchid\Screens\Pathways\PathwayListScreen;
 use App\Orchid\Screens\PlatformScreen;
 use App\Orchid\Screens\Quiz\QuestionEditScreen;
 use App\Orchid\Screens\Quiz\QuestionListScreen;
@@ -154,6 +156,35 @@ Route::screen('roles', RoleListScreen::class)
     ->breadcrumbs(fn (Trail $trail) => $trail
         ->parent('platform.index')
         ->push(__('Roles'), route('platform.systems.roles')));
+
+
+/*
+|--------------------------------------------------------------------------
+| Pathways Routes
+|--------------------------------------------------------------------------
+*/
+
+Route::screen('pathways', PathwayListScreen::class)
+    ->name('platform.systems.pathways')
+    ->breadcrumbs(fn (Trail $trail) => $trail
+        ->parent('platform.index')
+        ->push(__('Pathways'), route('platform.systems.pathways')));
+
+
+// Platform > System > Pathways > Create
+Route::screen('pathways/create', PathwayEditScreen::class)
+    ->name('platform.systems.pathways.create')
+    ->breadcrumbs(fn (Trail $trail) => $trail
+        ->parent('platform.systems.pathways')
+        ->push(__('Create'), route('platform.systems.pathways.create')));
+
+
+Route::screen('pathways/{pathway}/edit', PathwayEditScreen::class)
+    ->name('platform.systems.pathways.edit')
+    ->breadcrumbs(fn (Trail $trail, $pathway) => $trail
+        ->parent('platform.systems.pathways')
+        ->push($pathway->name, route('platform.systems.pathways.edit', $pathway)));
+
 
 // Example...
 Route::screen('example', ExampleScreen::class)

@@ -3,11 +3,10 @@ import { useDrop } from 'react-dnd';
 import { FaTrash } from 'react-icons/fa';
 import { v4 as uuidv4 } from 'uuid';
 
-const Canvas = ({ components, rows, setRows }) => {
+const Canvas = ({ components, rows, setRows, selectedComponent, setSelectedComponent }) => {
     // State for hovered row and column
     const [hoveredRow, setHoveredRow] = useState(null);
     const [hoveredColumn, setHoveredColumn] = useState(null);
-
     // Function to generate unique row IDs
     let nextRowId = 0;
     const generateRowId = () => {
@@ -15,6 +14,7 @@ const Canvas = ({ components, rows, setRows }) => {
         console.log(nextRowId);
         return nextRowId;
     };
+
 
     // Function to handle deletion of component from column
     const handleDeleteComponent = (rowId, columnIndex) => {
@@ -104,6 +104,11 @@ const Canvas = ({ components, rows, setRows }) => {
             const boundingRect = rowElement.getBoundingClientRect();
             const rowWidth = boundingRect.width;
             const columnWidths = row.columns.map(column => column.width * (rowWidth / 100)); // Calculate width of each column
+
+
+
+
+
             let cumulativeWidth = 0;
             let columnIndex = 0;
             // Determine column index based on drop position within row
@@ -156,6 +161,14 @@ const Canvas = ({ components, rows, setRows }) => {
                 }}
                 onMouseEnter={() => setIsColumnHovered(true)}
                 onMouseLeave={() => setIsColumnHovered(false)}
+                onClick={() => {
+                    if (column.components.length > 0) {
+                        setSelectedComponent(column.components[0]);
+                    } else {
+                        setSelectedComponent(null); // Clear selectedComponent if no components are present
+                    }
+                }}
+
                 ref={componentDrop}
             >
                 <div className="column-content">

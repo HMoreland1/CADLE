@@ -1,16 +1,14 @@
 import React from 'react';
-
 const Button = ({ text, color, style }) => {
-
 
     return (
         <div
             className="button"
             style={{
+                cursor: 'move',
+                backgroundColor: color || 'blue', // Default color is blue
                 height: '100%',
-                width: ' 100%',
-                backgroundColor: '#f1f1f1',
-                color: 'black',
+                width: ' 100%'
             }}
         >
             {text || 'Button'} {/* Default text is 'Button' */}

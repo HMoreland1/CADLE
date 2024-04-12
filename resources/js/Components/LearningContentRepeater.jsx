@@ -3,7 +3,7 @@ import LearningContentService from '@/Services/LearningContentService.jsx';
 import '/resources/css/LearningContentRepeater.css';
 import defaultImage from '/resources/imgs/LearningContentThumbnails/default.jpg';
 
-const LearningContentRepeater = ({ userId, showFilterByDefault, fillWindow }) => {
+const LearningContentRepeater = ({ userId, showFilterByDefault, fillWindow, assignedContentIds}) => {
     // State variables initialization
     const [learningContent, setLearningContent] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
@@ -14,7 +14,7 @@ const LearningContentRepeater = ({ userId, showFilterByDefault, fillWindow }) =>
     const [showFilter, setShowFilter] = useState(showFilterByDefault);
     const [selectedCategory, setSelectedCategory] = useState(null);
     const [searchQuery, setSearchQuery] = useState('');
-    
+
 
     // Fetch learning content and set states when component mounts or userId changes
     useEffect(() => {
@@ -26,7 +26,11 @@ const LearningContentRepeater = ({ userId, showFilterByDefault, fillWindow }) =>
                     if (!content || content.length === 0) {
                         setError("Your training is currently up to date.");
                     }
-                } else {
+                }
+                else if(assignedContentIds != null) {
+                    content = await LearningContentService.getPathwayContent(assignedContentIds);
+                }else
+                {
                     content = await LearningContentService.getAssignedContent();
                 }
                 setLearningContent(content);

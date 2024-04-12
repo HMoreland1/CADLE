@@ -9,21 +9,47 @@ import Menu from './Menu.jsx';
 import Button from './Components/Button';
 import TextInput from "@/Components/TextInput.jsx";
 import Checkbox from "@/Components/Checkbox.jsx";
-import ScormUtils from './SCORMUtils';
 import LayoutMenu from "@/Components/SCORM/Creator/LayoutMenu.jsx";
-import InfoBlock from "@/Components/SCORM/Creator/Components/InfoBlock.jsx"; // Import the SCORM utility functions
+import InfoBlock from "@/Components/SCORM/Creator/Components/InfoBlock.jsx";
+import ScormUtils from "@/Components/SCORM/Creator/SCORMUtils.jsx"; // Import the InfoBlock component
 
 const VisualEditor = () => {
-    const [selectedComponent, setSelectedComponent] = useState(null);
+    const [selectedComponent, setSelectedComponent] = useState({ props: {} }); // Initialize selectedComponent with props
+
     const [rows, setRows] = useState([]); // State to hold canvas rows
+    const [canvasComponents, setCanvasComponents] = useState([]); // State to hold canvas components
+
 
     const components = [
-        { component: <Button placeholder="Enter text" />, title: "Button" },
+        { component: <Button color={'#ffffff'} />, title: "Button" },
         { component: <TextInput placeholder="Enter text" />, title: "Text Input" },
         { component: <Checkbox label="Check me" />, title: "Checkbox" },
-        { component: <InfoBlock />, title: "Info Block" }
+        { component: <InfoBlock title="test" text="test" />, title: "Info Block" }
         // Add more components here
     ];
+
+    const handlePropertyChange = (property, value) => {
+        if (!selectedComponent) return;
+
+        // Find the index of the selected component in the canvas components
+        const index = canvasComponents.findIndex(component => component.id === selectedComponent.id);
+        if (index !== -1) {
+            // Update the selected property of the component
+            const updatedComponent = {
+                ...canvasComponents[index],
+                props: {
+                    ...canvasComponents[index].props,
+                    [property]: value
+                }
+            };
+            // Create a new array of canvas components with the updated component
+            const updatedCanvasComponents = [...canvasComponents];
+            updatedCanvasComponents[index] = updatedComponent;
+            // Update the canvas components state
+            setCanvasComponents(updatedCanvasComponents);
+        }
+    };2
+
 
 
     const handleSave = () => {
@@ -46,8 +72,10 @@ const VisualEditor = () => {
     };
 
     const handleComponentSelect = (component) => {
-        // Handle component selection
+        console.log("Selected component:", component);
+        setSelectedComponent(component);
     };
+
 
     return (
         <div className="visual-editor" style={{display: 'flex'}}>
@@ -62,8 +90,13 @@ const VisualEditor = () => {
                 </div>
                 <div style={{width: '70%', height: '100%', display: 'flex', flexDirection: 'column'}}>
                     <div className="canvas" style={{height: '95%', backgroundColor: 'blue'}}>
-                        <Canvas selectedComponent={selectedComponent} rows={rows}
-                                setRows={setRows}/> {/* Pass rows and setRows as props */}
+                        <Canvas
+                            components={components}
+                            rows={rows}
+                            setRows={setRows}
+                            selectedComponent={selectedComponent}
+                            setSelectedComponent={setSelectedComponent} // Pass setSelectedComponent here
+                        /> {/* Pass rows and setRows as props */}
                     </div>
                     <div className="layout-menu-container"
                          style={{height: '10%', width: '100%', backgroundColor: 'lightyellow'}}>
@@ -71,7 +104,11 @@ const VisualEditor = () => {
                     </div>
                 </div>
                 <div className="property-editor" style={{height: '100%', width: '15%', backgroundColor: 'lightcoral'}}>
-                    <PropertyEditor selectedComponent={selectedComponent}/>
+                    {/* Render the PropertyEditor component with the selectedComponent prop */}
+                    <PropertyEditor
+                        selectedComponent={selectedComponent}
+                        onPropertyChange={handlePropertyChange}
+                    />
                 </div>
             </DndProvider>
         </div>

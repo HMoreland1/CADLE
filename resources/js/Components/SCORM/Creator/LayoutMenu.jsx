@@ -31,6 +31,9 @@ const LayoutMenu = ({ onLayoutDrop }) => {
             { id: 'layout5-4', width: 20, height: 100 },
             { id: 'layout5-5', width: 20, height: 100 },
         ],
+        [
+            { id: 'layout6-1', width: 100, height: 100 },
+        ],
         // Define more layouts here as needed
     ];
 

@@ -30,7 +30,6 @@ class QuestionListScreen extends Screen
         $questions = Question::filters()
             ->defaultSort('id', 'desc')
             ->paginate(5);
-        echo $questions . " ";
 
         if ($quiz !== null) {
             $assignedQuestions = QuizQuestion::where('quiz_id', $quiz->id)->pluck('question_id')->toArray();

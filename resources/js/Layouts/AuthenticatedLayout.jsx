@@ -75,8 +75,8 @@ export default function Authenticated({ user, header, page_description, children
                                          active={route().current('dashboard')}>
                                     Dashboard
                                 </NavLink>
-                                <NavLink className="bg-white rounded-md py-2 px-4" href={route('dashboard')}
-                                         active={route().current('dashboard')}>
+                                <NavLink className="bg-white rounded-md py-2 px-4" href={route('pathways')}
+                                         active={route().current('pathways')}>
                                     Pathways
                                 </NavLink>
                                 <NavLink className="bg-white rounded-md py-2 px-4" href={route('catalogue')}
@@ -91,8 +91,8 @@ export default function Authenticated({ user, header, page_description, children
                                          active={route().current('dashboard')}>
                                     My Activity
                                 </NavLink>
-                                <NavLink className="bg-white rounded-md py-2 px-4" href={route('dashboard')}
-                                         active={route().current('dashboard')}>
+                                <NavLink className="bg-white rounded-md py-2 px-4" href={route('help')}
+                                         active={route().current('help')}>
                                     Help
                                 </NavLink>
                             </div>
@@ -130,7 +130,7 @@ export default function Authenticated({ user, header, page_description, children
                             <ResponsiveNavLink href={route('dashboard')} active={route().current('dashboard')}>
                                 Dashboard
                             </ResponsiveNavLink>
-                            <ResponsiveNavLink href={route('dashboard')} active={route().current('dashboard')}>
+                            <ResponsiveNavLink href={route('pathways')} active={route().current('pathways')}>
                                 Pathways
                             </ResponsiveNavLink>
                             <ResponsiveNavLink href={route('catalogue')} active={route().current('catalogue')}>
@@ -142,7 +142,7 @@ export default function Authenticated({ user, header, page_description, children
                             <ResponsiveNavLink href={route('dashboard')} active={route().current('dashboard')}>
                                 My Activity
                             </ResponsiveNavLink>
-                            <ResponsiveNavLink href={route('dashboard')} active={route().current('dashboard')}>
+                            <ResponsiveNavLink href={route('help')} active={route().current('help')}>
                                 Help
                             </ResponsiveNavLink>
                         </div>

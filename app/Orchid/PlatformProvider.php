@@ -82,13 +82,18 @@ class PlatformProvider extends OrchidServiceProvider
             Menu::make(__('Quizzes'))
                 ->icon('bs.question-circle')
                 ->route('platform.systems.quizzes')
-                ->permission('platform.systems.roles'),
+                ->permission('platform.systems.quizzes'),
 
             Menu::make(__('Learning Content - This will open in a new tab'))
                 ->icon('bs.book')
                 ->route('pagebuilder')
                 ->permission('platform.systems.learningcontent')
-                ->target('_blank')
+                ->target('_blank'),
+
+            Menu::make(__('Pathways'))
+                ->icon('bs.book')
+                ->route('platform.systems.pathways')
+                ->permission('platform.systems.pathways')
                 ->divider(),
 
             Menu::make('Documentation')
@@ -119,7 +124,8 @@ class PlatformProvider extends OrchidServiceProvider
                 ->addPermission('platform.systems.impersonate', __('Impersonate User')),
             ItemPermission::group(__('Content Management'))
                 ->addPermission('platform.systems.learningcontent', __('Learning Content Management'))
-                ->addPermission('platform.systems.quizzes', __('Quiz Management')),
+                ->addPermission('platform.systems.quizzes', __('Quiz Management'))
+                ->addPermission('platform.systems.pathways', __('Pathway Management')),
         ];
 
     }

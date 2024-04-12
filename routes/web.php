@@ -40,6 +40,14 @@ Route::get('/catalogue', function () {
     return Inertia::render('Catalogue');
 })->middleware(['auth', 'verified'])->name('catalogue');
 
+Route::get('/pathways', function () {
+    return Inertia::render('Pathways');
+})->middleware(['auth', 'verified'])->name('pathways');
+
+Route::get('/help', function () {
+    return Inertia::render('Help');
+})->middleware(['auth', 'verified'])->name('help');
+
 
 
 Route::middleware('auth')->group(function () {

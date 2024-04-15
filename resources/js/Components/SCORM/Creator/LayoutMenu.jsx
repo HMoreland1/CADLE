@@ -1,7 +1,7 @@
 import React from 'react';
 import { useDrag, useDrop } from 'react-dnd';
 
-const LayoutMenu = ({ onLayoutDrop }) => {
+const LayoutMenu = () => {
     // Define layouts with their positions
     const layouts = [
         [
@@ -34,6 +34,10 @@ const LayoutMenu = ({ onLayoutDrop }) => {
         [
             { id: 'layout6-1', width: 100, height: 100 },
         ],
+        [
+            { id: 'layout7-1', width: 80, height:100 },
+            { id: 'layout7-2', width: 20, height:100 },
+        ],
         // Define more layouts here as needed
     ];
 
@@ -42,7 +46,7 @@ const LayoutMenu = ({ onLayoutDrop }) => {
             <div className="layout-menu" style={{ height: '100%', width:'80%', display: 'flex', justifyContent: 'space-between' }}>
                 {/* Render layouts */}
                 {layouts.map((layout, index) => (
-                    <LayoutItem key={index} layout={layout} onLayoutDrop={onLayoutDrop} isFirst={index === 0} />
+                    <LayoutItem key={index} layout={layout}  isFirst={index === 0} />
                 ))}
             </div>
         </div>
@@ -50,7 +54,7 @@ const LayoutMenu = ({ onLayoutDrop }) => {
 };
 
 
-const LayoutItem = ({ layout, onLayoutDrop }) => {
+const LayoutItem = ({ layout }) => {
     // Drag hook for layout item
     const [{ isDragging }, drag] = useDrag({
         type: 'layout',
@@ -60,7 +64,6 @@ const LayoutItem = ({ layout, onLayoutDrop }) => {
     // Drop hook for layout item
     const [{ isOver }, drop] = useDrop({
         accept: 'layout',
-        drop: () => onLayoutDrop(layout),
         collect: (monitor) => ({
             isOver: monitor.isOver(),
         }),

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\LearningContentController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -48,6 +49,9 @@ Route::get('/help', function () {
     return Inertia::render('Help');
 })->middleware(['auth', 'verified'])->name('help');
 
+Route::get('/content/{learningContent}', [LearningContentController::class, 'displayContent'])
+    ->middleware(['auth', 'verified'])
+    ->name('displayContent');
 
 
 Route::middleware('auth')->group(function () {

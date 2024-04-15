@@ -118,14 +118,14 @@
 
 .pagination-btn.prev {
     position: absolute;
-    left: 0;
+    left:0;
     top: 50%; /* Align with the middle of the cards */
-    transform: translateY(-50%);
+    transform: translateY(-50%) translateX(-100%);
 }
 
 .pagination-btn.next {
     position: absolute;
     right: 0;
     top: 50%; /* Align with the middle of the cards */
-    transform: translateY(-50%);
+    transform: translateY(-50%) translateX(100%);
 }

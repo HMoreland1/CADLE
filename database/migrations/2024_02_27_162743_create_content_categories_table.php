@@ -10,12 +10,12 @@ class CreateContentCategoriesTable extends Migration
     {
         Schema::create('content_categories', function (Blueprint $table) {
             $table->id('category_id');
-            $table->string('category_name', 100);
+            $table->string('name');
             $table->timestamps();
         });
     }
 
-    public function down()
+    public function down(): void
     {
         Schema::dropIfExists('content_categories');
     }

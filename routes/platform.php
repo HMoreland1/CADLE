@@ -12,6 +12,8 @@ use App\Orchid\Screens\Examples\ExampleGridScreen;
 use App\Orchid\Screens\Examples\ExampleLayoutsScreen;
 use App\Orchid\Screens\Examples\ExampleScreen;
 use App\Orchid\Screens\Examples\ExampleTextEditorsScreen;
+use App\Orchid\Screens\LearningContent\ContentAssignments\Users\UserContentAssignmentListScreen;
+use App\Orchid\Screens\LearningContent\ContentAssignments\Users\UserContentAssignmentScreen;
 use App\Orchid\Screens\Pathways\PathwayEditScreen;
 use App\Orchid\Screens\Pathways\PathwayListScreen;
 use App\Orchid\Screens\PlatformScreen;
@@ -41,6 +43,24 @@ use App\Orchid\Screens\TaskScreen;
 // Main
 Route::screen('/main', PlatformScreen::class)
     ->name('platform.main');
+/*
+|--------------------------------------------------------------------------
+| Learning Content Routes
+|--------------------------------------------------------------------------
+*/
+// Platform > System > Users
+Route::screen('content/users/assign', UserContentAssignmentListScreen::class)
+    ->name('platform.systems.learningcontent.assign.users')
+    ->breadcrumbs(fn (Trail $trail) => $trail
+        ->parent('platform.index')
+        ->push(__('Content Assignment'), route('platform.systems.learningcontent.assign.users')));
+
+Route::screen('content/user/{userId}/assign', UserContentAssignmentScreen::class)
+    ->name('platform.systems.user.learningcontent.assign')
+    ->breadcrumbs(fn (Trail $trail, $user) => $trail
+        ->parent('platform.systems.learningcontent.assign.users')
+        ->push(__('Content Assignment'), route('platform.systems.user.learningcontent.assign', $user)));
+
 
 /*
 |--------------------------------------------------------------------------

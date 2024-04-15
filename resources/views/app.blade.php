@@ -14,7 +14,7 @@
         <!-- Scripts -->
         @routes
         @viteReactRefresh
-        @vite(['resources/js/app.jsx', "resources/js/Pages/{$page['component']}.jsx"])
+        @vite(['resources/js/app.jsx', "resources/js/Pages/{$page['component']}.jsx" , 'resources/js/Pages/SCORM/SCORMCreator.jsx'])
         @inertiaHead
     </head>
     <body class="font-sans antialiased">

@@ -1,30 +1,18 @@
-import React from 'react';
-import { useDrag } from 'react-dnd';
+import React, { Component } from 'react';
+import SidebarComponent from "@/Components/SCORM/Creator/SidebarComponent.jsx";
 
-const SidebarComponent = ({ componentObj, columnIndex }) => {
-    const [{ isDragging }, drag] = useDrag({
-        type: 'component',
-        item: { type: 'component', component: componentObj.component, columnIndex },
-        collect: (monitor) => ({
-            isDragging: monitor.isDragging(),
-        }),
-    });
+class Sidebar extends Component {
+    render() {
+        const { components } = this.props;
 
-    return (
-        <div className="sidebar-component" style={{ opacity: isDragging ? 0.5 : 1 }}>
-            <button ref={drag}>{componentObj.title}</button>
-        </div>
-    );
-};
-
-const Sidebar = ({ components }) => {
-    return (
-        <div className="sidebar">
-            {components.map((componentObj, index) => (
-                <SidebarComponent key={index} componentObj={componentObj} />
-            ))}
-        </div>
-    );
-};
+        return (
+            <div className="sidebar">
+                {components.map((componentObj, index) => (
+                    <SidebarComponent key={index} componentObj={componentObj} />
+                ))}
+            </div>
+        );
+    }
+}
 
 export default Sidebar;

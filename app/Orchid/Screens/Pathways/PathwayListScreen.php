@@ -4,15 +4,19 @@ declare(strict_types=1);
 
 namespace App\Orchid\Screens\Pathways;
 
+use App\Http\Controllers\ReactControllers\SCORMCreator;
 use App\Models\Pathway;
 use App\Orchid\Layouts\Pathways\PathwayEditLayout;
 use App\Orchid\Layouts\Pathways\PathwayListLayout;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
+use Inertia\Inertia;
 use Orchid\Screen\Actions\Button;
 use Orchid\Screen\Actions\Link;
 use Orchid\Screen\Actions\ModalToggle;
+use Orchid\Screen\Layouts\Blank;
 use Orchid\Screen\Screen;
+use Orchid\Support\Facades\Layout;
 use Orchid\Support\Facades\Toast;
 
 class PathwayListScreen extends Screen
@@ -26,6 +30,7 @@ class PathwayListScreen extends Screen
     {
         return [
             'pathways' => Pathway::query()
+                ->filters()
                 ->defaultSort('id', 'desc')
                 ->paginate(),
         ];
@@ -88,6 +93,8 @@ class PathwayListScreen extends Screen
     {
         return [
             PathwayListLayout::class,
+            Layout::view('scorm_creator'),
+
         ];
     }
 

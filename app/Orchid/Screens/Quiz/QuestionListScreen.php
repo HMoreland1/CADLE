@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Orchid\Screens\Quiz;
 use App\Models\Question;
-use App\Orchid\Layouts\Quiz\QuestionListLayout;
 use App\Models\Quiz;
+use App\Orchid\Layouts\Quiz\QuestionListLayout;
 use Harishdurga\LaravelQuiz\Models\QuizQuestion;
 use Illuminate\Http\Request;
 use Orchid\Screen\Actions\Button;

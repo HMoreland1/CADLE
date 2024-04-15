@@ -6,7 +6,9 @@ namespace App\Http\Controllers;
 use App\Models\LearningContent;
 use App\Models\Pathway;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Response;
+use Inertia\Inertia;
 
 class LearningContentController extends Controller
 {
@@ -38,5 +40,15 @@ class LearningContentController extends Controller
             // Handle any errors
             return response()->json(['error' => $e->getMessage()], 500);
         }
+    }
+    public function displayContent($learningContentId)
+    {
+        $auth = Auth::user(); // Assuming you want to pass the authenticated user data
+        // Fetch the learning content from the database based on the ID
+        $learningContent = LearningContent::find($learningContentId);
+
+        return Inertia::render('Content', [
+            'learningContent' => $learningContent,
+        ]);
     }
 }

@@ -1,11 +1,10 @@
 <?php
 namespace App\Orchid\Screens\Quiz;
-use App\Orchid\Layouts\Quiz\QuestionListLayout;
-use App\Orchid\Layouts\Quiz\QuizEditLayout;
+
 use App\Models\Quiz;
 
-use App\Orchid\Layouts\Quiz\QuizListLayout;
 use App\Models\Question;
+use App\Orchid\Layouts\Quiz\QuizEditLayout;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Validator;

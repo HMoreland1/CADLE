@@ -195,7 +195,8 @@ const LearningContentRepeater = ({ userId, showFilterByDefault, fillWindow, assi
                 }}>
                     {/* Iterate over current items and render content tiles */}
                     {currentItems.map((content, index) => (
-                        <a key={index} href="#" className="tile-link">
+                        <a key={index} href={route('displayContent', {learningContent: content.content_id})}
+                           className="tile-link">
                             <div className="learning-content-tile bg-primary-subtle1">
                                 <div className="image-container">
                                     <img src={content.image_filename || defaultImage} alt={content.title}/>

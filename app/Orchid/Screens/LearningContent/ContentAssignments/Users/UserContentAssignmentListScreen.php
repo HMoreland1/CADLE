@@ -2,42 +2,42 @@
 
 declare(strict_types=1);
 
-namespace App\Orchid\Screens\Quiz;
-use App\Models\Quiz;
-use App\Orchid\Layouts\Quiz\QuizListLayout;
+namespace App\Orchid\Screens\LearningContent\ContentAssignments\Users;
+
+use App\Orchid\Layouts\LearningContent\ContentAssignments\Users\UserContentAssignmentListLayout;
+use App\Orchid\Layouts\User\UserEditLayout;
+use App\Orchid\Layouts\User\UserFiltersLayout;
 use Illuminate\Http\Request;
-use Illuminate\Support\Str;
+use Illuminate\Validation\Rule;
+use Orchid\Platform\Models\User;
 use Orchid\Screen\Actions\Link;
-use Orchid\Screen\Fields\Input;
 use Orchid\Screen\Screen;
 use Orchid\Support\Facades\Layout;
 use Orchid\Support\Facades\Toast;
 
-class QuizListScreen extends Screen
+class UserContentAssignmentListScreen extends Screen
 {
     /**
      * Fetch data to be displayed on the screen.
      *
      * @return array
      */
-    public function query(): array
+    public function query(): iterable
     {
         return [
-            'quizzes' => Quiz::filters()
+            'users' => User::with('roles')
+                ->filters(UserFiltersLayout::class)
                 ->defaultSort('id', 'desc')
-                ->paginate(5),
+                ->paginate(),
         ];
     }
-
-
-
 
     /**
      * The name of the screen displayed in the header.
      */
     public function name(): ?string
     {
-        return 'Quiz Management';
+        return 'User Content Assignment';
     }
 
     /**
@@ -45,13 +45,13 @@ class QuizListScreen extends Screen
      */
     public function description(): ?string
     {
-        return 'A comprehensive list of all Quizzes.';
+        return 'Assign learning content to individual users.';
     }
 
     public function permission(): ?iterable
     {
         return [
-            'platform.systems.quizzes',
+            'platform.systems.users',
         ];
     }
 
@@ -63,9 +63,6 @@ class QuizListScreen extends Screen
     public function commandBar(): iterable
     {
         return [
-            Link::make(__('Add'))
-                ->icon('bs.plus-circle')
-                ->route('platform.systems.quizzes.create'),
         ];
     }
 
@@ -76,33 +73,27 @@ class QuizListScreen extends Screen
      */
     public function layout(): iterable
     {
-
         return [
-            QuizListLayout::class,
-
-
+            UserFiltersLayout::class,
+            UserContentAssignmentListLayout::class
         ];
-
     }
 
     /**
      * @return array
      */
-    public function asyncGetQuiz(Quiz $quiz): iterable
+    public function asyncGetUser(User $user): iterable
     {
         return [
-            'quiz' => $quiz,
+            'user' => $user,
         ];
     }
 
 
-
     public function remove(Request $request): void
     {
-        Quiz::findOrFail($request->get('id'))->delete();
+        User::findOrFail($request->get('id'))->delete();
 
-        Toast::info(__('Quiz was removed'));
+        Toast::info(__('User was removed'));
     }
-
-
 }

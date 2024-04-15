@@ -96,6 +96,14 @@ class PlatformProvider extends OrchidServiceProvider
                 ->permission('platform.systems.pathways')
                 ->divider(),
 
+            Menu::make(__('User Learning Assignment'))
+                ->icon('bs.people')
+                ->route('platform.systems.learningcontent.assign.users')
+                ->permission('platform.systems.users')
+                ->title(__('Learning Assignment'))
+                ->divider(),
+
+
             Menu::make('Documentation')
                 ->title('Docs')
                 ->icon('bs.box-arrow-up-right')
@@ -126,6 +134,8 @@ class PlatformProvider extends OrchidServiceProvider
                 ->addPermission('platform.systems.learningcontent', __('Learning Content Management'))
                 ->addPermission('platform.systems.quizzes', __('Quiz Management'))
                 ->addPermission('platform.systems.pathways', __('Pathway Management')),
+            ItemPermission::group(__('Content Assignment'))
+                ->addPermission('platform.systems.learningcontent.assign', __('Learning Content Assignment'))
         ];
 
     }

@@ -3,10 +3,10 @@
 namespace App\Orchid\Screens\Quiz;
 
 use App\Models\Question;
+use App\Models\QuestionOption;
 use App\Orchid\Layouts\Quiz\QuestionEditLayout;
 use App\Orchid\Layouts\Quiz\QuestionOptionsEditLayout;
 use App\Orchid\Layouts\Quiz\QuestionOptionsListLayout;
-use App\Models\QuestionOption;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Validator;
@@ -76,19 +76,12 @@ class QuestionEditScreen extends Screen
      */
     public function commandBar(): array
     {
-        if ($this->question && $this->question->exists) {
             $buttons = [
                 Button::make(__('Save'))
                     ->icon('bs.check-circle')
-                    ->method('save'),
-            ];
-        } else {
-            $buttons = [
-                Button::make(__('Save'))
-                    ->icon('bs.check-circle')
-                    ->method('save'),
-            ];
-        }
+                    ->method('save')
+                    ->parameters(['runValidation' => true])];
+
 
         return $buttons;
     }

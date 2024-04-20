@@ -31,9 +31,14 @@ export function initializeQuestionsCheckbox(quizTotalMarks) {
 }
 
 document.addEventListener("turbo:load", function() {
-    // Get the total marks of the quiz from a data attribute or any other method
-    const quizTotalMarks = parseInt(document.querySelector('[data-quiz-total-marks]').dataset.quizTotalMarks);
+    // Check if the element with data-quiz-total-marks attribute exists on the current page
+    const quizElement = document.querySelector('[data-quiz-total-marks]');
+    if (quizElement) {
+        // Get the total marks of the quiz from the data attribute
+        const quizTotalMarks = parseInt(quizElement.dataset.quizTotalMarks);
 
-    // Call the function to initialize checkbox behavior
-    initializeQuestionsCheckbox(quizTotalMarks);
+        // Call the function to initialize checkbox behavior
+        initializeQuestionsCheckbox(quizTotalMarks);
+    }
 });
+

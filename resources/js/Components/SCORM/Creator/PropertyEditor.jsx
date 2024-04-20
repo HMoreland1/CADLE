@@ -11,6 +11,7 @@ const PropertyEditor = ({ selectedComponent, onPropertyChange }) => {
 
     const handleChange = (property, value) => {
         // Update the input values state
+        console.log("test");
         const updatedInputValues = {
             ...inputValues,
             [property]: value
@@ -18,7 +19,7 @@ const PropertyEditor = ({ selectedComponent, onPropertyChange }) => {
         setInputValues(updatedInputValues);
 
         // Call the onPropertyChange callback to update the canvas component
-        onPropertyChange(property, value);
+        onPropertyChange(selectedComponent, updatedInputValues);
     };
 
     const renderProperties = () => {

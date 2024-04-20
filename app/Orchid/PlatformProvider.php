@@ -86,7 +86,7 @@ class PlatformProvider extends OrchidServiceProvider
 
             Menu::make(__('Learning Content - This will open in a new tab'))
                 ->icon('bs.book')
-                ->route('pagebuilder')
+                ->route('platform.systems.learningcontent')
                 ->permission('platform.systems.learningcontent')
                 ->target('_blank'),
 
@@ -126,6 +126,8 @@ class PlatformProvider extends OrchidServiceProvider
     public function permissions(): array
     {
         return [
+            ItemPermission::group(__('Super User'))
+                ->addPermission('platform.systems.super', __('Super')),
             ItemPermission::group(__('User Management'))
                 ->addPermission('platform.systems.roles', __('Roles'))
                 ->addPermission('platform.systems.users', __('Users'))

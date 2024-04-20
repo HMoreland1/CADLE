@@ -42,5 +42,18 @@ class Question extends Model
         'valid_from',
         'valid_upto',
         'updated_at',
-        'created_at',];
+        'created_at',
+    ];
+
+    public function quizzes()
+    {
+        return $this->belongsToMany(Quiz::class, 'quiz_questions')
+            ->withPivot('marks', 'negative_marks', 'is_optional', 'order')
+            ->withTimestamps();
+    }
+
+    public function questionOptions()
+    {
+        return $this->hasMany(QuestionOption::class, 'question_id', 'id');
+    }
 }

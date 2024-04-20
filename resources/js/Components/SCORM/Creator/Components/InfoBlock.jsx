@@ -9,16 +9,6 @@ class InfoBlock extends Component {
         };
     }
 
-    // Function to handle changes in title input
-    handleTitleChange = (e) => {
-        this.setState({ title: e.target.value });
-    };
-
-    // Function to handle changes in text input
-    handleTextChange = (e) => {
-        this.setState({ text: e.target.value });
-    };
-
     render() {
         const { title, text } = this.state;
 

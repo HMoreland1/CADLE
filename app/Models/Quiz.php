@@ -47,4 +47,12 @@ class Quiz extends Model
     ];
 
     protected $dates = ['valid_from', 'valid_upto'];
+    public function questions()
+    {
+        return $this->belongsToMany(Question::class, 'quiz_questions', 'quiz_id', 'question_id');
+    }
+    public function quizQuestions()
+    {
+        return $this->hasMany(QuizQuestion::class, 'quiz_id');
+    }
 }

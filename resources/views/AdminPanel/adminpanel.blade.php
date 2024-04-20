@@ -38,23 +38,7 @@
             </p>
         </div>
 
-        <div class="col-md-6 my-2">
-            <h3 class="text-muted fw-light lh-lg d-flex align-items-center">
-                <x-orchid-icon path="bs.rocket"/>
 
-                <span class="ms-3 text-dark">Quick Start Guide</span>
-            </h3>
-            <p class="ms-md-5 ps-md-1">
-                New to CADLE and feeling a bit overwhelmed?
-                Don't sweat it - we've all been there.
-                Dive into our step-by-step tutorials to
-                quickly grasp the core features and functionalities
-                of CADLE. Whether you're navigating course creation
-                or user management, these tutorials are your go-to
-                resource for mastering CADLE in no time. Let's simplify
-                your journey to cyber awareness proficiency together!
-            </p>
-        </div>
 
 
         <div class="col-md-6 my-2">

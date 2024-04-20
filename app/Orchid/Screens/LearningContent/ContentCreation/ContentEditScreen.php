@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Orchid\Screens\Pathways;
+namespace App\Orchid\Screens\LearningContent\ContentCreation;
 
 use App\Models\LearningContent;
 use App\Models\Pathway;
@@ -25,40 +25,32 @@ use Orchid\Support\Facades\Layout;
 use Orchid\Support\Facades\Toast;
 use Orchid\Support\Facades\Dashboard;
 
-class PathwayEditScreen extends Screen
+class ContentEditScreen extends Screen
 {
-    /**
-     * @var Pathway
-     */
-    public $pathway;
 
+    /**
+     * @var LearningContent
+     */
+    public $content;
     /**
      * Fetch data to be displayed on the screen.
      *
      * @return array
      */
-    public function query(Pathway $pathway, LearningContent $learningContent): iterable
+    public function query(?LearningContent $content): array
     {
-        if ($pathway !== null) {
-            $assignedContent = $pathway->content_ids;
-        }
-        else{
-            $assignedContent = [];
-        }
+
         return [
-            'pathway' => $pathway,
-            'content'  => LearningContent::paginate(8),
-            'assignedContent' => $assignedContent,
-            // You can define other data to be queried here if needed
+            'content' => $content ?? new LearningContent(),
         ];
     }
 
-    /**
+        /**
      * The name of the screen displayed in the header.
      */
     public function name(): ?string
     {
-        return $this->pathway->exists ? 'Edit Pathway' : 'Create Pathway';
+        return $this->content->exists ? 'Edit Pathway' : 'Create Pathway';
     }
 
     /**
@@ -88,7 +80,7 @@ class PathwayEditScreen extends Screen
                 ->icon('bs.trash3')
                 ->confirm(__('Once the pathway is deleted, all of its resources and data will be permanently deleted. Before deleting the pathway, please download any data or information that you wish to retain.'))
                 ->method('remove')
-                ->canSee($this->pathway->exists),
+                ->canSee($this->content->exists),
 
             Button::make(__('Save'))
                 ->icon('bs.check-circle')
@@ -110,19 +102,11 @@ class PathwayEditScreen extends Screen
                     Button::make(__('Save'))
                         ->type(Color::BASIC)
                         ->icon('bs.check-circle')
-                        ->canSee($this->pathway->exists)
+                        ->canSee($this->content->exists)
                         ->method('save')
                 ),
-            Layout::block(PathwayContentListLayout::class)
-                ->title(__('Learning Content'))
-                ->description(__('Select Learning Content to be included within the pathway'))
-                ->commands(
-                    Button::make(__('Save'))
-                        ->type(Color::BASIC)
-                        ->icon('bs.check-circle')
-                        ->canSee($this->pathway->exists)
-                        ->method('save')
-                )
+
+            Layout::view('scorm_creator'),
 
         ];
     }

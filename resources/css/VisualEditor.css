@@ -12,7 +12,6 @@
 /* Canvas styles */
 .canvas {
     flex-grow: 1; /* Allow canvas to grow and take remaining space */
-    background-color: grey;
     display: flex;
     flex-direction: column; /* Change to column layout */
     align-items: stretch; /* Stretch items to fill the container */

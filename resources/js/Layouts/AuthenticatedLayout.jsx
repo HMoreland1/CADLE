@@ -158,11 +158,11 @@ export default function Authenticated({ user, header, page_description, children
             </div>
 
             {header && (
-                <div className="py-5 bg-gold">
-                    <header className="bg-gold flex justify-center">
+                <div className="bg-gold">
+                    <header className=" py-3 bg-gold flex justify-center">
                         <div>{header}</div>
                     </header>
-                    <header className="bg-gold flex justify-center">
+                    <header className="py-3 bg-gold flex justify-center">
                         <div>{page_description}</div>
                     </header>
                 </div>

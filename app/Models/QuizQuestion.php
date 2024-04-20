@@ -3,18 +3,22 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\SoftDeletes;
+
 class QuizQuestion extends Model
 {
-    use HasFactory;
-    protected $primaryKey = 'question_id';
+    use SoftDeletes;
+
+    protected $table = 'quiz_questions';
 
     protected $fillable = [
-        'question_text',
-        'option_1',
-        'option_2',
-        'option_3',
-        'option_4',
-        'correct_option',
+        'quiz_id',
+        'question_id',
+        'marks',
+        'negative_marks',
+        'is_optional',
+        'order',
     ];
+
+    // Define relationships and other methods as needed
 }

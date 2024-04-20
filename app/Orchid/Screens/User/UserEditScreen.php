@@ -9,7 +9,7 @@ use App\Orchid\Layouts\Role\RolePermissionLayout;
 use App\Orchid\Layouts\User\UserEditLayout;
 use App\Orchid\Layouts\User\UserPasswordLayout;
 use App\Orchid\Layouts\User\UserRoleLayout;
-use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -22,7 +22,6 @@ use Orchid\Screen\Screen;
 use Orchid\Support\Color;
 use Orchid\Support\Facades\Layout;
 use Orchid\Support\Facades\Toast;
-use Orchid\Support\Facades\Dashboard;
 class UserEditScreen extends Screen
 {
     /**
@@ -149,19 +148,23 @@ class UserEditScreen extends Screen
     }
 
     /**
-     * @return \Illuminate\Http\RedirectResponse
+     * @return RedirectResponse
      */
     public function save(User $user, Request $request)
     {
-        $authUser = Auth::user();
         // Check if the user is authorized to edit users
-       if (!Auth::user()->hasAccess('platform.systems.users')) {
-            Toast::error(__('You are not authorized to perform this action.'));
-            return redirect()->back();
+
+        // Check if the user is authorized to edit users
+        if (!Auth::user()->hasAccess('platform.systems.users')) {
+            // Check if the user has super permission to bypass restrictions
+            if (!Auth::user()->hasAccess('platform.systems.super')) {
+                Toast::error(__('You are not authorized to perform this action.'));
+                return redirect()->back();
+            }
         }
 
         // Check if the user is trying to edit their own profile
-        if ($user->id === Auth::id()) {
+        if ($user->id === Auth::id() && !Auth::user()->hasAccess('platform.systems.super')) {
             // Prevent editing permissions or roles for own profile
             Toast::error(__('You are not allowed to change your own permissions or roles.'));
             return redirect()->back();
@@ -172,7 +175,6 @@ class UserEditScreen extends Screen
 
 
         $permissions = $request->get('permissions', []);
-        $requestedPermission = [];
 
         $decodedPermissions = collect($permissions)->map(function ($value, $key) {
             // Decode the key (permission) if it's not empty
@@ -200,19 +202,19 @@ class UserEditScreen extends Screen
         }
         //dd($extractedPermissions, $allowedPermissions, $invalidPermissions);
         $invalidPermissions = collect($invalidPermissions);
-        if ($invalidPermissions->isNotEmpty()) {
+        if ($invalidPermissions->isNotEmpty() && !Auth::user()->hasAccess('platform.systems.super')) {
             // Prevent the user from granting permissions that they do not have
             Toast::error(__('You are not allowed to grant permissions that you do not have.'));
             return redirect()->back();
         }
 
-        if ($authUser->roles()->exists()) {
+        if (Auth::user()->roles()->exists() || Auth::user()->hasAccess('platform.systems.super')) {
             // Retrieve the highest authority role of the authenticated user
-            $highestAuthorityRole = $authUser->roles()->orderByDesc('authority')->first();
+            $highestAuthorityRole = Auth::user()->roles()->orderByDesc('authority')->first();
             foreach ($request->input('user.roles', []) as $roleId) {
                 $role = Role::findOrFail($roleId);
 
-                if ($role->authority >= $highestAuthorityRole->authority) {
+                if ($role->authority >= $highestAuthorityRole->authority && !Auth::user()->hasAccess('platform.systems.super')) {
                     Toast::error(__('You are not allowed to assign or remove roles of equal or higher authority than your own.'));
                     return redirect()->back();
                 }
@@ -265,7 +267,7 @@ class UserEditScreen extends Screen
     /**
      * @throws \Exception
      *
-     * @return \Illuminate\Http\RedirectResponse
+     * @return RedirectResponse
      */
     public function remove(User $user)
     {
@@ -277,7 +279,7 @@ class UserEditScreen extends Screen
     }
 
     /**
-     * @return \Illuminate\Http\RedirectResponse
+     * @return RedirectResponse
      */
     public function loginAs(User $user)
     {

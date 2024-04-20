@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import { useDrop } from 'react-dnd';
 import { FaTrash } from 'react-icons/fa';
 import { v4 as uuidv4 } from 'uuid';
 
-const Canvas = ({ components, rows, setRows, selectedComponent, setSelectedComponent }) => {
+const Canvas = ({ components, rows, setRows, selectedComponent, setSelectedComponent, existingCanvasObject }) => {
     // State for hovered row and column
     const [hoveredRow, setHoveredRow] = useState(null);
     const [hoveredColumn, setHoveredColumn] = useState(null);
@@ -15,6 +15,64 @@ const Canvas = ({ components, rows, setRows, selectedComponent, setSelectedCompo
         return nextRowId;
     };
 
+    useEffect(() => {
+        const canvasJSON = canvasStateToJSON(rows);
+        console.log("Canvas JSON:", JSON.stringify(canvasJSON, null, 2)); // Stringify JSON object and log to console
+    }, [rows]);
+
+
+
+    const canvasStateToJSON = (rows) => {
+        return {
+            canvas: {
+                rows: rows.map(row => ({
+                    id: row.id,
+                    style: row.style, // Store row style
+                    columns: row.columns.map(column => ({
+                        id: column.id,
+                        width: column.width,
+                        style: column.style, // Store column style
+                        components: column.components.map(component => ({
+                            id: component.id,
+                            title: component.json,
+                            style: component.style // Store component style
+                        }))
+                    }))
+                }))
+            }
+        };
+    };
+    const updateRowsState = (updatedRows) => {
+        setRows(updatedRows);
+        const canvasJSON = canvasStateToJSON(updatedRows);
+        // Save canvas JSON or perform other operations with it
+    };
+    // Load canvas from JSON
+    const loadCanvasFromJSON = (json) => {
+        const { canvas } = json;
+        const loadedRows = canvas.rows.map(row => ({
+            id: row.id,
+            columns: row.columns.map(column => ({
+                width: column.width,
+                components: column.components.map(componentName => {
+                    // Search for component by name
+                    const foundComponent = components.find(component => component.name === componentName);
+                    return foundComponent ? foundComponent : null;
+                })
+            }))
+        }));
+        setRows(loadedRows); // Update canvas state directly
+    };
+
+    useEffect(() => {
+        if (existingCanvasObject) {
+            loadCanvasFromJSON(existingCanvasObject);
+        }
+    }, [existingCanvasObject]);
+
+
+
+
 
     // Function to handle deletion of component from column
     const handleDeleteComponent = (rowId, columnIndex) => {
@@ -22,11 +80,7 @@ const Canvas = ({ components, rows, setRows, selectedComponent, setSelectedCompo
             if (row.id === rowId) {
                 const updatedColumns = row.columns.map((column, index) => {
                     if (index === columnIndex) {
-                        // Check if there is a component to delete
-                        if (column.components.length > 0) {
-                            // If there's a component, remove it by emptying the components array
-                            return { ...column, components: [] };
-                        }
+                        return { ...column, components: [] };
                     }
                     return column;
                 });
@@ -34,18 +88,14 @@ const Canvas = ({ components, rows, setRows, selectedComponent, setSelectedCompo
             }
             return row;
         });
-        setRows(updatedRows);
+        updateRowsState(updatedRows);
     };
 
-    // Function to handle delete button state for a specific column
-    const handleDeleteButtonHover = (columnIndex, isHovering) => {
-        setHoveredColumn(isHovering ? columnIndex : null);
-    };
 
     // Function to handle delete button state for a specific row
     const handleDeleteRow = (rowId) => {
         const updatedRows = rows.filter(row => row.id !== rowId);
-        setRows(updatedRows);
+        updateRowsState(updatedRows);
     };
 
     // Function to handle hover state for rows
@@ -60,18 +110,21 @@ const Canvas = ({ components, rows, setRows, selectedComponent, setSelectedCompo
 
     // Function to handle drop layout
     const handleDropLayout = (layout) => {
-        const newRow = { id: uuidv4(), columns: layout.map(column => ({ width: column.width, components: [] })) };
+        const newRow = { id: uuidv4(), columns: layout.map(column => ({ id: uuidv4(), width: column.width, components: [] })) };
         setRows([...rows, newRow]);
     };
 
     // Function to handle drop component
     const handleDropComponent = (item, rowId, columnIndex) => {
-        const { component } = item;
+        const { component, title, json } = item;
+
+
+        // Add the new component to the canvas with its ID
         const updatedRows = rows.map(row => {
             if (row.id === rowId) {
                 const updatedColumns = row.columns.map((column, index) => {
                     if (index === columnIndex) {
-                        return { ...column, components: [component] };
+                        return { ...column, components: [{ id: uuidv4(), component, title, json }] };
                     }
                     return column;
                 });
@@ -79,8 +132,12 @@ const Canvas = ({ components, rows, setRows, selectedComponent, setSelectedCompo
             }
             return row;
         });
-        setRows(updatedRows);
+        updateRowsState(updatedRows);
     };
+
+
+
+
 
     // DnD hook for layout drop
     const [, layoutDrop] = useDrop({
@@ -104,9 +161,6 @@ const Canvas = ({ components, rows, setRows, selectedComponent, setSelectedCompo
             const boundingRect = rowElement.getBoundingClientRect();
             const rowWidth = boundingRect.width;
             const columnWidths = row.columns.map(column => column.width * (rowWidth / 100)); // Calculate width of each column
-
-
-
 
 
             let cumulativeWidth = 0;
@@ -137,6 +191,7 @@ const Canvas = ({ components, rows, setRows, selectedComponent, setSelectedCompo
     });
 
     // Column component
+    // Column component
     const Column = ({ rowId, columnIndex, column, handleDropComponent }) => {
         const [, componentDrop] = useDrop({
             accept: 'component',
@@ -163,7 +218,7 @@ const Canvas = ({ components, rows, setRows, selectedComponent, setSelectedCompo
                 onMouseLeave={() => setIsColumnHovered(false)}
                 onClick={() => {
                     if (column.components.length > 0) {
-                        setSelectedComponent(column.components[0]);
+                        setSelectedComponent(column.components[0].component); // Select the component
                     } else {
                         setSelectedComponent(null); // Clear selectedComponent if no components are present
                     }
@@ -174,7 +229,7 @@ const Canvas = ({ components, rows, setRows, selectedComponent, setSelectedCompo
                 <div className="column-content">
                     {column.components.length > 0 && (
                         <div className="component">
-                            {column.components[0]}
+                            {column.components[0].component}
                         </div>
                     )}
                 </div>
@@ -203,9 +258,10 @@ const Canvas = ({ components, rows, setRows, selectedComponent, setSelectedCompo
         );
     };
 
+
     return (
         <div className="canvas-container" style={{ display: 'flex', flexDirection: 'column', width: '100%', height: '100%', justifyContent: 'flex-start' }}>
-            <div className="canvas" ref={layoutDrop} style={{ overflowY: 'auto', flexGrow: 1, display: 'flex', flexDirection: 'column' }}>
+            <div className="canvas" ref={layoutDrop} style={{ flexGrow: 1, display: 'flex', flexDirection: 'column' }}>
                 {rows.map((row, rowIndex) => (
                     <div key={row.id} style={{ position: 'relative', minHeight: '10%', width: '80%', margin: '5px auto' }}
                          className="canvas-row" id={`canvas-row-${row.id}`}

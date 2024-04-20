@@ -143,7 +143,7 @@ class QuestionListScreen extends Screen
         foreach ($selectedQuestions as $questionId) {
             QuizQuestion::updateOrCreate(
                 ['quiz_id' => $this->quiz->id, 'question_id' => $questionId],
-                ['marks' => 1, 'order' => 1, 'negative_marks' => 1, 'is_optional' => false]
+                ['marks' => 1, 'order' => 1, 'negative_marks' => 0, 'is_optional' => false]
             );
         }
 

@@ -1,28 +1,26 @@
-import React from 'react';
+
 import { useDrag, useDrop } from 'react-dnd';
 
 const LayoutMenu = () => {
     // Define layouts with their positions
     const layouts = [
         [
-            { id: 'layout1-1', width: 50, height: 100 },
-            { id: 'layout1-2', width: 50, height: 100 },
+            { id: 'layout1-1', width: 100, height: 100 },
         ],
         [
-            { id: 'layout2-1', width: 25, height: 100 },
-            { id: 'layout2-2', width: 25, height: 100 },
-            { id: 'layout2-3', width: 25, height: 100 },
-            { id: 'layout2-4', width: 25, height: 100 },
+            { id: 'layout2-1', width: 50, height: 100 },
+            { id: 'layout2-2', width: 50, height: 100 },
         ],
         [
-            { id: 'layout3-1', width: 25, height: 100 },
-            { id: 'layout3-2', width: 50, height: 100 },
-            { id: 'layout3-3', width: 25, height: 100 },
+            { id: 'layout3-1', width: 33, height: 100 },
+            { id: 'layout3-2', width: 34, height: 100 },
+            { id: 'layout3-3', width: 33, height: 100 },
         ],
         [
-            { id: 'layout4-1', width: 33, height: 100 },
-            { id: 'layout4-2', width: 34, height: 100 },
-            { id: 'layout4-3', width: 33, height: 100 },
+            { id: 'layout4-1', width: 25, height: 100 },
+            { id: 'layout4-2', width: 25, height: 100 },
+            { id: 'layout4-3', width: 25, height: 100 },
+            { id: 'layout4-4', width: 25, height: 100 },
         ],
         [
             { id: 'layout5-1', width: 20, height: 100 },
@@ -32,31 +30,66 @@ const LayoutMenu = () => {
             { id: 'layout5-5', width: 20, height: 100 },
         ],
         [
-            { id: 'layout6-1', width: 100, height: 100 },
+            { id: 'layout6-1', width: 20, height: 100 },
+            { id: 'layout6-2', width: 20, height: 100 },
+            { id: 'layout6-3', width: 20, height: 100 },
+            { id: 'layout6-4', width: 20, height: 100 },
+            { id: 'layout6-5', width: 20, height: 100 },
         ],
         [
-            { id: 'layout7-1', width: 80, height:100 },
-            { id: 'layout7-2', width: 20, height:100 },
+            { id: 'layout7-1', width: 20, height: 100 },
+            { id: 'layout7-2', width: 40, height: 100 },
+            { id: 'layout7-3', width: 40, height: 100 },
+        ],
+        [
+            { id: 'layout8-1', width: 40, height: 100 },
+            { id: 'layout8-2', width: 40, height: 100 },
+            { id: 'layout8-3', width: 20, height: 100 },
+        ],
+        [
+            { id: 'layout9-1', width: 25, height:100 },
+            { id: 'layout9-2', width: 25, height:100 },
+            { id: 'layout9-3', width: 50, height:100 },
+        ],
+        [
+            { id: 'layout10-1', width: 50, height:100 },
+            { id: 'layout10-2', width: 25, height:100 },
+            { id: 'layout10-3', width: 25, height:100 },
+        ],
+        [
+            { id: 'layout11-1', width: 25, height:100 },
+            { id: 'layout11-2', width: 50, height:100 },
+            { id: 'layout11-3', width: 25, height:100 },
+        ],
+        [
+            { id: 'layout12-1', width: 15, height:100 },
+            { id: 'layout12-2', width: 70, height:100 },
+            { id: 'layout12-3', width: 15, height:100 },
         ],
         // Define more layouts here as needed
     ];
 
     return (
-        <div className="layout-menu-wrapper" style={{ height: '100%', overflow: 'hidden',  display: 'flex', justifyContent: 'center' }}>
-            <div className="layout-menu" style={{ height: '100%', width:'80%', display: 'flex', justifyContent: 'space-between' }}>
+        <div className="layout-menu-wrapper"
+             style={{ display: 'flex', justifyContent: 'center'}}>
+            <div className="layout-menu"
+                 style={{ width: '80%', display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(150px, 1fr))', gap: '10px'}}>
                 {/* Render layouts */}
                 {layouts.map((layout, index) => (
-                    <LayoutItem key={index} layout={layout}  isFirst={index === 0} />
+                    <LayoutItem key={index} layout={layout} isFirst={index === 0}/>
                 ))}
             </div>
         </div>
     );
+
+
+
 };
 
 
-const LayoutItem = ({ layout }) => {
+const LayoutItem = ({layout}) => {
     // Drag hook for layout item
-    const [{ isDragging }, drag] = useDrag({
+    const [{isDragging}, drag] = useDrag({
         type: 'layout',
         item: { type: 'layout', layout },
     });
@@ -69,47 +102,52 @@ const LayoutItem = ({ layout }) => {
         }),
     });
 
-    // Render SVG images based on layout
-    const totalWidth = layout.reduce((acc, cur) => acc + cur.width, 0) / 5;
+    const renderSVGs = () => {
+        const svgElements = [];
 
-    // Calculate scaling factor for the SVG boxes
-    const scaleFactor = 100 / totalWidth;
+        layout.forEach((position, index) => {
+            // Calculate the width of the current column
+            const columnWidth = `${position.width}%`;
 
-    // Render SVG boxes based on layout
-    const renderLayoutImages = () => {
-        return (
-            <div style={{ display: 'flex', flexDirection: 'row', height: '100%' }}>
-                {layout.map((position, index) => {
-                    const boxWidth = position.width * scaleFactor;
-                    const viewBoxWidth = position.width + 20; // Adjusted to accommodate padding
-                    return (
-                        <svg key={index} width={`${boxWidth}%`} height="100%" viewBox={`0 0 ${viewBoxWidth} 100`} xmlns="http://www.w3.org/2000/svg">
-                            {/* Add SVG rect element to represent the layout box with rounded corners */}
-                            <rect width={`${position.width}`} height="100" rx="5" ry="5" fill="blue" />
-                        </svg>
-                    );
-                })}
-            </div>
-        );
+            // Add SVG for column
+            svgElements.push(
+                <div key={`column-${index}`} style={{ width: columnWidth, height: '100%' }}>
+                    <svg width="100%" height="100%">
+                        {/* Example content: a rectangle filling the entire SVG */}
+                        <rect x="0" y="0" width="100%" height="100%" fill="gray" rx="5" ry="5"/>
+                    </svg>
+                </div>
+            );
+
+            // Add space between columns except for the last one
+            if (index !== layout.length - 1) {
+                svgElements.push(
+                    <div key={`space-${index}`} style={{ width: '10px', height: '100%' }} />
+                );
+            }
+        });
+
+        return svgElements;
     };
-
     return (
-        <div className="layout" ref={drag} style={{ margin:'10px', opacity: isDragging ? 0.5 : 1 }}>
-            {renderLayoutImages()} {/* Render SVG images */}
+        <div className="layout" ref={drag}
+             style={{width: '75%', margin: 'auto', opacity: isDragging ? 0.5 : 1}}>
+            <div style={{display: 'flex', flexDirection: 'row', height: '100%'}}>
+                {renderSVGs()}
+            </div>
+
+
             {layout.map((position, index) => (
                 <div
                     key={position.id}
                     className="layout-dropzone"
                     style={{
                         width: `${position.width}%`,
-                        height: `${position.height}%`,
-                        marginRight: index < layout.length - 1 ? '5px' : '0', // Adjusted gap between boxes
+                        margin: '5px', // Adjusted gap between boxes
                     }}
                     ref={drop}
                 />
             ))}
-            {/* Drop zone */}
-            <div style={{ height: '100%', backgroundColor: isOver ? 'lightgray' : 'transparent' }} />
         </div>
     );
 };

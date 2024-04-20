@@ -3,7 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\Quiz;
+use App\Models\UserAssignedContent;
+use Harishdurga\LaravelQuiz\Models\QuizAttempt;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
+use Inertia\Inertia;
 
 class QuizController extends Controller
 {
@@ -63,6 +68,58 @@ class QuizController extends Controller
         return redirect()->route('platform.quiz')
             ->with('success', 'Quiz deleted successfully.');
     }
+
+
+
+    public function showQuiz($quizId, $learningContent = null)
+    {
+
+        // Fetch the quiz data along with its associated quiz questions and questions
+        $quiz = Quiz::with(['quizQuestions', 'questions.questionOptions'])->find($quizId);
+
+        // Return the quiz data as JSON response
+        return Inertia::render('Quiz', [
+            'quiz' => $quiz,
+            'content' =>$learningContent,
+        ]);
+    }
+
+
+    public function showQuizResult($quizId, $contentId = null, $attemptId)
+    {
+
+        // Fetch the quiz data along with its associated quiz questions and questions
+        $quiz = Quiz::with(['quizQuestions', 'questions.questionOptions'])->find($quizId);
+
+        // Find the quiz attempt
+        $quizAttempt = QuizAttempt::find($attemptId);
+
+        // Validate the quiz attempt and calculate score
+
+        $result = $quizAttempt->calculate_score();
+
+
+        // Check if the user has the content assigned to them
+        $contentAssignment = UserAssignedContent::where('user_id', auth()->id())
+            ->where('content_id', $contentId)
+            ->first();
+
+        // If the content is assigned and the user passed the quiz, mark the content assignment as completed
+        if ($contentAssignment && $result >= $quiz->pass_marks) {
+            $contentAssignment->completed = true;
+            $contentAssignment->save();
+        }
+
+        // Return the quiz data as JSON response
+        return Inertia::render('ContentComplete', [
+            'quiz' => $quiz,
+            'content' => $contentId,
+            'score' => $result,
+            'val' => $quizAttempt->validate()
+        ]);
+    }
+
+
 
 
 }

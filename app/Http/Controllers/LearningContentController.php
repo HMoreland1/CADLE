@@ -43,8 +43,7 @@ class LearningContentController extends Controller
     }
     public function displayContent($learningContentId)
     {
-        $auth = Auth::user(); // Assuming you want to pass the authenticated user data
-        // Fetch the learning content from the database based on the ID
+
         $learningContent = LearningContent::find($learningContentId);
 
         return Inertia::render('Content', [

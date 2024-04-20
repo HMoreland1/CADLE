@@ -3,7 +3,7 @@ import { Head } from '@inertiajs/react';
 
 export default function Content({ auth, learningContent }) {
 
-    console.log(learningContent.content)
+    console.log(learningContent.content_id)
     return (
         <AuthenticatedLayout
 
@@ -16,15 +16,20 @@ export default function Content({ auth, learningContent }) {
 
             <div className="py-6">
                 <div className="mx-auto sm:px-6 lg:px-8" style={{width: '70%'}}>
-                    <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+                    <div
+                        className="py-6 bg-white overflow-hidden shadow-sm sm:rounded-lg items-center flex flex-col justify-center">
                         <div className="py-6">
                             <div dangerouslySetInnerHTML={{__html: learningContent.content}}/>
-                            {/* You can display more details of the learning content here */}
+
                         </div>
+                        <a href={route('showQuiz', {quiz: learningContent.quiz_id, learningContent: learningContent.content_id})} className="py-3 px-3 text-white bg-navy-blue rounded-xl">
+                            Take the quiz
+                        </a>
+
                     </div>
                 </div>
             </div>
 
         </AuthenticatedLayout>
-);
+    );
 }

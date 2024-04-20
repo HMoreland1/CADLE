@@ -4,6 +4,8 @@ use App\Http\Controllers\Components\UserLearningController;
 use App\Http\Controllers\LearningContentController;
 use App\Http\Controllers\PathwayController;
 use App\Http\Controllers\QuestionController;
+use App\Http\Controllers\QuizAttemptController;
+use App\Http\Controllers\QuizController;
 use App\Http\Controllers\SCORMCreatorController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -23,6 +25,8 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+
+
 // Route to fetch learning content assigned directly to a user
 Route::get('/learning-content/user/{userId}', [UserLearningController::class, 'getAssignedContentForUser']);
 Route::get('/learning-content/user/{userId}/status', [UserLearningController::class, 'getAssignedContentCompletionStatus']);
@@ -35,6 +39,12 @@ Route::get('/scorm-creator', [SCORMCreatorController::class, 'index'])->name('sc
 
 // Route to fetch learning content assigned to a user through their roles
 Route::get('/learning-content/role/{userId}', [UserLearningController::class, 'getAssignedContentForUserRole']);
+
+Route::post('/quiz-attempts/user/{userId}/quiz/{quizId}/start', [QuizAttemptController::class, 'startQuiz']);
+
+Route::get('/quiz-attempts/{quizAttempt}/evaluate', [QuizAttemptController::class, 'evaluate']);
+
+Route::post('/quiz-attempts/storeAnswer', [QuizAttemptController::class, 'storeAnswers']);
 
 
 Route::get('/pathways', [PathwayController::class, 'index']);

@@ -15,7 +15,7 @@ use Orchid\Screen\Screen;
 use Orchid\Support\Facades\Layout;
 use Orchid\Support\Facades\Toast;
 
-class RoleEditScreen extends Screen
+class  RoleEditScreen extends Screen
 {
     /**
      * @var Role

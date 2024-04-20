@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useLayoutEffect } from 'react';
+import { useState, useEffect, useLayoutEffect } from 'react';
 import LearningContentService from '@/Services/LearningContentService.jsx';
 import '/resources/css/LearningContentRepeater.css';
 import defaultImage from '/resources/imgs/LearningContentThumbnails/default.jpg';
@@ -204,8 +204,8 @@ const LearningContentRepeater = ({ userId, showFilterByDefault, fillWindow, assi
                                 <div className="banner p-3">
                                     <p>test{content.content_type}</p>
                                 </div>
-                                <div className=" p-3 title-container">
-                                    <h3 style={{fontWeight: 'bold', marginTop: '10px', marginBottom: '10px'}}>
+                                <div className="py-3 px-3 title-container">
+                                    <h3 style={{fontWeight: 'bold', marginTop: '1px'}}>
                                         {content.title}
                                     </h3>
                                 </div>

@@ -14,6 +14,8 @@ use App\Orchid\Screens\Examples\ExampleScreen;
 use App\Orchid\Screens\Examples\ExampleTextEditorsScreen;
 use App\Orchid\Screens\LearningContent\ContentAssignments\Users\UserContentAssignmentListScreen;
 use App\Orchid\Screens\LearningContent\ContentAssignments\Users\UserContentAssignmentScreen;
+use App\Orchid\Screens\LearningContent\ContentCreation\ContentEditScreen;
+use App\Orchid\Screens\LearningContent\ContentCreation\ContentListScreen;
 use App\Orchid\Screens\Pathways\PathwayEditScreen;
 use App\Orchid\Screens\Pathways\PathwayListScreen;
 use App\Orchid\Screens\PlatformScreen;
@@ -60,6 +62,25 @@ Route::screen('content/user/{userId}/assign', UserContentAssignmentScreen::class
     ->breadcrumbs(fn (Trail $trail, $user) => $trail
         ->parent('platform.systems.learningcontent.assign.users')
         ->push(__('Content Assignment'), route('platform.systems.user.learningcontent.assign', $user)));
+
+Route::screen('content', ContentListScreen::class)
+    ->name('platform.systems.learningcontent')
+    ->breadcrumbs(fn (Trail $trail) => $trail
+        ->parent('platform.index')
+        ->push(__('Content Assignment'), route('platform.systems.learningcontent')));
+
+Route::screen('content/{contentId}/edit}', ContentEditScreen::class)
+    ->name('platform.systems.learningcontent.edit')
+    ->breadcrumbs(fn (Trail $trail, $content) => $trail
+        ->parent('platform.systems.learningcontent')
+        ->push(__('Content Assignment'), route('platform.systems.learningcontent.edit')));
+
+Route::screen('content/create', ContentEditScreen::class)
+    ->name('platform.systems.learningcontent.create')
+    ->breadcrumbs(fn (Trail $trail) => $trail
+        ->parent('platform.index')
+        ->push(__('Questions'), route('platform.systems.learningcontent.create')));
+
 
 
 /*

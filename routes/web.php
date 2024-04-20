@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\LearningContentController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\QuizController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -16,7 +17,7 @@ use App\Http\Controllers\SCORMCreatorController;
 | contains the "web" middleware group. Now create something great!
 |
 */
-require __DIR__.'/optionbuilder.php';
+//require __DIR__.'/optionbuilder.php';
 
 
 Route::get('/popup', function () {
@@ -54,6 +55,15 @@ Route::get('/content/{learningContent}', [LearningContentController::class, 'dis
     ->name('displayContent');
 
 
+Route::get('/content/{learningContent}/quiz/{quiz}/complete/{attemptId}', [QuizController::class, 'showQuizResult'])
+    ->middleware(['auth', 'verified'])
+    ->name('showQuizResult');
+
+
+Route::get('/content/{learningContent}/quiz/{quiz}/', [QuizController::class, 'showQuiz'])
+    ->middleware(['auth', 'verified'])
+    ->name('showQuiz');
+
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
@@ -67,6 +77,6 @@ Route::get('/scorm/creator', function () {
 
 
 require __DIR__.'/auth.php';
-require __DIR__.'/pagebuilder.php';
+//require __DIR__.'/pagebuilder.php';
 
 

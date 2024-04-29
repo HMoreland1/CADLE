@@ -1,24 +1,34 @@
-// CreatorContainer.jsx
-import ReactDOM from 'react-dom/client';
-import VisualEditor from "@/Components/SCORM/Creator/VisualEditor.jsx";
 
-export function initializeCreator() {
-        // Get the element with id "creator-container"
-        console.log("test")
-        const creatorContainer = document.getElementById("creator-container");
+import { createRoot } from 'react-dom/client';
+import Editor from "@/Components/SCORM/Editor/Editor.jsx";
 
-        // Render VisualEditor component into the "creator-container"
-        if (creatorContainer) {
-            const root= ReactDOM.createRoot(creatorContainer)
-            root.render(<VisualEditor/>);
+
+
+export function initializeCreator(rows) {
+    const creatorContainer = document.getElementById("creator-container");
+    let root = null
+    if (creatorContainer) {
+        console.log("creatorContainer: ", creatorContainer)
+        root = createRoot(creatorContainer);
+        console.log("root: ", root)
+        if (root && creatorContainer) {
+            root.render(<Editor startingRows={rows} isEditing={true} />);
+        } else {
+
+            console.log("No Container ", creatorContainer)
         }
+    }
 
 
-    return null; // or you can return some placeholder content here
+
+    return root;
 }
 
-document.addEventListener("turbo:load", function() {
-    // Get the total marks of the quiz from a data attribute or any other method
-    // Call the function to initialize checkbox behavior
-    initializeCreator();
-});
+// Function to unmount the component and remove the root
+
+
+
+    // Add cleanup function to listen for Turbo visit events
+
+
+

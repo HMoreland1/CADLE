@@ -12,12 +12,12 @@ export default function Catalogue({auth}) {
         >
             <Head title="Catalogue"/>
 
-            <div className="py-6">
-                <div className="mx-auto sm:px-6 lg:px-8" style={{width: '70%'}}>
-                    <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+            <div className="overflow-visible py-6">
+                <div className="mx-auto overflow-visible sm:px-6 lg:px-8" style={{width: '70%'}}>
+                    <div className="bg-white overflow-visible shadow-sm sm:rounded-lg">
 
 
-                        <div className={"p-4"}>
+                        <div className={"overflow-visible p-4"}>
                             <LearningContentRepeater showFilterByDefault={true} fillWindow={true}/>
 
                         </div>

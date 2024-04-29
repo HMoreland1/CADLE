@@ -8,7 +8,7 @@ class CreateLearningContentsTable extends Migration
     public function up(): void
     {
         Schema::create('learning_contents', function (Blueprint $table) {
-            $table->id('content_id');
+            $table->increments('content_id');
             $table->foreignId('quiz_id')->constrained('quizzes', "id");
             $table->json('category_ids')->nullable();
             $table->longText('description');

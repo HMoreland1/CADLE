@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Quiz;
 use App\Models\UserAssignedContent;
+use App\Models\UserRoleAssignedContent;
 use Harishdurga\LaravelQuiz\Models\QuizAttempt;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -71,12 +72,10 @@ class QuizController extends Controller
 
 
 
-    public function showQuiz($quizId, $learningContent = null)
+    public function showQuiz(  $quizId, $learningContent = null,)
     {
-
         // Fetch the quiz data along with its associated quiz questions and questions
         $quiz = Quiz::with(['quizQuestions', 'questions.questionOptions'])->find($quizId);
-
         // Return the quiz data as JSON response
         return Inertia::render('Quiz', [
             'quiz' => $quiz,
@@ -85,7 +84,7 @@ class QuizController extends Controller
     }
 
 
-    public function showQuizResult($quizId, $contentId = null, $attemptId)
+    public function showQuizResult($contentId = null, $quizId, $attemptId,)
     {
 
         // Fetch the quiz data along with its associated quiz questions and questions
@@ -103,6 +102,12 @@ class QuizController extends Controller
         $contentAssignment = UserAssignedContent::where('user_id', auth()->id())
             ->where('content_id', $contentId)
             ->first();
+
+        if(!$contentAssignment){
+            $contentAssignment = UserRoleAssignedContent::where('user_id', auth()->id())
+                ->where('content_id', $contentId)
+                ->first();
+        }
 
         // If the content is assigned and the user passed the quiz, mark the content assignment as completed
         if ($contentAssignment && $result >= $quiz->pass_marks) {

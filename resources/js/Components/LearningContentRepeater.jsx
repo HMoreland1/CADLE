@@ -3,7 +3,7 @@ import LearningContentService from '@/Services/LearningContentService.jsx';
 import '/resources/css/LearningContentRepeater.css';
 import defaultImage from '/resources/imgs/LearningContentThumbnails/default.jpg';
 
-const LearningContentRepeater = ({ userId, showFilterByDefault, fillWindow, assignedContentIds}) => {
+const LearningContentRepeater = ({ userId, complete, showFilterByDefault, fillWindow, assignedContentIds}) => {
     // State variables initialization
     const [learningContent, setLearningContent] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
@@ -14,7 +14,7 @@ const LearningContentRepeater = ({ userId, showFilterByDefault, fillWindow, assi
     const [showFilter, setShowFilter] = useState(showFilterByDefault);
     const [selectedCategory, setSelectedCategory] = useState(null);
     const [searchQuery, setSearchQuery] = useState('');
-
+    console.log("USER ID 2: ", userId)
 
     // Fetch learning content and set states when component mounts or userId changes
     useEffect(() => {
@@ -22,10 +22,15 @@ const LearningContentRepeater = ({ userId, showFilterByDefault, fillWindow, assi
             try {
                 let content;
                 if (userId) {
-                    content = await LearningContentService.getAssignedContent(userId);
-                    if (!content || content.length === 0) {
-                        setError("Your training is currently up to date.");
+                    if (complete){
+                        content = await LearningContentService.getAssignedContent(userId, complete);
+                    } else {
+                        content = await LearningContentService.getAssignedContent(userId, complete);
+                        if (!content || content.length === 0) {
+                            setError("Your training is currently up to date.");
+                        }
                     }
+
                 }
                 else if(assignedContentIds != null) {
                     content = await LearningContentService.getPathwayContent(assignedContentIds);
@@ -51,12 +56,12 @@ const LearningContentRepeater = ({ userId, showFilterByDefault, fillWindow, assi
         // This function will be executed whenever isLoading changes
         const handleStateChange = async () => {
             // Do something when isLoading changes
-            console.log("isLoading changed:", isLoading);
+            //console.log("isLoading changed:", isLoading);
             // Call any other functions or logic you want to execute
             if (isLoading) {
-                console.log("Learning Content Length: ", learningContent.length);
+                //console.log("Learning Content Length: ", learningContent.length);
                 setItemsPerRow(Math.min(itemsPerRow, learningContent.length));
-                console.log("Row: ",itemsPerRow);
+                //console.log("Row: ",itemsPerRow);
             }
         }
 
@@ -80,7 +85,7 @@ const LearningContentRepeater = ({ userId, showFilterByDefault, fillWindow, assi
             const itemsPerRow = Math.floor(0.8 * windowWidth / cardWidth);
             const rowsPerPage = Math.floor(0.9 * windowHeight / cardHeight);
 
-            console.log("isLoading Calc:", isLoading);
+            //console.log("isLoading Calc:", isLoading);
             if(isLoading){
                 setItemsPerRow(Math.min(itemsPerRow, learningContent.length));
             }
@@ -211,6 +216,7 @@ const LearningContentRepeater = ({ userId, showFilterByDefault, fillWindow, assi
                                 </div>
                                 <div className="tooltip">{content.description}</div>
                             </div>
+
                         </a>
                     ))}
                     {/* Render message if no matching results */}

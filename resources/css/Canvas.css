@@ -1,0 +1,111 @@
+.canvas {
+    max-height: 100%;
+    overflow-y: auto;
+    background-color: white;
+}
+.rows-container {
+    margin-top: 2.5%;
+}
+.no-border {
+    border: none !important;
+}
+.canvas-row {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+    width: 100%;
+    height: auto;
+    transition: background-color 0.3s ease;
+    background-color: white; /* Default background color */
+}
+
+.canvas-row.canvas-row-hovered {
+    background-color: lightgrey; /* Highlight the row on hover */
+}
+
+
+.canvas-row:hover {
+    background-color: lightgrey; /* Highlight the row on hover */
+}
+
+.canvas-row.hovered-column:hover {
+    background-color: white; /* Remove highlight when a column is also hovered */
+}
+
+.canvas-column {
+    border: 1px solid #000;
+    cursor: pointer;
+    height: auto; /* Adjust height based on content */
+    margin: 5px;
+    min-height: 50px;
+}
+.row-container{
+    position: relative;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-content: center;
+}
+
+.column-container{
+    position: relative;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-content: center;
+}
+
+.canvas-column:hover {
+    background-color: lightgrey; /* Highlight the column on hover */
+}
+.canvas-column.isEditing:hover {
+    background-color: white; /* Remove highlight when a column is also hovered */
+    cursor: auto;
+}
+/* Remove highlighting of row when a column is hovered
+.canvas-row:hover{
+    background-color: lightgrey;
+}*/
+
+.column-button {
+    position: absolute; /* Position the button */
+    top: -15px; /* Align the button to the top */
+    left: 50%; /* Align the button to the horizontal center */
+    transform: translateX(-50%); /* Adjust horizontal position to center */
+    background-color: #21252a; /* Transparent background */
+    border-radius:50%;
+    color: white;
+    border: none; /* Remove border */
+    cursor: pointer; /* Set cursor to pointer */
+    padding: 8px; /* Add padding */
+    z-index: 1; /* Ensure the button appears above other elements */
+
+}
+.row-button {
+    position: absolute; /* Position the button */
+    top: -20px; /* Align the button to the top */
+    left: 50%; /* Align the button to the horizontal center */
+    transform: translateX(-50%); /* Adjust horizontal position to center */
+    background-color: #21252a; /* Transparent background */
+    border-radius:50%;
+    color: white;
+    border: none; /* Remove border */
+    cursor: pointer; /* Set cursor to pointer */
+    padding: 8px; /* Add padding */
+    z-index: 1; /* Ensure the button appears above other elements */
+}
+
+.row-button:hover {
+    color: red; /* Change button color on hover */
+}
+
+.canvas-row:hover .row-button {
+    display: block; /* Show the row button on hover */
+}
+
+.canvas-column:hover .column-button {
+    display: block; /* Show the column button on hover */
+}

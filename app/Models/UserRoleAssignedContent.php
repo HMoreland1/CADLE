@@ -13,7 +13,7 @@ class UserRoleAssignedContent extends Model
     protected $fillable = [
         'user_id',
         'role_id',
-        'learning_content_id',
+        'content_id',
         'completed',
     ];
 

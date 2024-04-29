@@ -11,6 +11,14 @@ class RoleAssignedContent extends Model
 
     protected $table = 'role_assigned_content';
 
+
+    protected $fillable = [
+        'role_id',
+        'content_id', // Updated field name
+        'importance', // New field
+        'completed',
+    ];
+
     public function role()
     {
         return $this->belongsTo(Role::class);

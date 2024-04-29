@@ -41,7 +41,7 @@
     border-radius: 6px;
     padding: 5px;
     position: fixed; /* Position fixed to stay at the top of the screen */
-    top: 0; /* Align with the top of the screen */
+    top: 18vh; /* Align with the top of the screen */
     left: 50%;
     transform: translateX(-50%);
     opacity: 0;

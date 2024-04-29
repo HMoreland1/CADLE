@@ -1,0 +1,139 @@
+/* styles.css */
+
+/* Editor Styles */
+.editor-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    max-height: 93.5vh; /* Make the editor take up the entire viewport height */
+    width: 100%;
+}
+.editor {
+    display: flex;
+    flex-direction: row;
+
+    justify-content: space-between;
+    height: 100vh; /* Make the editor take up the entire viewport height */
+    width: 100%;
+}
+.editor-content {
+    display: flex;
+    flex-direction: row;
+    height: 100%;
+    width: 100%;
+}
+.canvas-container {
+    display: flex;
+    flex-direction: column;
+    max-height:100vh; /* Make the editor take up the entire viewport height */
+    width: 75%;
+}
+.tabs-container{
+    display: flex;
+    width: 25%;
+    height: 100%;
+    flex-direction: column;
+    justify-content: center;
+    margin-bottom: 10px;
+}
+/* Tabs */
+.tabs {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    margin-bottom: 10px;
+}
+
+.tab-item {
+    flex-grow: 1; /* This makes each tab take up equal width */
+    padding: 8px 0; /* Remove fixed padding */
+    background-color:#21252a ;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    cursor: pointer;
+    color: #FFFFFF;
+    text-align: center; /* Optional: Center text horizontally */
+}
+
+.tabs button.active {
+    background-color: #e0e0e0;
+}
+
+/* Sidebar Styles */
+.sidebar {
+    width: 100%;
+    padding: 10px;
+    border-right: 1px solid #ccc;
+    display: none;
+}
+
+.sidebar.active {
+    display: block;
+}
+
+/* Component Palette Styles */
+.component-palette {
+    width: 100%;
+    padding: 10px;
+    border-left: 1px solid #ccc;
+    display: none;
+}
+
+.component-palette.active {
+    display: block;
+}
+
+.layout-palette-container {
+    width: 100%;
+    min-height: 25vh;
+    height: 25vh; /* Limit the palette height to 25% of the viewport height */
+    display: flex;
+    flex-wrap: wrap; /* Allow layouts to wrap to the next line */
+    background-color: lightgrey;
+    justify-content: center;
+}
+/* Layout Palette Styles */
+.layout-palette {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-wrap: wrap; /* Allow layouts to wrap to the next line */
+    background-color: lightgrey;
+    justify-content: center;
+    overflow: auto; /* Add this line to enable scrolling if content overflows */
+}
+
+.layout-layout {
+    border: 0 solid #1c00cf;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-top: 3%;
+    margin-right: 5%;
+    margin-left: 5%;
+    max-height: 8vh;
+    max-width: calc(8vh - 10px); /* Set the max-width to 25% minus the gap */
+}
+
+.layout-row {
+    display: flex;
+    flex-wrap: nowrap; /* Ensure items do not wrap to the next line */
+    justify-content: space-between; /* Spread items evenly along the row */
+    height: 100%;
+    width: 100%; /* Ensure the row spans the full width */
+}
+
+/* Layout Item Styles */
+.layout-item {
+    border: 0 solid #000000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 2.5%;
+}
+
+/* SVG Styles */
+.layout-svg {
+    width: 100%;
+    height: auto;
+}

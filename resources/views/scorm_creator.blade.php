@@ -9,13 +9,13 @@
 </script>
 
 <script type="module">
-    import { initializeCreator } from "{{ Vite::asset('resources/js/Scripts/SCORMCreator.jsx') }}";
-    // Ensure that the initializeCreator function is imported successfully
-    if (typeof initializeCreator === 'function') {
-        console.log("initializeCreator function is imported successfully");
-        initializeCreator(); // Initialize creator when the event is triggered
-        // Add an event listener for turbo:before-render
-    } else {
-        console.error("initializeCreator function is not imported correctly");
-    }
+    import {initializeCreator} from "{{ Vite::asset('resources/js/Scripts/SCORMCreator.jsx') }}";
+
+    console.log("test")
+    const baseContent = {!! json_encode($content) !!};
+    initializeCreator(baseContent);
+
+
+
 </script>
+

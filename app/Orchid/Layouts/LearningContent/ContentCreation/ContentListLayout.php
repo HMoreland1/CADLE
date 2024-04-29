@@ -3,6 +3,7 @@ namespace App\Orchid\Layouts\LearningContent\ContentCreation;
 
 use App\Models\LearningContent;
 use App\Models\Question;
+use Illuminate\Support\Facades\Log;
 use Orchid\Screen\Actions\Button;
 use Orchid\Screen\Actions\DropDown;
 use Orchid\Screen\Actions\Link;
@@ -17,7 +18,7 @@ class ContentListLayout extends Table
     /**
      * @var string
      */
-    public $target = 'content';
+    public $target = 'contents';
 
 
     /**
@@ -29,7 +30,7 @@ class ContentListLayout extends Table
         return [
             // Checkbox column for selecting questions
 
-            TD::make('name', __('Name'))
+            TD::make('title', __('Title'))
                 ->sort()
                 ->cantHide()
                 ->filter(Input::make()),
@@ -59,14 +60,12 @@ class ContentListLayout extends Table
                         ->list([
                             Link::make(__('Edit'))
                                 ->route('platform.systems.learningcontent.edit', $content)
-                                ->icon('pencil'),
+                                ->icon('bs.pencil'),
 
                             Button::make(__('Delete'))
                                 ->icon('trash')
                                 ->confirm(__('Are you sure you want to delete this question?'))
-                                ->method('remove', [
-                                    'id' => $content->id,
-                                ]),
+                                ->method('remove', ['content_id' => $content->content_id]),
                         ]);
                 }),
         ];

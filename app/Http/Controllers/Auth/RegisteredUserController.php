@@ -10,6 +10,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 use Illuminate\Validation\Rules;
 use Inertia\Inertia;
 use Inertia\Response;
@@ -34,16 +35,21 @@ class RegisteredUserController extends Controller
         $request->validate([
             'forename' => 'required|string|max:255',
             'surname' => 'required|string|max:255',
-            'email' => 'required|string|lowercase|email|max:255|unique:'.User::class,
+            'email' => 'required|string|lowercase|email|max:255|unique:' . User::class,
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
-        print("validating");
+
+        // Generate a random salt
+        $salt = Str::random(32); // Adjust the length of the salt as needed
+
+        // Create the user record with the salt included
         $user = User::create([
             'name' => $request->forename . " " . $request->surname,
             'forename' => $request->forename,
             'surname' => $request->surname,
             'email' => $request->email,
-            'password' => Hash::make($request->password),
+            'password' => Hash::make(env('PEPPER') . $salt . $request->password), // Concatenate salt with password
+            'salt' => $salt, // Store the salt in the database
         ]);
 
         event(new Registered($user));

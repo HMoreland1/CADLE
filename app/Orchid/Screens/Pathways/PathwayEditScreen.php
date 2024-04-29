@@ -37,7 +37,7 @@ class PathwayEditScreen extends Screen
      *
      * @return array
      */
-    public function query(Pathway $pathway, LearningContent $learningContent): iterable
+    public function query(Pathway $pathway): iterable
     {
         if ($pathway !== null) {
             $assignedContent = $pathway->content_ids;

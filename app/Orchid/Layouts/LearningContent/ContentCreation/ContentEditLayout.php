@@ -19,7 +19,7 @@ class ContentEditLayout extends Rows
     public function fields(): array
     {
         return [
-            Input::make('content.name')
+            Input::make('content.title')
                 ->type('text')
                 ->max(255)
                 ->required()

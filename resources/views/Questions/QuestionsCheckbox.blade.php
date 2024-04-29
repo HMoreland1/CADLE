@@ -5,8 +5,7 @@
 <script type="module">
     import { initializeQuestionsCheckbox } from "{{ Vite::asset('resources/js/Scripts/QuestionsCheckbox.jsx') }}";
 
-
-    document.addEventListener("turbo:load", function() {
+    document.addEventListener("DOMContentLoaded", function() {
         // Get the total marks of the quiz
         const quizTotalMarks = parseInt(<?php echo json_encode($quizTotalMarks); ?>-1);
 

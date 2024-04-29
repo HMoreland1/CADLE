@@ -10,8 +10,20 @@ class CreateRoleAssignedContentTable extends Migration
     {
         Schema::create('role_assigned_content', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_role_id')->constrained('user_roles', 'role_id')->onDelete('cascade'); // Use role_id as the referenced column
-            $table->foreignId('content_id')->constrained('learning_contents', 'content_id')->onDelete('cascade'); // Specify the column name
+            $table->unsignedInteger('role_id');
+            $table->foreign('role_id')
+                ->references('id')
+                ->on('roles')
+                ->onUpdate('cascade')
+                ->onDelete('cascade');
+            $table->unsignedInteger('content_id');
+
+            $table->foreign('content_id')
+                ->references('content_id')
+                ->on('learning_contents')
+                ->onUpdate('cascade')
+                ->onDelete('cascade');
+            $table->enum('importance', ['Essential', 'Compliance'])->default('Essential');
             $table->timestamps();
         });
     }

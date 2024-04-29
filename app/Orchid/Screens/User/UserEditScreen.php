@@ -13,6 +13,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
 use Orchid\Access\Impersonation;
 use Orchid\Platform\Models\User;
@@ -213,11 +214,18 @@ class UserEditScreen extends Screen
             $highestAuthorityRole = Auth::user()->roles()->orderByDesc('authority')->first();
             foreach ($request->input('user.roles', []) as $roleId) {
                 $role = Role::findOrFail($roleId);
-
-                if ($role->authority >= $highestAuthorityRole->authority && !Auth::user()->hasAccess('platform.systems.super')) {
-                    Toast::error(__('You are not allowed to assign or remove roles of equal or higher authority than your own.'));
-                    return redirect()->back();
+                if($highestAuthorityRole)  {
+                    if ($role->authority >= $highestAuthorityRole->authority && !Auth::user()->hasAccess('platform.systems.super')) {
+                        Toast::error(__('You are not allowed to assign or remove roles of equal or higher authority than your own.'));
+                        return redirect()->back();
+                    }
+                } else{
+                    if (!Auth::user()->hasAccess('platform.systems.super')) {
+                        Toast::error(__('You are not allowed to assign or remove roles of equal or higher authority than your own.'));
+                        return redirect()->back();
+                    }
                 }
+
             }
         } else {
             // If the authenticated user has no roles, prevent them from assigning any roles
@@ -235,14 +243,16 @@ class UserEditScreen extends Screen
             'user.surname' => 'required',
         ]);
 
+        $salt = Str::random(32); // Adjust the length of the salt as needed
         // Update the user's name based on forename and surname
         $user->surname = $request->input('user.surname');
         $user->forename = $request->input('user.forename');
         $user->name = $request->input('user.forename') . ' ' . $request->input('user.surname');
         $user->email = $request->input('user.email');
+        $user->salt =$salt;
         // Update the password if provided
         if ($request->filled('user.password')) {
-            $user->password = Hash::make($request->input('user.password'));
+            $user->password = Hash::make(env('PEPPER') . $salt .$request->input('user.password'));
         }
         //dd($user);
         // Save the user details

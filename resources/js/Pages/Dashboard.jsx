@@ -45,7 +45,7 @@ export default function Dashboard({ auth }) {
             <div className="py-12">
                 <div className="mx-auto sm:px-6 lg:px-8" style={{ width: '70%' }}>
                     <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                        <h1 className="p-6 font-bold text-gray-900">My Progress!</h1>
+                        <h1 className="p-6 font-bold text-gray-900">Completion Status:</h1>
                         <div className="flex items-center">
                             <div className="w-1/3 p-6">
                                 <h1 className="font-bold text-gray-900">Essential</h1>

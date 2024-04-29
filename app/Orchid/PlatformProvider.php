@@ -87,8 +87,7 @@ class PlatformProvider extends OrchidServiceProvider
             Menu::make(__('Learning Content - This will open in a new tab'))
                 ->icon('bs.book')
                 ->route('platform.systems.learningcontent')
-                ->permission('platform.systems.learningcontent')
-                ->target('_blank'),
+                ->permission('platform.systems.learningcontent'),
 
             Menu::make(__('Pathways'))
                 ->icon('bs.book')
@@ -100,9 +99,12 @@ class PlatformProvider extends OrchidServiceProvider
                 ->icon('bs.people')
                 ->route('platform.systems.learningcontent.assign.users')
                 ->permission('platform.systems.users')
-                ->title(__('Learning Assignment'))
+                ->title(__('Learning Assignment')),
+            Menu::make(__('Role Learning Assignment'))
+                ->icon('bs.people')
+                ->route('platform.systems.learningcontent.assign.roles')
+                ->permission('platform.systems.users')
                 ->divider(),
-
 
             Menu::make('Documentation')
                 ->title('Docs')

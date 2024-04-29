@@ -93,7 +93,6 @@ class PathwayListScreen extends Screen
     {
         return [
             PathwayListLayout::class,
-            Layout::view('scorm_creator'),
 
         ];
     }
@@ -104,12 +103,6 @@ class PathwayListScreen extends Screen
      * @param Pathway $pathway
      * @return array
      */
-    public function asyncGetPathway(Pathway $pathway): array
-    {
-        return [
-            'pathway' => $pathway,
-        ];
-    }
 
     /**
      * Save the pathway data.

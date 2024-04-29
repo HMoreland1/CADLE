@@ -6,18 +6,12 @@ namespace App\Orchid\Screens\LearningContent\ContentAssignments\Users;
 
 use App\Models\LearningContent;
 use App\Models\UserAssignedContent;
-use App\Orchid\Layouts\LearningContent\ContentAssignments\Users\ContentListLayout;
-use App\Orchid\Layouts\LearningContent\ContentAssignments\Users\UserContentAssignmentListLayout;
-use App\Orchid\Layouts\User\UserEditLayout;
-use App\Orchid\Layouts\User\UserFiltersLayout;
+use App\Orchid\Layouts\LearningContent\ContentAssignments\ContentListLayout;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Validation\Rule;
 use Orchid\Platform\Models\User;
 use Orchid\Screen\Actions\Button;
-use Orchid\Screen\Actions\Link;
 use Orchid\Screen\Screen;
-use Orchid\Support\Facades\Layout;
 use Orchid\Support\Facades\Toast;
 
 class UserContentAssignmentScreen extends Screen

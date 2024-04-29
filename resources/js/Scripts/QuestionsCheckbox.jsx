@@ -5,6 +5,7 @@ export function initializeQuestionsCheckbox(quizTotalMarks) {
 
     // Function to handle checkbox change
     function handleCheckboxChange() {
+
         const selectedCheckboxes = document.querySelectorAll('.question-checkbox:checked');
         if (selectedCheckboxes.length > quizTotalMarks) {
             // If the number of selected checkboxes exceeds the total marks, disable further selection
@@ -31,8 +32,10 @@ export function initializeQuestionsCheckbox(quizTotalMarks) {
 }
 
 document.addEventListener("turbo:load", function() {
+
+
     // Check if the element with data-quiz-total-marks attribute exists on the current page
-    const quizElement = document.querySelector('[data-quiz-total-marks]');
+    const quizElement = document.querySelector('.content-quiz-checkbox');
     if (quizElement) {
         // Get the total marks of the quiz from the data attribute
         const quizTotalMarks = parseInt(quizElement.dataset.quizTotalMarks);

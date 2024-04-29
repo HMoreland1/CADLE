@@ -1,9 +1,11 @@
+
 import {useEffect, useState} from 'react';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import {Head} from '@inertiajs/react';
 import axios from 'axios';
 
 export default function Quiz({ auth, quiz, content = null }) {
+    console.log(quiz)
     const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
     const [userAnswers, setUserAnswers] = useState({});
     const { id, name, pass_marks, total_marks, questions, quiz_questions} = quiz;
@@ -125,7 +127,7 @@ export default function Quiz({ auth, quiz, content = null }) {
                                 ) : (
                                     <a
                                         href={attemptId ? route('showQuizResult', {
-                                            learningContent: content, quiz: quiz, attemptId: attemptId,
+                                            quiz: quiz, learningContent: content,  attemptId: attemptId,
                                         }) : '#'}
                                         className={`rounded-full px-1 text-white ${(!attemptId || !userAnswers[currentQuestionIndex]) ? 'bg-gray-400' : 'bg-navy-blue'}`}
                                         disabled={!attemptId || !userAnswers[currentQuestionIndex]}

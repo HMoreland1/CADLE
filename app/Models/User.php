@@ -27,6 +27,7 @@ class User extends Authenticatable
         'surname',
         'email',
         'password',
+        'salt',
     ];
 
     /**
@@ -38,6 +39,7 @@ class User extends Authenticatable
         'password',
         'remember_token',
         'permissions',
+        'salt',
     ];
 
     /**
@@ -87,5 +89,10 @@ class User extends Authenticatable
 
         // Check if the impersonate permission is present in the user's permissions
         return in_array('platform.system.impersonate', $permissions);
+    }
+
+    public function authLogs(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(AuthLog::class);
     }
 }

@@ -83,8 +83,8 @@ export default function Authenticated({ user, header, page_description, children
                                          active={route().current('catalogue')}>
                                     Catalogue
                                 </NavLink>
-                                <NavLink className="bg-white rounded-md py-2 px-4" href={route('dashboard')}
-                                         active={route().current('dashboard')}>
+                                <NavLink className="bg-white rounded-md py-2 px-4" href={route('activity')}
+                                         active={route().current('activity')}>
                                     My Activity
                                 </NavLink>
                                 <NavLink className="bg-white rounded-md py-2 px-4" href={route('help')}
@@ -132,7 +132,7 @@ export default function Authenticated({ user, header, page_description, children
                             <ResponsiveNavLink href={route('catalogue')} active={route().current('catalogue')}>
                                 Catalogue
                             </ResponsiveNavLink>
-                            <ResponsiveNavLink href={route('dashboard')} active={route().current('dashboard')}>
+                            <ResponsiveNavLink href={route('activity')} active={route().current('activity')}>
                                 My Activity
                             </ResponsiveNavLink>
                             <ResponsiveNavLink href={route('help')} active={route().current('help')}>

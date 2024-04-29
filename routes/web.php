@@ -17,7 +17,7 @@ use App\Http\Controllers\SCORMCreatorController;
 | contains the "web" middleware group. Now create something great!
 |
 */
-//require __DIR__.'/optionbuilder.php';
+require __DIR__.'/optionbuilder.php';
 
 
 Route::get('/popup', function () {
@@ -46,6 +46,10 @@ Route::get('/pathways', function () {
     return Inertia::render('Pathways');
 })->middleware(['auth', 'verified'])->name('pathways');
 
+Route::get('/my-activity', function () {
+    return Inertia::render('MyActivity');
+})->middleware(['auth', 'verified'])->name('activity');
+
 Route::get('/help', function () {
     return Inertia::render('Help');
 })->middleware(['auth', 'verified'])->name('help');
@@ -60,7 +64,7 @@ Route::get('/content/{learningContent}/quiz/{quiz}/complete/{attemptId}', [QuizC
     ->name('showQuizResult');
 
 
-Route::get('/content/{learningContent}/quiz/{quiz}/', [QuizController::class, 'showQuiz'])
+Route::get('/content/{learningContent}/quiz/{quizId}/', [QuizController::class, 'showQuiz'])
     ->middleware(['auth', 'verified'])
     ->name('showQuiz');
 
@@ -77,6 +81,6 @@ Route::get('/scorm/creator', function () {
 
 
 require __DIR__.'/auth.php';
-//require __DIR__.'/pagebuilder.php';
+require __DIR__.'/pagebuilder.php';
 
 

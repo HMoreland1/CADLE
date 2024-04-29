@@ -6,7 +6,10 @@ namespace App\Orchid\Screens\LearningContent\ContentCreation;
 
 use App\Models\LearningContent;
 use App\Models\Pathway;
+use App\Models\Quiz;
 use App\Models\Role;
+use App\Orchid\Layouts\LearningContent\ContentCreation\ContentEditLayout;
+use App\Orchid\Layouts\LearningContent\ContentCreation\ContentQuizListLayout;
 use App\Orchid\Layouts\Pathways\PathwayContentListLayout;
 use App\Orchid\Layouts\Role\RolePermissionLayout;
 use App\Orchid\Layouts\Pathways\PathwayEditLayout;
@@ -32,16 +35,20 @@ class ContentEditScreen extends Screen
      * @var LearningContent
      */
     public $content;
+
     /**
      * Fetch data to be displayed on the screen.
      *
      * @return array
      */
-    public function query(?LearningContent $content): array
+    public function query(LearningContent $content): array
     {
-
         return [
-            'content' => $content ?? new LearningContent(),
+            'content' => $content,
+            'contents' => "test",
+            'quizzes' => Quiz::filters()
+                ->defaultSort('id', 'desc')
+                ->paginate(5),
         ];
     }
 
@@ -50,7 +57,7 @@ class ContentEditScreen extends Screen
      */
     public function name(): ?string
     {
-        return $this->content->exists ? 'Edit Pathway' : 'Create Pathway';
+        return $this->content->exists ? 'Edit Content' : 'Create Content';
     }
 
     /**
@@ -58,7 +65,7 @@ class ContentEditScreen extends Screen
      */
     public function description(): ?string
     {
-        return 'Pathway profile and privileges, including associated roles.';
+        return $this->content->exists ? 'Edit existing learning content.' : 'Create new learning content.';
     }
 
     public function permission(): ?iterable
@@ -95,9 +102,19 @@ class ContentEditScreen extends Screen
     {
         return [
 
-            Layout::block(PathwayEditLayout::class)
-                ->title(__('Profile Information'))
-                ->description(__('Update pathway profile information and email address.'))
+            Layout::block(ContentEditLayout::class)
+                ->title(__('Content Information'))
+                ->description(__('Set the content details'))
+                ->commands(
+                    Button::make(__('Save'))
+                        ->type(Color::BASIC)
+                        ->icon('bs.check-circle')
+                        ->canSee($this->content->exists)
+                        ->method('save')
+                ),
+            Layout::block(ContentQuizListLayout::class)
+                ->title(__('Quizzes'))
+                ->description(__('Set the content details'))
                 ->commands(
                     Button::make(__('Save'))
                         ->type(Color::BASIC)
@@ -107,6 +124,8 @@ class ContentEditScreen extends Screen
                 ),
 
             Layout::view('scorm_creator'),
+            Layout::view('ContentManagement/ContentQuizCheckbox', [
+            ]),
 
         ];
     }
@@ -114,30 +133,36 @@ class ContentEditScreen extends Screen
     /**
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function save(Pathway $pathway, Request $request)
+    public function save(LearningContent $content, Request $request)
     {
+
+
+
         // Validate the request data
         $request->validate([
-            'pathway.name' => 'required|string|max:255',
-            'pathway.description' => 'nullable|string',
+            'content.title' => 'required|string|max:255',
+            'content.description' => 'nullable|string',
+            'selected_quiz' => 'required',
+            'canvas_json' => 'required',
             // Add more validation rules as needed
         ]);
 
         // Update the pathway's name and description
-        $pathway->name = $request->input('pathway.name');
-        $pathway->description = $request->input('pathway.description');
+        $content->title = $request->input('content.title');
+        $content->description = $request->input('content.description');
+        $content->content = $request->input('canvas_json');
+        $content->quiz_id = $request->get('selected_quiz');
+        $selectedQuizzes = $request->get('selected_quiz');
 
-        // Convert selected content IDs to integers
-        $contentIds = array_map('intval', $request->input('content_ids', []));
+// $selectedQuizzes is now an array containing the IDs of the selected quizzes
 
-        // Save the pathway details
-        $pathway->content_ids = $contentIds;
-        $pathway->save();
+        $content->save();
+
 
         // Show success message
-        Toast::info(__('Pathway details have been saved.'));
+        Toast::info(__('Content details have been saved.'));
 
-        return redirect()->route('platform.systems.pathways');
+        return redirect()->route('platform.systems.learningcontent');
     }
 
 

@@ -16,7 +16,6 @@ class CreateUserProgressesTable extends Migration
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('score');
 
-            $table->foreign('content_id')->references('content_id')->on('learning_contents');
             $table->foreign('user_id')->references('id')->on('users');
             $table->timestamps();
         });

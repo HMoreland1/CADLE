@@ -22,6 +22,7 @@ class LearningContent extends Model
         'description',
         'categories',
         'content',
+        'quiz_id',
         'title',
         'image_filename', // Add new field for image path
     ];
@@ -44,4 +45,5 @@ class LearningContent extends Model
     {
         return $this->hasMany(UserLearningAssignment::class);
     }
+
 }

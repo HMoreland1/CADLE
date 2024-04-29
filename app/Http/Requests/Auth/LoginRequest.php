@@ -2,6 +2,8 @@
 
 namespace App\Http\Requests\Auth;
 
+use App\Models\AuthLog;
+use App\Models\User;
 use Illuminate\Auth\Events\Lockout;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
@@ -41,16 +43,53 @@ class LoginRequest extends FormRequest
     {
         $this->ensureIsNotRateLimited();
 
-        if (! Auth::attempt($this->only('email', 'password'), $this->boolean('remember'))) {
-            RateLimiter::hit($this->throttleKey());
+        $credentials = $this->only('email', 'password');
 
+        // Retrieve the user from the database using the provided email address
+        $user = User::where('email', $credentials['email'])->first();
+
+        if (!$user) {
+            RateLimiter::hit($this->throttleKey());
+            AuthLog::create([
+                'user_id' => "NO ID",
+                'ip_address' => $this->ip(),
+                'user_agent' => $this->userAgent(),
+                'type' => 'login_failed',
+            ]);
             throw ValidationException::withMessages([
                 'email' => trans('auth.failed'),
+            ]);
+
+        }
+
+        // Append the user's salt to the password
+        $credentials['password'] = env('PEPPER') . $user->salt . $credentials['password'];
+
+        if (!Auth::attempt($credentials, $this->boolean('remember'))) {
+            RateLimiter::hit($this->throttleKey());
+            AuthLog::create([
+                'user_id' => Auth::id(),
+                'ip_address' => $this->ip(),
+                'user_agent' => $this->userAgent(),
+                'type' => 'login_failed',
+            ]);
+            throw ValidationException::withMessages([
+                'email' => trans('auth.failed'),
+            ]);
+
+        } else {
+            AuthLog::create([
+                'user_id' => Auth::id(),
+                'ip_address' => $this->ip(),
+                'user_agent' => $this->userAgent(),
+                'logout_at' => now(),
+                'type' => 'login_success',
             ]);
         }
 
         RateLimiter::clear($this->throttleKey());
     }
+
 
     /**
      * Ensure the login request is not rate limited.
@@ -66,7 +105,12 @@ class LoginRequest extends FormRequest
         event(new Lockout($this));
 
         $seconds = RateLimiter::availableIn($this->throttleKey());
-
+        AuthLog::create([
+            'user_id' => Auth::id(),
+            'ip_address' => $this->ip(),
+            'user_agent' => $this->userAgent(),
+            'type' => 'login_failed',
+        ]);
         throw ValidationException::withMessages([
             'email' => trans('auth.throttle', [
                 'seconds' => $seconds,

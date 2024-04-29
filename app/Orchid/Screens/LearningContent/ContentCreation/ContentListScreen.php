@@ -18,21 +18,18 @@ use Orchid\Support\Facades\Toast;
 
 class ContentListScreen extends Screen
 {
-    public $content;
     /**
      * Fetch data to be displayed on the screen.
      *
      * @return array
      */
-    public function query(?Quiz $quiz): array
+    public function query(): array
     {
-
-        $content = LearningContent::filters()
-            ->defaultSort('content_id', 'desc')
-            ->paginate(5);
-
         return [
-            'content' => $content,
+            'contents' =>  LearningContent::query()
+                ->filters()
+                ->defaultSort('content_id', 'desc')
+                ->paginate(5)
         ];
     }
 
@@ -42,7 +39,7 @@ class ContentListScreen extends Screen
      */
     public function name(): ?string
     {
-        return 'Question Management';
+        return 'Content Management';
     }
 
     /**
@@ -56,7 +53,7 @@ class ContentListScreen extends Screen
     public function permission(): ?iterable
     {
         return [
-            'platform.systems.quizzes',
+            'platform.systems.learningcontent',
         ];
     }
 
@@ -98,7 +95,6 @@ class ContentListScreen extends Screen
     /**
      * @return array
      */
-
 
     public function remove(Request $request): void
     {

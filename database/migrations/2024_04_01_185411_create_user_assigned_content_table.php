@@ -10,7 +10,13 @@ class CreateUserAssignedContentTable extends Migration
         Schema::create('user_assigned_content', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
-            $table->foreignId('content_id')->constrained('learning_contents', 'content_id')->onDelete('cascade'); // Specify the column name
+            $table->unsignedInteger('content_id');
+            $table->foreign('content_id')
+                ->references('content_id')
+                ->on('learning_contents')
+                ->onUpdate('cascade')
+                ->onDelete('cascade');
+            // Define foreign key constraint for content_id column, specifying the co
             $table->enum('importance', ['Essential', 'Compliance'])->default('Essential');
             $table->boolean('completed')->default(false);
             $table->timestamps();

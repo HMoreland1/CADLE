@@ -3,6 +3,8 @@
 declare(strict_types=1);
 
 //use App\Http\Controllers\QuestionController;
+use App\Models\LearningContent;
+use App\Models\Pathway;
 use App\Orchid\Screens\Examples\ExampleActionsScreen;
 use App\Orchid\Screens\Examples\ExampleCardsScreen;
 use App\Orchid\Screens\Examples\ExampleChartsScreen;
@@ -12,6 +14,8 @@ use App\Orchid\Screens\Examples\ExampleGridScreen;
 use App\Orchid\Screens\Examples\ExampleLayoutsScreen;
 use App\Orchid\Screens\Examples\ExampleScreen;
 use App\Orchid\Screens\Examples\ExampleTextEditorsScreen;
+use App\Orchid\Screens\LearningContent\ContentAssignments\Roles\RoleContentAssignmentListScreen;
+use App\Orchid\Screens\LearningContent\ContentAssignments\Roles\RoleContentAssignmentScreen;
 use App\Orchid\Screens\LearningContent\ContentAssignments\Users\UserContentAssignmentListScreen;
 use App\Orchid\Screens\LearningContent\ContentAssignments\Users\UserContentAssignmentScreen;
 use App\Orchid\Screens\LearningContent\ContentCreation\ContentEditScreen;
@@ -50,7 +54,22 @@ Route::screen('/main', PlatformScreen::class)
 | Learning Content Routes
 |--------------------------------------------------------------------------
 */
-// Platform > System > Users
+// Platform > System > Content > Roles
+
+Route::screen('content/role/assign', RoleContentAssignmentListScreen::class)
+    ->name('platform.systems.learningcontent.assign.roles')
+    ->breadcrumbs(fn (Trail $trail) => $trail
+        ->parent('platform.index')
+        ->push(__('Content Assignment'), route('platform.systems.learningcontent.assign.roles')));
+
+Route::screen('content/role/{roleId}/assign', RoleContentAssignmentScreen::class)
+    ->name('platform.systems.role.learningcontent.assign')
+    ->breadcrumbs(fn (Trail $trail, $role) => $trail
+        ->parent('platform.systems.learningcontent.assign.roles')
+        ->push(__('Content Assignment'), route('platform.systems.role.learningcontent.assign', $role)));
+
+
+// Platform > System > Content > Users
 Route::screen('content/users/assign', UserContentAssignmentListScreen::class)
     ->name('platform.systems.learningcontent.assign.users')
     ->breadcrumbs(fn (Trail $trail) => $trail
@@ -63,17 +82,22 @@ Route::screen('content/user/{userId}/assign', UserContentAssignmentScreen::class
         ->parent('platform.systems.learningcontent.assign.users')
         ->push(__('Content Assignment'), route('platform.systems.user.learningcontent.assign', $user)));
 
+
+// Platform > System > Content
 Route::screen('content', ContentListScreen::class)
     ->name('platform.systems.learningcontent')
     ->breadcrumbs(fn (Trail $trail) => $trail
         ->parent('platform.index')
-        ->push(__('Content Assignment'), route('platform.systems.learningcontent')));
+        ->push(__('Content Management'), route('platform.systems.learningcontent')));
 
-Route::screen('content/{contentId}/edit}', ContentEditScreen::class)
+
+
+Route::screen('content/{content}/edit', ContentEditScreen::class)
     ->name('platform.systems.learningcontent.edit')
-    ->breadcrumbs(fn (Trail $trail, $content) => $trail
+    ->breadcrumbs(fn (Trail $trail,LearningContent $content) => $trail
         ->parent('platform.systems.learningcontent')
-        ->push(__('Content Assignment'), route('platform.systems.learningcontent.edit')));
+        ->push(__($content->title), route('platform.systems.learningcontent.edit', $content)));
+
 
 Route::screen('content/create', ContentEditScreen::class)
     ->name('platform.systems.learningcontent.create')
@@ -92,7 +116,7 @@ Route::screen('quizzes/questions/{question}/edit', QuestionEditScreen::class)
     ->name('platform.systems.questions.edit')
     ->breadcrumbs(fn (Trail $trail, $question) => $trail
         ->parent('platform.systems.quizzes.edit', $question)
-        ->push(__('Questions'), route('platform.systems.questions.edit', $question)));
+        ->push(__($question->name), route('platform.systems.questions.edit', $question)));
 
 Route::screen('quizzes/questions/create', QuestionEditScreen::class)
     ->name('platform.systems.questions.create')
@@ -204,6 +228,12 @@ Route::screen('roles', RoleListScreen::class)
 | Pathways Routes
 |--------------------------------------------------------------------------
 */
+Route::screen('pathways/{pathway}/edit', PathwayEditScreen::class)
+    ->name('platform.systems.pathways.edit')
+    ->breadcrumbs(fn (Trail $trail, Pathway $pathway) => $trail
+        ->parent('platform.systems.pathways')
+        ->push($pathway->name, route('platform.systems.pathways.edit', $pathway)));
+
 
 Route::screen('pathways', PathwayListScreen::class)
     ->name('platform.systems.pathways')
@@ -220,11 +250,6 @@ Route::screen('pathways/create', PathwayEditScreen::class)
         ->push(__('Create'), route('platform.systems.pathways.create')));
 
 
-Route::screen('pathways/{pathway}/edit', PathwayEditScreen::class)
-    ->name('platform.systems.pathways.edit')
-    ->breadcrumbs(fn (Trail $trail, $pathway) => $trail
-        ->parent('platform.systems.pathways')
-        ->push($pathway->name, route('platform.systems.pathways.edit', $pathway)));
 
 
 // Example...

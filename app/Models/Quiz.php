@@ -16,7 +16,7 @@ class Quiz extends Model
 
 
     protected $table = 'quizzes';
-
+    protected $primaryKey = 'id';
     protected $fillable = [
         'name',
         'slug',

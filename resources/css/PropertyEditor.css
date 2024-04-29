@@ -1,0 +1,20 @@
+.property-editor {
+    display: flex;
+    flex-direction: column;
+}
+
+.property {
+    display: flex;
+    flex-direction: column;
+}
+
+.label {
+    margin-right: 10px;
+}
+
+.property-input {
+    flex: 1;
+}
+.quill-editor{
+    height: 20vh;
+}

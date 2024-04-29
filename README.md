@@ -35,25 +35,27 @@ npm install
 1.	You will need a MySQL database to use with the application.
 2.	Open the .env file in a text editor.
 3.	Find the following lines and update them with your database credentials:
-                DB_CONNECTION=mysql
-                DB_HOST=127.0.0.1
-                DB_PORT=3306
-                DB_DATABASE=your_database_name
-                DB_USERNAME=your_database_username
-                DB_PASSWORD=your_database_password
-4.	Replace your_database_name, your_database_username, and your_database_password with your actual database details.
+```
+DB_CONNECTION=mysql
+    DB_HOST=127.0.0.1
+    DB_PORT=3306
+    DB_DATABASE=your_database_name
+    DB_USERNAME=your_database_username
+    DB_PASSWORD=your_database_password
+```
+5.	Replace your_database_name, your_database_username, and your_database_password with your actual database details.
 ###	Step 5: Generate Application Key
 1.	While still in the project directory, run the following command to generate an application key:
 php artisan key:generate
 ###	Step 6: Run Migrations
 1.	Run the database migrations to create necessary tables:
-php artisan migrate
+```php artisan migrate```
 ###	Step 7: Compile Frontend Assets
 1.	To compile the frontend assets using Laravel Mix and Inertia.js, run the following command:
-npm run dev
+```npm run dev```
 ###	Step 8: Start the Development Server
 1.	Finally, start the development server by running the following command:
-php artisan serve
+```php artisan serve```
 ###	Step 9: Accessing the Application
 1.	Once the server has started, open a web browser, and go to http://localhost:8000 to access the CADLE application.
 
@@ -83,14 +85,11 @@ CADLE is built on top of the Laravel framework and utilizes various packages and
 - **[guzzlehttp/guzzle](https://packagist.org/packages/guzzlehttp/guzzle)**: A PHP HTTP client library used for making HTTP requests.
 - **[harishdurga/laravel-quiz](https://packagist.org/packages/harishdurga/laravel-quiz)**: A Laravel package for creating quizzes.
 - **[inertiajs/inertia-laravel](https://packagist.org/packages/inertiajs/inertia-laravel)**: The Inertia.js adapter for Laravel.
-- **[larabuild/optionbuilder](https://packagist.org/packages/larabuild/optionbuilder)**: A package for building options dynamically.
-- **[larabuild/pagebuilder](https://packagist.org/packages/larabuild/pagebuilder)**: A package for building pages dynamically.
 - **[laravel/breeze](https://packagist.org/packages/laravel/breeze)**: A simple and minimalistic starter kit for Laravel.
 - **[laravel/framework](https://packagist.org/packages/laravel/framework)**: The Laravel framework itself.
 - **[laravel/sanctum](https://packagist.org/packages/laravel/sanctum)**: Laravel Sanctum provides a lightweight authentication system for SPAs and simple APIs.
 - **[laravel/tinker](https://packagist.org/packages/laravel/tinker)**: Laravel Tinker is a powerful REPL for testing with Laravel applications.
 - **[orchid/platform](https://packagist.org/packages/orchid/platform)**: A platform for back-office applications, admin panels, and dashboards.
-- **[tightenco/ziggy](https://packagist.org/packages/tightenco/ziggy)**: A package for automatically generating JavaScript routes for Laravel.
 
 
 ### Development Dependencies

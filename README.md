@@ -8,16 +8,54 @@ CADLE is a web application designed to educate individuals, particularly Royal N
 
 - **Learning Modules:** Interactive modules covering various aspects of cybersecurity awareness.
 - **Quizzes:** Assessments to test knowledge and understanding of cybersecurity concepts.
-- **Role-based Assignments:** Employers can assign specific tasks and workloads to employees based on their roles within the organization.
+- **Role-based Assignments:** Employers can assign specific tasks and workloads to employees based on their organisational roles.
 
-## Getting Started:
+## Setup Guide
+###	Requirements:
+	PHP (>=8.1)
+	Composer
+	Node.js (>=14.x)
+	npm (>=6.x)
+	MySQL database
+###	Step 1: Clone the Project
+1.	Open your terminal or command prompt.
+2.	Navigate to the directory where you want to clone the project.
+3.	Run the following command to clone the project repository:
+git clone https://github.com/HMoreland1/CADLE.git
 
-To access CADLE, follow these steps:
 
-1. Visit the CADLE website.
-2. Use your provided credentials to log in. Otherwise, contact your system administrator for access.
-3. Explore the available learning modules and quizzes to enhance your cyber-security awareness.
-4. Employers can set tasks and assignments for employees through the administrative interface.
+###	Step 2: Install PHP Dependencies
+1.	Navigate into the cloned project directory:
+2.	Run the following command to install PHP dependencies using Composer:
+composer install
+###	Step 3: Install Node.js Dependencies
+1.	While still in the project directory, run the following command to install JavaScript dependencies using npm:
+npm install
+###	Step 4: Configure Database
+1.	You will need a MySQL database to use with the application.
+2.	Open the .env file in a text editor.
+3.	Find the following lines and update them with your database credentials:
+                DB_CONNECTION=mysql
+                DB_HOST=127.0.0.1
+                DB_PORT=3306
+                DB_DATABASE=your_database_name
+                DB_USERNAME=your_database_username
+                DB_PASSWORD=your_database_password
+4.	Replace your_database_name, your_database_username, and your_database_password with your actual database details.
+###	Step 5: Generate Application Key
+1.	While still in the project directory, run the following command to generate an application key:
+php artisan key:generate
+###	Step 6: Run Migrations
+1.	Run the database migrations to create necessary tables:
+php artisan migrate
+###	Step 7: Compile Frontend Assets
+1.	To compile the frontend assets using Laravel Mix and Inertia.js, run the following command:
+npm run dev
+###	Step 8: Start the Development Server
+1.	Finally, start the development server by running the following command:
+php artisan serve
+###	Step 9: Accessing the Application
+1.	Once the server has started, open a web browser, and go to http://localhost:8000 to access the CADLE application.
 
 ## Security Considerations:
 

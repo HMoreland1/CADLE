@@ -54,23 +54,14 @@ class QuestionOptionsListLayout extends Table
                 ->align(TD::ALIGN_CENTER)
                 ->width('100px')
                 ->render(function (QuestionOption $option) {
-                    return DropDown::make()
-                        ->icon('bs.three-dots-vertical')
-                        ->list([
-                            //Link::make(__('Edit'))
-                               // ->route('platform.systems.question_options.edit', $option)
-                               // ->icon('pencil'),
-
-                            button::make(__('Delete'))
-                                ->icon('trash')
-                                ->method('removeOption', [
-                                    'id' => $option->id,
-                                ])
-
-
-
-                        ]);
+                    return Button::make(__('Delete'))
+                        ->icon('trash')
+                        ->method('removeOption', [
+                            'id' => $option->id,
+                        ])
+                        ->style('background-color: red; border-color: black; border-radius: 5px; border-width: 5px; font-weight: bold;');
                 }),
+
         ];
     }
 

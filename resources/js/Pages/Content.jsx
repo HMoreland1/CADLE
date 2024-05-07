@@ -21,7 +21,7 @@ export default function Content({ auth, learningContent, assignment}) {
                     <div
                         className="py-6 bg-white overflow-hidden shadow-sm sm:rounded-lg items-center flex flex-col justify-center">
                         <div className="py-6 flex justify-content-center">
-                            <Editor startingRows={learningContent} isEditing={false}/>
+                            <Editor startingRows={learningContent.content} isEditing={false}/>
                         </div>
                         <a href={route('showQuiz', {
                             quizId: learningContent.quiz_id,

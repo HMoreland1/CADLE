@@ -2,7 +2,6 @@
 export function initializeQuestionsCheckbox(quizTotalMarks) {
     // Get all checkboxes
     const checkboxes = document.querySelectorAll('.question-checkbox');
-
     // Function to handle checkbox change
     function handleCheckboxChange() {
 

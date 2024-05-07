@@ -8,9 +8,7 @@ export function initializeCreator(rows) {
     const creatorContainer = document.getElementById("creator-container");
     let root = null
     if (creatorContainer) {
-        console.log("creatorContainer: ", creatorContainer)
         root = createRoot(creatorContainer);
-        console.log("root: ", root)
         if (root && creatorContainer) {
             root.render(<Editor startingRows={rows} isEditing={true} />);
         } else {

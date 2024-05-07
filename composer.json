@@ -5,23 +5,12 @@
     "keywords": ["laravel", "framework"],
     "license": "MIT",
     "repositories": {
-        "optionbuilder": {
-            "type": "path",
-            "url": "packages/larabuild/optionbuilder"
-        },
-        "pagebuilder": {
-            "type": "path",
-            "url": "packages/larabuild/pagebuilder"
-        }
-
     },
     "require": {
         "php": "^8.1",
         "guzzlehttp/guzzle": "^7.2",
         "harishdurga/laravel-quiz": "^1.2",
         "inertiajs/inertia-laravel": "^0.6.3",
-        "larabuild/optionbuilder": "^1.1",
-        "larabuild/pagebuilder": "^1.1",
         "laravel/breeze": "^1.29",
         "laravel/framework": "^10.10",
         "laravel/sanctum": "^3.2",

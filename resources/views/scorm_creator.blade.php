@@ -11,8 +11,7 @@
 <script type="module">
     import {initializeCreator} from "{{ Vite::asset('resources/js/Scripts/SCORMCreator.jsx') }}";
 
-    console.log("test")
-    const baseContent = {!! json_encode($content) !!};
+    const baseContent = {!! json_encode($content->content) !!};
     initializeCreator(baseContent);
 
 

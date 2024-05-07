@@ -1,0 +1,65 @@
+.tile {
+    height: auto;
+    cursor: pointer;
+    border: 3px solid #ccc;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    transform-style: preserve-3d;
+    transition: transform 0.5s ease;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+}
+
+
+
+
+
+.tile-inner {
+    height: auto;
+    position: relative;
+    width: 100%;
+    transform-style: preserve-3d;
+    display: grid;
+    grid-template-columns: 1fr; /* Single column grid */
+    grid-template-rows: auto; /* Single row grid */
+    justify-items: center;
+    align-items: center;
+    padding: 10px;
+    margin: 10px;
+}
+
+.tile-front,
+.tile-back {
+    max-width: 100%;
+    backface-visibility: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative; /* Position relative for z-index */
+    grid-row: 1; /* Both elements in the same row */
+    grid-column: 1; /* Both elements in the same column */
+}
+
+.tile-back {
+    z-index: 1; /* Ensure back is below front */
+}
+
+
+
+
+
+.tile-back {
+    transform: rotateY(180deg);
+}
+
+.tile.flipped {
+    transform: rotateY(180deg);
+}
+
+.back-text {
+    width: 100%;
+}
+

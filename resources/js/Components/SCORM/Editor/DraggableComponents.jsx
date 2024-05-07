@@ -1,11 +1,52 @@
 import {useDrag} from 'react-dnd';
 
-
-const DraggableText = ({text, alignment}) => {
+const DraggableFlipTile = ({title, text}) => {
     const [{isDragging}, drag] = useDrag({
         type: 'component',
-        item: {type: 'text', properties: {text: [{input: 'paragraph', value: text}],
-                alignment: [{input: 'alignment', value: alignment}]}},
+        item: {
+            type: 'tile',
+            properties: {
+                title: [{input: 'text', value: title}],
+                text: [{input: 'paragraph', value: text}]
+            }
+        },
+        collect: (monitor) => ({
+            isDragging: !!monitor.isDragging(),
+        }),
+    });
+
+    const label = "Tile"
+    return (tile({isDragging, drag, label}));
+};
+
+const DraggableImage = ({width, height}) => {
+    const [{isDragging}, drag] = useDrag({
+        type: 'component',
+        item: {
+            type: 'tile',
+            properties: {
+                width: [{input: 'text', value: width}],
+                height: [{input: 'text', value: height}]
+            }
+        },
+        collect: (monitor) => ({
+            isDragging: !!monitor.isDragging(),
+        }),
+    });
+
+    const label = "Tile"
+    return (tile({isDragging, drag, label}));
+};
+
+const DraggableText = ({text = "Text", alignment = "left"}) => {
+    const [{isDragging}, drag] = useDrag({
+        type: 'component',
+        item: {
+            type: 'text', properties: {
+                text: [{input: 'paragraph', value: text}],
+                alignment: [{input: 'alignment', value: alignment}]
+            }
+        },
         collect: (monitor) => ({
             isDragging: !!monitor.isDragging(),
         }),
@@ -15,7 +56,7 @@ const DraggableText = ({text, alignment}) => {
     return (tile({isDragging, drag, label}));
 };
 
-const DraggableTextTitle = ({title, text, alignment}) => {
+const DraggableTextTitle = ({title, text, alignment="left"}) => {
     const [{isDragging}, drag] = useDrag({
         type: 'component',
         item: {
@@ -41,15 +82,15 @@ const DraggableEmail = ({
                             body = "This is a sample email body.",
                             date = "April 29, 2024"
                         }) => {
-    const [{ isDragging }, drag] = useDrag({
+    const [{isDragging}, drag] = useDrag({
         type: 'component',
         item: {
             type: 'email',
             properties: {
-                sender: [{ input: 'text', value: sender }],
-                subject: [{ input: 'text', value: subject }],
-                body: [{ input: 'paragraph', value: body }],
-                date: [{ input: 'text', value: date }],
+                sender: [{input: 'text', value: sender}],
+                subject: [{input: 'text', value: subject}],
+                body: [{input: 'paragraph', value: body}],
+                date: [{input: 'text', value: date}],
             },
         },
         collect: (monitor) => ({
@@ -72,7 +113,7 @@ const DraggableSpacer = () => {
     return (tile({isDragging, drag, label}));
 };
 
-const tile = ({ isDragging, drag, label }) => {
+const tile = ({isDragging, drag, label}) => {
     return (
         <div
             ref={drag}
@@ -94,4 +135,4 @@ const tile = ({ isDragging, drag, label }) => {
 
     );
 };
-export { DraggableText, DraggableTextTitle, DraggableEmail, DraggableSpacer};
+export {DraggableFlipTile, DraggableText, DraggableTextTitle, DraggableEmail, DraggableSpacer};

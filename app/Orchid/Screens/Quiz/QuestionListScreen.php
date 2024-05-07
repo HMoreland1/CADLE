@@ -33,6 +33,7 @@ class QuestionListScreen extends Screen
 
         if ($quiz !== null) {
             $assignedQuestions = QuizQuestion::where('quiz_id', $quiz->id)->pluck('question_id')->toArray();
+
             return [
                 'quiz' => $quiz,
                 'questions' => $questions,

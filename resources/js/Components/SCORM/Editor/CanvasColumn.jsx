@@ -6,12 +6,14 @@ import textTitle from './DraggableComponents/TextTitle.jsx';
 import Email from './DraggableComponents/Email.jsx';
 import Spacer from './DraggableComponents/Spacer.jsx';
 import {FaTrash} from "react-icons/fa";
+import FlipTile from "@/Components/SCORM/Editor/DraggableComponents/FlipTile.jsx";
 
 const componentMap = {
     text: text,
     textTitle: textTitle,
     email: Email,
     spacer: Spacer,
+    tile: FlipTile,
     // Add more component types and corresponding components as needed
 };
 

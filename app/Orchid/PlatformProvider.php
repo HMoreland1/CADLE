@@ -109,14 +109,8 @@ class PlatformProvider extends OrchidServiceProvider
             Menu::make('Documentation')
                 ->title('Docs')
                 ->icon('bs.box-arrow-up-right')
-                ->url('https://orchid.software/en/docs')
+                ->url('https://github.com/HMoreland1/CADLE/')
                 ->target('_blank'),
-
-            Menu::make('Changelog')
-                ->icon('bs.box-arrow-up-right')
-                ->url('https://github.com/orchidsoftware/platform/blob/master/CHANGELOG.md')
-                ->target('_blank')
-                ->badge(fn () => Dashboard::version(), Color::DARK),
         ];
     }
 

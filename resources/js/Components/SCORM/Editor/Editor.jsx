@@ -28,7 +28,7 @@ const Editor = ({ startingRows, isEditing }) => {
     useEffect(() => {
             if(startingRows != null){
                 try{
-                    setCanvasRows(JSON.parse(startingRows.content));
+                    setCanvasRows(JSON.parse(startingRows));
                 } catch (e) {
                     location.reload()
                     console.log("content invalid", e)

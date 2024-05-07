@@ -5,12 +5,12 @@ import {Head} from '@inertiajs/react';
 import axios from 'axios';
 
 export default function Quiz({ auth, quiz, content = null }) {
-    console.log(quiz)
     const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
     const [userAnswers, setUserAnswers] = useState({});
     const { id, name, pass_marks, total_marks, questions, quiz_questions} = quiz;
     const currentQuestion = questions[currentQuestionIndex];
     const [attemptId, setAttemptId] = useState();
+    const [maxAttemptReached, setMaxAttemptReached] = useState(false);
 
     // Function to start the quiz attempt
     const startQuizAttempt = async () => {
@@ -19,11 +19,11 @@ export default function Quiz({ auth, quiz, content = null }) {
             setAttemptId(response.data.quiz_attempt.id);
 
         } catch (error) {
-            console.error('Error starting quiz attempt:', error);
+            setMaxAttemptReached(true);
+
         }
     };
     useEffect(() => {
-        console.log("attemptId changed:", attemptId);
     }, [attemptId]);
 
     useEffect(() => {
@@ -61,7 +61,7 @@ export default function Quiz({ auth, quiz, content = null }) {
                     quiz_question_id: question.id,
                     question_option_id: optionId
                 });
-                return response.data; // Optionally, you can return the created QuizAttemptAnswer data
+                return response.data;
             });
 
             // Wait for all QuizAttemptAnswer creations to complete
@@ -76,12 +76,6 @@ export default function Quiz({ auth, quiz, content = null }) {
                     }
                 });
 
-                // Handle the response, e.g., display the user's score
-                if (response.data.passed) {
-                    // Do something if the user passed the quiz
-                } else {
-                    // Do something if the user failed the quiz
-                }
             } catch (error) {
                 console.error('Error evaluating answers:', error);
             }
@@ -89,6 +83,30 @@ export default function Quiz({ auth, quiz, content = null }) {
             console.error('Error creating QuizAttemptAnswers:', error);
         }
     };
+
+    if (maxAttemptReached) {
+        return <AuthenticatedLayout
+            user={auth.user}
+            header={<h1 className="font-semibold text-xl text-gray-800 leading-tight">{name}</h1>}
+            page_description={<h1 className="font-semibold text-xs text-gray-800 leading-tight">You must
+                score {pass_marks} / {total_marks} to pass.</h1>}
+        >
+            <Head title={name}/>
+            <div className="py-6">
+                <div className="mx-auto sm:px-6 lg:px-8" style={{width: '70%'}}>
+                    <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+                        <div className="px-6 py-4 " style={{width: '100%'}}>
+                            <h1>You have reached the maximum number of attempts for this quiz.</h1>
+                            Please contact your supervisor.
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </AuthenticatedLayout>
+    ;
+    }
+
 
     return (
         <AuthenticatedLayout

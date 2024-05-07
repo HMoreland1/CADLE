@@ -20,7 +20,7 @@ class PasswordController extends Controller
 
         $user = $request->user();
 
-        $request->merge(['current_password' => env('PEPPER') . $user->salt . $request->current_password]);
+        $request->merge(['current_password' => $request->current_password . env('PEPPER') . $user->salt ]);
         $request->validate([
             'current_password' => ['required', 'current_password'],
             'password' => ['required', Password::defaults(), 'confirmed'],
@@ -29,10 +29,10 @@ class PasswordController extends Controller
 
 
         // Generate new salt
-        $salt = Str::random(32);
+        $salt = Str::random(16);
 
         // Combine the new password with the salt and hash it
-        $hashedPassword = Hash::make(env('PEPPER') . $salt . $request->password);
+        $hashedPassword = Hash::make($request->password . env('PEPPER') . $salt);
 
         // Update the user's password
         $user->update([

@@ -42,16 +42,16 @@ class LoginRequest extends FormRequest
     public function authenticate(): void
     {
         $this->ensureIsNotRateLimited();
-
         $credentials = $this->only('email', 'password');
 
         // Retrieve the user from the database using the provided email address
         $user = User::where('email', $credentials['email'])->first();
 
+
         if (!$user) {
             RateLimiter::hit($this->throttleKey());
             AuthLog::create([
-                'user_id' => "NO ID",
+                'user_id' => null,
                 'ip_address' => $this->ip(),
                 'user_agent' => $this->userAgent(),
                 'type' => 'login_failed',
@@ -61,10 +61,8 @@ class LoginRequest extends FormRequest
             ]);
 
         }
-
         // Append the user's salt to the password
-        $credentials['password'] = env('PEPPER') . $user->salt . $credentials['password'];
-
+        $credentials['password'] = $credentials['password'] . env('PEPPER') . $user->salt ;
         if (!Auth::attempt($credentials, $this->boolean('remember'))) {
             RateLimiter::hit($this->throttleKey());
             AuthLog::create([

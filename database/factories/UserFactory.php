@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 use App\Models\User;
 
@@ -13,13 +14,19 @@ UserFactory extends Factory
 
     public function definition(): array
     {
+        $salt = Str::random(16);
+        $forename = $this->faker->firstName;
+        $surname = $this->faker->lastName;
         return [
             'email' => $this->faker->unique()->safeEmail,
-            'password_hash' => bcrypt('password'), // You may want to adjust this
-            'forename' => $this->faker->firstName,
-            'surname' => $this->faker->lastName,
+            'salt' => $salt,
+            'password' => Hash::make('password'. env('PEPPER') . $salt ), // You may want to adjust this
+            'forename' => $forename,
+            'surname' => $surname,
+            'name' => $forename . " " . $surname,
             'email_verified_at' => now(),
             'remember_token' => Str::random(10),
         ];
     }
 }
+

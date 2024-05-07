@@ -2,6 +2,7 @@
 
 use App\Models\User;
 use App\Providers\RouteServiceProvider;
+use Illuminate\Support\Facades\Auth;
 
 test('login screen can be rendered', function () {
     $response = $this->get('/login');
@@ -23,7 +24,8 @@ test('users can authenticate using the login screen', function () {
 
 test('users can not authenticate with invalid password', function () {
     $user = User::factory()->create();
-
+    Auth::logout();
+    $this->actingAs($user)->post('/logout');
     $this->post('/login', [
         'email' => $user->email,
         'password' => 'wrong-password',

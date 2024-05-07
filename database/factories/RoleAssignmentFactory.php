@@ -1,19 +1,34 @@
 <?php
-
-namespace Database\Factories;
 // database/factories/RoleAssignmentFactory.php
 
+namespace Database\Factories;
+
+use App\Models\RoleAssignment;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class RoleAssignmentFactory extends Factory
 {
-    protected $model = \App\Models\RoleAssignment::class;
+    /**
+     * The name of the factory's corresponding model.
+     *
+     * @var string
+     */
+    protected $model = RoleAssignment::class;
 
+    /**
+     * Define the model's default state.
+     *
+     * @return array
+     */
     public function definition()
     {
         return [
-            'user_id' => \App\Models\User::factory(),
-            'role_id' => $this->faker->randomElement([1, 2, 3]), // Adjust role IDs as needed
+            'role_id' => function () {
+                return \App\Models\Role::factory()->create()->id;
+            },
+            'user_id' => function () {
+                return \App\Models\User::factory()->create()->id;
+            },
         ];
     }
 }

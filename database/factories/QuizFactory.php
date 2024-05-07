@@ -1,26 +1,37 @@
 <?php
 
 namespace Database\Factories;
-// QuizFactory.php
-
-namespace Database\Factories;
 
 use App\Models\Quiz;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
+/**
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Quiz>
+ */
 class QuizFactory extends Factory
 {
+    /**
+     * Define the model's default state.
+     *
+     * @return array<string, mixed>
+     */
     protected $model = Quiz::class;
-
-    public function definition()
+    public function definition(): array
     {
         return [
-            'created_by_user_id' => function () {
-                return \App\Models\User::factory()->create()->user_id;
-            },
+            'name' => $this->faker->sentence,
+            'slug' => $this->faker->slug,
             'description' => $this->faker->paragraph,
-            'title' => $this->faker->sentence,
-            'question_ids' => [], // Initialize the field as an empty array
+            'total_marks' => $this->faker->numberBetween(10, 100),
+            'pass_marks' => $this->faker->numberBetween(5, 50),
+            'max_attempts' => $this->faker->numberBetween(1, 5),
+            'is_published' => $this->faker->boolean,
+            'media_url' => $this->faker->imageUrl(),
+            'media_type' => 'image',
+            'duration' => $this->faker->numberBetween(30, 120),
+            'valid_from' => $this->faker->dateTimeBetween('-1 month', '+1 month'),
+            'valid_upto' => $this->faker->dateTimeBetween('+1 month', '+6 months'),
+            'time_between_attempts' => $this->faker->numberBetween(1, 24),
         ];
     }
 }

@@ -84,7 +84,7 @@ class PlatformProvider extends OrchidServiceProvider
                 ->route('platform.systems.quizzes')
                 ->permission('platform.systems.quizzes'),
 
-            Menu::make(__('Learning Content - This will open in a new tab'))
+            Menu::make(__('Learning Content'))
                 ->icon('bs.book')
                 ->route('platform.systems.learningcontent')
                 ->permission('platform.systems.learningcontent'),

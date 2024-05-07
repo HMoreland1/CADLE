@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Database\Factories\LearningContentFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Orchid\Filters\Filterable;
@@ -13,12 +14,11 @@ use Orchid\Screen\AsSource;
 class LearningContent extends Model
 {
     use  Filterable, Chartable, Sortable, HasFactory, AsSource;
-
+    protected $factory = LearningContentFactory::class;
     protected $table = 'learning_contents';
     protected $primaryKey = 'content_id';
 
     protected $fillable = [
-        'page_id',
         'description',
         'categories',
         'content',

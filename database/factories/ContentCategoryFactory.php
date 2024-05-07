@@ -1,15 +1,25 @@
 <?php
+// database/factories/ContentCategoryFactory.php
 
 namespace Database\Factories;
 
-// database/factories/ContentCategoryFactory.php
-
+use App\Models\ContentCategory;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class ContentCategoryFactory extends Factory
 {
-    protected $model = \App\Models\ContentCategory::class;
+    /**
+     * The name of the factory's corresponding model.
+     *
+     * @var string
+     */
+    protected $model = ContentCategory::class;
 
+    /**
+     * Define the model's default state.
+     *
+     * @return array
+     */
     public function definition()
     {
         return [

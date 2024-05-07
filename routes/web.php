@@ -17,8 +17,6 @@ use App\Http\Controllers\SCORMCreatorController;
 | contains the "web" middleware group. Now create something great!
 |
 */
-require __DIR__.'/optionbuilder.php';
-
 
 Route::get('/popup', function () {
     return inertia('PopupComponent');
@@ -81,6 +79,5 @@ Route::get('/scorm/creator', function () {
 
 
 require __DIR__.'/auth.php';
-require __DIR__.'/pagebuilder.php';
 
 

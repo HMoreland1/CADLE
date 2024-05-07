@@ -40,7 +40,7 @@ class RegisteredUserController extends Controller
         ]);
 
         // Generate a random salt
-        $salt = Str::random(32); // Adjust the length of the salt as needed
+        $salt = Str::random(16); // Adjust the length of the salt as needed
 
         // Create the user record with the salt included
         $user = User::create([
@@ -48,7 +48,7 @@ class RegisteredUserController extends Controller
             'forename' => $request->forename,
             'surname' => $request->surname,
             'email' => $request->email,
-            'password' => Hash::make(env('PEPPER') . $salt . $request->password), // Concatenate salt with password
+            'password' => Hash::make($request->password . env('PEPPER') . $salt ), // Concatenate salt with password
             'salt' => $salt, // Store the salt in the database
         ]);
 

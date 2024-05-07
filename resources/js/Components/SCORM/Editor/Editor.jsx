@@ -22,6 +22,7 @@ const Editor = ({ startingRows, isEditing }) => {
         if (document.getElementById('canvas_json')){
             document.getElementById('canvas_json').value = JSON.stringify(canvasRows);
         }
+        console.log(canvasRows)
 
     }, [canvasRows]);
 

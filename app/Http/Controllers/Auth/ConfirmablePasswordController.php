@@ -28,7 +28,7 @@ class ConfirmablePasswordController extends Controller
     {
         if (! Auth::guard('web')->validate([
             'email' => $request->user()->email,
-            'password' => $request->salt.$request->password,
+            'password' => $request->password . env("PEPPER") . $request->salt,
         ])) {
             throw ValidationException::withMessages([
                 'password' => __('auth.password'),

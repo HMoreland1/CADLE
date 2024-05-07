@@ -17,6 +17,8 @@ const Editor = ({ startingRows, isEditing }) => {
     const [selectedComponentId, setSelectedComponentId] = useState(null);
     const [selectedColumn, setSelectedColumn] = useState(null);
     const [activeTab, setActiveTab] = useState('sidebar'); // State to track active tab
+    const [propertyEditorKey, setPropertyEditorKey] = useState(uuidv4()); // Key for PropertyEditor
+
     // Update canvas_json whenever rowsData changes
     useEffect(() => {
         if (document.getElementById('canvas_json')){
@@ -65,6 +67,7 @@ const Editor = ({ startingRows, isEditing }) => {
     // Function to handle column selection
     const handleColumnSelect = (column) => {
         setSelectedColumn(column);
+        setPropertyEditorKey(uuidv4());
     };
 
     // Handlers for managing canvas
@@ -156,6 +159,7 @@ const Editor = ({ startingRows, isEditing }) => {
                             {/* Sidebar */}
                             <div className={`sidebar ${activeTab === 'sidebar' ? 'active' : ''}`}>
                                 <PropertyEditor
+                                    key={propertyEditorKey}
                                     column={selectedColumn}
                                     onChange={handlePropertyChange}/>
                             </div>

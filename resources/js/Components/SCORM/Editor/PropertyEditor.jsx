@@ -10,7 +10,7 @@ const PropertyEditor = ({ column, onChange }) => {
     // Update local state when the column prop changes
     useEffect(() => {
         if (column?.component?.properties) {
-            setProperties(column.component.properties);
+            setProperties(column?.component?.properties || {})
         }
 
     }, [column,updateProps]);

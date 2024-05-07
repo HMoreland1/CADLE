@@ -1,5 +1,5 @@
 .tile {
-    height: auto;
+    height: 100%;
     cursor: pointer;
     border: 3px solid #ccc;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);

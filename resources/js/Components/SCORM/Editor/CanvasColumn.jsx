@@ -1,4 +1,4 @@
-import { useDrop } from 'react-dnd';
+import {useDrop} from 'react-dnd';
 
 // Import the draggable components
 import text from './DraggableComponents/Text.jsx';
@@ -17,13 +17,22 @@ const componentMap = {
     // Add more component types and corresponding components as needed
 };
 
-const CanvasColumn = ({ isEditing, column, onDrop, onClick, onMouseEnterColumn, onMouseLeaveColumn, hoveredCol, onDeleteCol }) => {
+const CanvasColumn = ({
+                          isEditing,
+                          column,
+                          onDrop,
+                          onClick,
+                          onMouseEnterColumn,
+                          onMouseLeaveColumn,
+                          hoveredCol,
+                          onDeleteCol
+                      }) => {
 
-    const [{ isOver }, drop] = useDrop({
+    const [{isOver}, drop] = useDrop({
         accept: 'component',
         drop: (item, monitor) => {
             // Retrieve dropped component type and properties
-            const { type, component, properties } = item;
+            const {type, component, properties} = item;
             // Perform actions based on dropped component type and properties
             // Here you can use the onDrop function to handle the dropped data
             onDrop(item, column.id);
@@ -50,40 +59,33 @@ const CanvasColumn = ({ isEditing, column, onDrop, onClick, onMouseEnterColumn, 
              style={{width: `${column.properties.width}%`}}
              onMouseEnter={() => onMouseEnterColumn(column.id)} // Call onMouseEnterColumn when the mouse enters the column
              onMouseLeave={() => onMouseLeaveColumn(column.id)}>
-            {hoveredCol === column.id && isEditing ?(
+            {hoveredCol === column.id && isEditing ? (
                 <a
                     className="column-button"
                     onClick={() => onDeleteCol(column.id)}
 
                 >
-                    <FaTrash />
+                    <FaTrash/>
                 </a>
-            ): null}
-        <div
-            ref={drop}
-            className={
-                !isEditing ? "canvas-column no-border isEditing" :
-                    column.component ? "canvas-column no-border" : "canvas-column"
-            }
-
-
-            onClick={handleClick} // Add onClick event handler
-        >
-
-
-            {/* Render the component object if it's not null */}
+            ) : null}
             <div
-                style={{
-                    width: '100%', // Ensure the component fills the column width
-                    flexGrow: '1',
-                }}
+                ref={drop}
+                className={
+                    !isEditing ? "canvas-column no-border isEditing" :
+                        column.component ? "canvas-column no-border" : "canvas-column"
+                }
+
+
+                onClick={handleClick} // Add onClick event handler
             >
 
-                {Component && <Component {...column.component.properties} />}
+
+                {/* Render the component object if it's not null */}
+
+                {Component && <Component  {...column.component.properties} />}
+
 
             </div>
-
-        </div>
         </div>
     );
 

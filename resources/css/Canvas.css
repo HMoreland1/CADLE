@@ -15,7 +15,6 @@
     align-items: center;
     padding: 10px;
     width: 100%;
-    height: auto;
     transition: background-color 0.3s ease;
     background-color: white; /* Default background color */
 }
@@ -36,26 +35,23 @@
 .canvas-column {
     border: 1px solid #000;
     cursor: pointer;
-    height: 100%; /* Adjust height based on content */
+    height: 100%;
     margin: 5px;
     min-height: 50px;
 }
-.row-container{
+.row-container {
     position: relative;
     width: 100%;
+    height: 100%;
     display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-content: center;
+    flex-direction: row; /* Ensure columns are aligned horizontally */
+    align-items: stretch; /* Make columns stretch vertically */
 }
 
-.column-container{
-    position: relative;
-    width: 100%;
+.column-container {
+    height: 100%;
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    align-content: center;
 }
 
 .canvas-column:hover {

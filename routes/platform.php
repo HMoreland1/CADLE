@@ -5,6 +5,7 @@ declare(strict_types=1);
 //use App\Http\Controllers\QuestionController;
 use App\Models\LearningContent;
 use App\Models\Pathway;
+use App\Orchid\Screens\AuthLogs\AuthLogListScreen;
 use App\Orchid\Screens\Examples\ExampleActionsScreen;
 use App\Orchid\Screens\Examples\ExampleCardsScreen;
 use App\Orchid\Screens\Examples\ExampleChartsScreen;
@@ -49,6 +50,12 @@ use App\Orchid\Screens\TaskScreen;
 // Main
 Route::screen('/main', PlatformScreen::class)
     ->name('platform.main');
+Route::screen('authlog', AuthLogListScreen::class)
+    ->name('platform.systems.authlogs')
+    ->breadcrumbs(fn (Trail $trail) => $trail
+        ->parent('platform.index')
+        ->push(__('Content Assignment'), route('platform.systems.authlogs')));
+
 /*
 |--------------------------------------------------------------------------
 | Learning Content Routes

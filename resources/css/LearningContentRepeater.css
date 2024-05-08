@@ -82,7 +82,7 @@
     position: absolute; /* Position absolute to overlay on the card */
     bottom: 30%; /* Align with the bottom of the card */
     left: 0; /* Align with the left edge of the card */
-    height: 15%;
+    height: 5%;
     width: 100%; /* Full width */
     text-align: left; /* Align the text to the left */
     display: flex; /* Use flexbox for centering */

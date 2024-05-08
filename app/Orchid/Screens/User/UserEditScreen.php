@@ -5,6 +5,9 @@ declare(strict_types=1);
 namespace App\Orchid\Screens\User;
 
 use App\Models\Role;
+use App\Models\RoleAssignedContent;
+use App\Models\RoleUser;
+use App\Models\UserRoleAssignedContent;
 use App\Orchid\Layouts\Role\RolePermissionLayout;
 use App\Orchid\Layouts\User\UserEditLayout;
 use App\Orchid\Layouts\User\UserPasswordLayout;
@@ -12,6 +15,7 @@ use App\Orchid\Layouts\User\UserRoleLayout;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
@@ -243,7 +247,7 @@ class UserEditScreen extends Screen
             'user.surname' => 'required',
         ]);
 
-        $salt = Str::random(32); // Adjust the length of the salt as needed
+        $salt = Str::random(16); // Adjust the length of the salt as needed
         // Update the user's name based on forename and surname
         $user->surname = $request->input('user.surname');
         $user->forename = $request->input('user.forename');
@@ -252,7 +256,7 @@ class UserEditScreen extends Screen
         $user->salt =$salt;
         // Update the password if provided
         if ($request->filled('user.password')) {
-            $user->password = Hash::make(env('PEPPER') . $salt .$request->input('user.password'));
+            $user->password = Hash::make($request->input('user.password').env('PEPPER') . $salt);
         }
         //dd($user);
         // Save the user details
@@ -266,8 +270,63 @@ class UserEditScreen extends Screen
 
         $user->forceFill(['permissions' => $permissions])->save();
 
+        $previousRoles = RoleUser::where('user_id', $user->id)->pluck('role_id')->toArray();
         // Update user roles
         $user->replaceRoles($request->input('user.roles'));
+        $newRoles = RoleUser::where('user_id', $user->id)->pluck('role_id')->toArray();
+
+        // Check for new roles
+        $newlyAddedRoles = [];
+        foreach ($newRoles as $role) {
+            if (!in_array($role, $previousRoles)) {
+                $newlyAddedRoles[] = $role;
+            }
+        }
+        // Check for removed roles
+        $removedRoles = [];
+        foreach ($previousRoles as $role) {
+            if (!in_array($role, $newRoles)) {
+                $removedRoles[] = $role;
+            }
+        }
+
+        foreach ($removedRoles as $roleId) {
+            UserRoleAssignedContent::where('role_id', $roleId)->delete();
+        }
+
+        foreach ($newRoles as $roleId) {
+            $roleAssignedContent = RoleAssignedContent::where('role_id', $roleId)->pluck("content_id");
+            foreach ($roleAssignedContent as $contentId) {
+                DB::beginTransaction();
+                try{
+                    $existingAssignment = UserRoleAssignedContent::where('role_id', $roleId)
+                        ->where('content_id', $contentId)
+                        ->where('user_id', $user->id)
+                        ->first();
+                    // Create new assignment only if it doesn't exist
+                    if (!$existingAssignment) {
+                        UserRoleAssignedContent::create([
+                            'role_id' => $roleId,
+                            'user_id' => $user->id,
+                            'content_id' => $contentId,
+                            // You can set other fields like 'completed' here if needed
+                        ]);
+                    }
+                    DB::commit();
+
+                } catch (\Exception $e) {
+                    // Rollback the transaction if an error occurred
+                    DB::rollback();
+
+                    // Log the error
+                    logger()->error('Error saving assignments: ' . $e->getMessage());
+
+                    // Display an error message
+                    Toast::error('An error occurred while saving assignments. Please try again.');
+                }
+            }
+        }
+
 
         // Show success message
         Toast::info(__('User details have been saved.'));
@@ -294,7 +353,6 @@ class UserEditScreen extends Screen
     public function loginAs(User $user)
     {
         $authUser = Auth::user();
-
         if ($authUser->canImpersonate()) {
             Impersonation::loginAs($user);
 

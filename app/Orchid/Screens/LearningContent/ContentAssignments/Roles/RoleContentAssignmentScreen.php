@@ -138,7 +138,7 @@ class RoleContentAssignmentScreen extends Screen
                 $existingUserRoleAssignedContent = UserRoleAssignedContent::where('role_id', $roleId)
                     ->where('completed', 0)
                     ->get();
-// Loop through existing user role assigned content
+                // Loop through existing user role assigned content
                 foreach ($existingUserRoleAssignedContent as $existingAssignment) {
                     // Check if the content ID exists in the selected content IDs
                     if (!in_array($existingAssignment->content_id, $selectedContentIds)) {

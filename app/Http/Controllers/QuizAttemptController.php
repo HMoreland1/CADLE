@@ -46,7 +46,7 @@ class QuizAttemptController extends Controller
         $quizAttempt = QuizAttempt::find($quizAttemptId);
         // Validate the quiz attempt and calculate score
         $result = $quizAttempt->calculate_score();
-
+        $result = $quizAttempt->evaluate();
         // You can return the result or perform any additional actions here
         return response()->json($result);
     }

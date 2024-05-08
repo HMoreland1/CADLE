@@ -66,7 +66,12 @@ class PlatformProvider extends OrchidServiceProvider
                 ->icon('bs.card-text')
                 ->route('platform.example.cards')
                 ->divider(),
-            */
+            */Menu::make(__('Authentication Log'))
+                ->icon('bs.body-text')
+                ->route('platform.systems.authlogs')
+                ->permission('platform.systems.authlogs')
+                ->title(__('Logs')),
+
             Menu::make(__('Users'))
                 ->icon('bs.people')
                 ->route('platform.systems.users')
@@ -124,6 +129,8 @@ class PlatformProvider extends OrchidServiceProvider
         return [
             ItemPermission::group(__('Super User'))
                 ->addPermission('platform.systems.super', __('Super')),
+            ItemPermission::group(__('Logs'))
+                ->addPermission('platform.systems.authlogs', __('Authentication Logs')),
             ItemPermission::group(__('User Management'))
                 ->addPermission('platform.systems.roles', __('Roles'))
                 ->addPermission('platform.systems.users', __('Users'))

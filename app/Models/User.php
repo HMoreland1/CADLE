@@ -86,9 +86,10 @@ class User extends Authenticatable
     {
         // Get the current user's permissions
         $permissions = $this->permissions ?? [];
-
-        // Check if the impersonate permission is present in the user's permissions
-        return in_array('platform.system.impersonate', $permissions);
+        if (isset($permissions["platform.systems.impersonate"]) && $permissions["platform.systems.impersonate"] === '1') {
+            return true;
+        }
+        return false;
     }
 
     public function authLogs(): \Illuminate\Database\Eloquent\Relations\HasMany

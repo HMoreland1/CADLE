@@ -61,6 +61,7 @@ export default function Quiz({ auth, quiz, content = null }) {
                     quiz_question_id: question.id,
                     question_option_id: optionId
                 });
+                console.log(response.data);
                 return response.data;
             });
 

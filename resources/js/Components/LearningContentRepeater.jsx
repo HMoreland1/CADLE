@@ -207,7 +207,7 @@ const LearningContentRepeater = ({ userId, complete, showFilterByDefault, fillWi
                                     <img src={content.image_filename || defaultImage} alt={content.title}/>
                                 </div>
                                 <div className="banner p-3">
-                                    <p>test{content.content_type}</p>
+                                    <p>{content.content_type}</p>
                                 </div>
                                 <div className="py-3 px-3 title-container">
                                     <h3 style={{fontWeight: 'bold', marginTop: '1px'}}>
